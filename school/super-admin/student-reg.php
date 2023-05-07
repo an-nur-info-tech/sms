@@ -43,7 +43,8 @@ if(isset($_POST['submit_btn']))
     }
     
     // check if file exists
-    if(file_exists($target_file)) {
+    if(file_exists($target_file)) 
+    {
       $error= true;
       $warningMsg = "Picture exist";
     }
@@ -91,13 +92,18 @@ if(isset($_POST['submit_btn']))
               $db->bind(':student_state', $data['student_state']);
               $db->bind(':lga', $data['lga']);
   
-              if($db->execute()){
+              if($db->execute())
+              {
                 $successMsg = "Record added successfully";
-              }else{
+              }
+              else
+              {
                 //unlink($target_file);TODO
                 $warningMsg = "Submittion failed!";
               }
-            }else{
+            }
+            else
+            {
               $warningMsg = "Error! could not upload image";
             }
           }
