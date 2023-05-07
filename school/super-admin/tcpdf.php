@@ -113,5 +113,3 @@ if(isset($_POST['view_class_btn']))
 */
         
 }
-
-?>

@@ -9,5 +9,3 @@ if(isset($_POST['logout_btn']))
     header('location: ../../index');
 	
 }
-
-?>

@@ -2213,4 +2213,3 @@ if(isset($_POST['download_view_btn']))
 
 
 /*****************************Making Downloadable ***********************************/
-?>

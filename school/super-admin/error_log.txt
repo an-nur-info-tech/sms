@@ -20,3 +20,15 @@ Stack trace:
 [07-May-2023 14:33:23 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 221
 [07-May-2023 14:36:04 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 221
 [07-May-2023 14:36:48 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 221
+[07-May-2023 14:52:52 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 221
+[07-May-2023 14:53:00 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 221
+[07-May-2023 15:01:01 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 221
+[07-May-2023 15:01:05 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 221
+[07-May-2023 15:01:45 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 221
+[07-May-2023 15:01:49 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 221
+[07-May-2023 15:02:18 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 221
+[07-May-2023 15:02:37 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 221
+[07-May-2023 15:02:41 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 221
+[07-May-2023 15:03:13 Europe/Berlin] PHP Notice:  Undefined variable: staff_id in C:\xampp\htdocs\sms\school\super-admin\staff-reg-page.php on line 494
+[07-May-2023 15:03:13 Europe/Berlin] PHP Notice:  Undefined variable: staff_id in C:\xampp\htdocs\sms\school\super-admin\staff-reg-page.php on line 502
+[07-May-2023 15:03:13 Europe/Berlin] PHP Notice:  Undefined variable: staff_id in C:\xampp\htdocs\sms\school\super-admin\staff-reg-page.php on line 509

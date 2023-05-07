@@ -53,21 +53,15 @@ if (isset($_POST['deleteBtn'])) {
   $db->query("SELECT passport FROM students_tbl WHERE admNo = :admNo;");
   $db->bind(':admNo', $admNo);
   $img = $db->single();
-  if($img)
-  {
+  if ($img) {
     $db->query("DELETE FROM students_tbl WHERE admNo = :admNo;");
     $db->bind(':admNo', $admNo);
-    if ($db->execute() && unlink($img->passport)) 
-    {
+    if ($db->execute() && unlink($img->passport)) {
       echo "<script>alert('Record deleted');</script>";
-    } 
-    else 
-    {
+    } else {
       echo "<script>alert('Record not deleted!');</script>";
     }
-  }
-  else
-  {
+  } else {
     $db->query("DELETE FROM students_tbl WHERE admNo = :admNo;");
     $db->bind(':admNo', $admNo);
     if ($db->execute()) {
@@ -137,30 +131,30 @@ if (isset($_POST['deleteBtn'])) {
     </div>
     <div class="card-body">
       <div class="table-responsive">
-          <table class="table table-resonsive table-hover" id="dataTable" width="100%" cellspacing="0">
-            <thead>
-              <th class="table-primary">#</th>
-              <th class="table-primary">Passsport</th>
-              <th class="table-primary">Admission No.</th>
-              <th class="table-primary">Full name</th>
-              <th class="table-primary">Class</th>
-              <th class="table-primary">Gender</th>
-              <th class="table-primary">D.O.B</th>
-              <th class="table-primary">Religion</th>
-              <th class="table-primary">Action</th>
-            </thead>
-            <tbody>
+        <table class="table table-resonsive table-hover" id="dataTable" width="100%" cellspacing="0">
+          <thead>
+            <th class="table-primary">#</th>
+            <th class="table-primary">Passsport</th>
+            <th class="table-primary">Admission No.</th>
+            <th class="table-primary">Full name</th>
+            <th class="table-primary">Class</th>
+            <th class="table-primary">Gender</th>
+            <th class="table-primary">D.O.B</th>
+            <th class="table-primary">Religion</th>
+            <th class="table-primary">Action</th>
+          </thead>
+          <tbody>
             <?php
             if (isset($_POST['view_btn'])) {
               $select_class = trim($_POST['select_class']);
               $db->query("SELECT * FROM students_tbl WHERE class_name =:class_name;");
               $db->bind(':class_name', $select_class);
               $data = $db->resultset();
-              
+
               if ($db->rowCount() > 0) {
                 $count = 1;
                 foreach ($data as $record) {
-              ?>
+            ?>
                   <tr>
                     <td> <?php echo $count; ?></td>
                     <td> <img src="<?php if ($record->passport == null) {
@@ -202,8 +196,8 @@ if (isset($_POST['deleteBtn'])) {
               }
             }
             ?>
-            </tbody>
-          </table>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
