@@ -17,7 +17,7 @@ include('includes/header.php');
     <!-- ***********************************Secondary Results Rows**************** -->
     <?php $db = new Database(); ?>
     <!-- Class Subject Content Row -->
-    <form method="POST" action="fpdf.php">
+    <form method="POST" action="fpdf" target="_blank">
         <div class="form-row">
             <div class="col-md-3">
                 <div class="form-group">
@@ -109,7 +109,7 @@ include('includes/header.php');
         </div>
     </form>
 
-    <form method="POST" action="singleFpdf.php">
+    <form method="POST" action="singleFpdf" target="_blank">
         <div class="form-row">
             <div class="col-md-3">
                 <div class="form-group">
@@ -209,7 +209,7 @@ include('includes/header.php');
     <!-- ***********************************Primary Results Rows**************** -->
     <h2 class="alert-primary" style="font-weight: bold; font-family: Georgia, 'Times New Roman', Times, serif; border-radius: 5px; padding: 2px; margin-bottom: 10px;"> Primary Section</h2>
     <!-- Class Subject Content Row -->
-    <form method="POST" action="fpdf.php">
+    <form method="POST" action="fpdf" target="_blank">
         <div class="form-row">
             <div class="col-md-3">
                 <div class="form-group">
@@ -301,7 +301,7 @@ include('includes/header.php');
         </div>
     </form>
 
-    <form method="POST" action="singleFpdf.php">
+    <form method="POST" action="singleFpdf" target="_blank">
         <div class="form-row">
             <div class="col-md-3">
                 <div class="form-group">
@@ -395,10 +395,10 @@ include('includes/header.php');
     </form>
     <!-- ***********************************END Primary Results Rows**************** -->
 
-    <!-- ***********************************Primary Results Rows**************** -->
+    <!-- ***********************************Nursery Results Rows**************** -->
     <h2 class="alert-primary" style="font-weight: bold; font-family: Georgia, 'Times New Roman', Times, serif; border-radius: 5px; padding: 2px; margin-bottom: 10px;"> Nursery Section</h2>
     <!-- Class Subject Content Row -->
-    <form method="POST" action="fpdf.php">
+    <form method="POST" action="fpdf" target="_blank">
         <div class="form-row">
             <div class="col-md-3">
                 <div class="form-group">
@@ -491,7 +491,7 @@ include('includes/header.php');
         </div>
     </form>
 
-    <form method="POST" action="singleFpdf.php">
+    <form method="POST" action="singleFpdf" target="_blank">
         <div class="form-row">
             <div class="col-md-3">
                 <div class="form-group">
