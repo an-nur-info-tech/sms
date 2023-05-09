@@ -16,7 +16,7 @@ if (isset($_POST['assigning_btn'])) {
     $db->bind(':teacher_class', $teacher_class);
     $db->bind(':class_id', $class_id);
     if (!$db->execute()) {
-      die("Error " . $db->getError());
+      die("Error " .$db->getError());
     } else {
       $successMsg = "Teacher Assigned successfully";
     }
@@ -67,7 +67,7 @@ if (isset($_POST['assigning_btn'])) {
         <option value=""> Select Teacher...</option>
         <?php
         if (!$db->isConnected()) {
-          die("Error " . $db->getError());
+          die("Error " .$db->getError());
         } else {
           if ($db->rowCount() > 0) {
             //$class_id = $row->class_id;
@@ -86,7 +86,7 @@ if (isset($_POST['assigning_btn'])) {
       </select> &nbsp;&nbsp;
       <button name="assigning_btn" class="btn btn-primary"> Assign </button>
     </div><br><br><br><br>
-    <a href="class-page.php" class="btn btn-outline-danger"> Back </a>
+    <a href="class-page" class="btn btn-outline-danger"> Back </a>
   </form>
 </div><!-- End of Main Content -->
 

@@ -1,6 +1,9 @@
 <?php
   require_once('includes/security.php');
   require_once('../database/Database.php');
+  if (session_status() == PHP_SESSION_NONE) {
+    session_start(); //start session if session not start
+  }
 ?>
 
 <!DOCTYPE html>

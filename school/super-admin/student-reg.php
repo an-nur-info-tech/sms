@@ -25,33 +25,47 @@ if (isset($_POST['submit_btn'])) {
 
   // For image upload
   $fileToUpload = strtolower($_FILES["fileToUpload"]["name"]);
+  //specifying the directory where the file is going to be placed.
+  $target_dir = "../uploads/students/";
+  //specifying path of the file to be uploaded
+  $target_file = $target_dir . basename($fileToUpload);
+  //Getting the file extension
+  $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
-  if ($fileToUpload) { //Select Image
-    //specifying the directory where the file is going to be placed.
-    $target_dir = "../uploads/students/";
-    //specifying path of the file to be uploaded
-    $target_file = $target_dir . basename($fileToUpload);
-    //Getting the file extension
-    $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+  //check if file type is an image
+  $imgType = ["jpg", "gif", "jpeg", "png"];
 
-    //check if file type is an image
-    $imgType = ["jpg", "gif", "jpeg", "png"];
-    if (!in_array($imageFileType, $imgType)) {
+  if ($fileToUpload) 
+  { //Select Image
+    //Checking for image size
+    if($_FILES['fileToUpload']['size'] > 102405 or $_FILES['fileToUpload']['size'] < 10240) {
       $error = true;
-      $warningMsg = "The file is not an image type";
+      $_SESSION['errorMsg'] = true;
+      $_SESSION['errorTitle'] = "Error";
+      $_SESSION['sessionMsg'] = "Image size within 15KB to 100KB";
+      $_SESSION['sessionIcon'] = "error";
+      $_SESSION['location'] = "student-reg";
+    }
+    
+    if(!in_array($imageFileType, $imgType)) {
+      $error = true;
+      $_SESSION['errorMsg'] = true;
+      $_SESSION['errorTitle'] = "Error";
+      $_SESSION['sessionMsg'] = "The file is not an image type";
+      $_SESSION['sessionIcon'] = "error";
+      $_SESSION['location'] = "student-reg";
     }
 
     // check if file exists
-    if (file_exists($target_file)) {
+    if(file_exists($target_file)) {
       $error = true;
-      $warningMsg = "Picture exist";
+      $_SESSION['errorMsg'] = true;
+      $_SESSION['errorTitle'] = "Error";
+      $_SESSION['sessionMsg'] = "Picture exist!";
+      $_SESSION['sessionIcon'] = "error";
+      $_SESSION['location'] = "student-reg";
     }
 
-    //Checking for image size
-    if ($_FILES['fileToUpload']['size'] > 102405 or $_FILES['fileToUpload']['size'] < 10240) {
-      $error = true;
-      $warningMsg = "Image size should be in the range of 15KB to 100KB";
-    }
     if (!$error) { //If error free
       if ($section == "NS/") { //Nursery school
         $section_nur = $section . date('y') . "/";
@@ -87,10 +101,19 @@ if (isset($_POST['submit_btn'])) {
             $db->bind(':student_state', $data['student_state']);
             $db->bind(':lga', $data['lga']);
 
-            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file) && $db->execute()) {
-              $successMsg = "Record added successfully";
-            } else {
-              $warningMsg = "Error! record could not be uploaded";
+            if(move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file) && $db->execute()) {
+              $_SESSION['errorMsg'] = true;
+              $_SESSION['errorTitle'] = "Success";
+              $_SESSION['sessionMsg'] = "Record added!";
+              $_SESSION['sessionIcon'] = "success";
+              $_SESSION['location'] = "student-reg";
+            }else {
+              $_SESSION['errorMsg'] = true;
+              $_SESSION['errorTitle'] = "Error";
+              $_SESSION['sessionMsg'] = "Error occured!";
+              $_SESSION['sessionIcon'] = "error";
+              $_SESSION['location'] = "student-reg";
+              die($db->getError());
             }
           }
         } else { //Initial admission number if no record in the database
@@ -118,10 +141,19 @@ if (isset($_POST['submit_btn'])) {
           $db->bind(':student_state', $data['student_state']);
           $db->bind(':lga', $data['lga']);
 
-          if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file) && $db->execute()) {
-            $successMsg = "Record added successfully";
-          } else {
-            $warningMsg = "Error! record could not be uploaded";
+          if(move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file) && $db->execute()) {
+            $_SESSION['errorMsg'] = true;
+            $_SESSION['errorTitle'] = "Success";
+            $_SESSION['sessionMsg'] = "Record added!";
+            $_SESSION['sessionIcon'] = "success";
+            $_SESSION['location'] = "student-reg";
+          }else {
+            $_SESSION['errorMsg'] = true;
+            $_SESSION['errorTitle'] = "Error";
+            $_SESSION['sessionMsg'] = "Error occured!";
+            $_SESSION['sessionIcon'] = "error";
+            $_SESSION['location'] = "student-reg";
+            die($db->getError());
           }
         }
       } elseif ($section == "PS/") { //Primary school
@@ -158,10 +190,19 @@ if (isset($_POST['submit_btn'])) {
             $db->bind(':student_state', $data['student_state']);
             $db->bind(':lga', $data['lga']);
 
-            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file) && $db->execute()) {
-              $successMsg = "Record added successfully";
-            } else {
-              $warningMsg = "Error! record could not be uploaded";
+            if(move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file) && $db->execute()) {
+              $_SESSION['errorMsg'] = true;
+              $_SESSION['errorTitle'] = "Success";
+              $_SESSION['sessionMsg'] = "Record added!";
+              $_SESSION['sessionIcon'] = "success";
+              $_SESSION['location'] = "student-reg";
+            }else {
+              $_SESSION['errorMsg'] = true;
+              $_SESSION['errorTitle'] = "Error";
+              $_SESSION['sessionMsg'] = "Error occured!";
+              $_SESSION['sessionIcon'] = "error";
+              $_SESSION['location'] = "student-reg";
+              die($db->getError());
             }
           }
         } else { //Initial admission number if no record in the database
@@ -189,10 +230,19 @@ if (isset($_POST['submit_btn'])) {
           $db->bind(':student_state', $data['student_state']);
           $db->bind(':lga', $data['lga']);
 
-          if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file) && $db->execute()) {
-            $successMsg = "Record added successfully";
-          } else {
-            $warningMsg = "Error! record could not be uploaded";
+          if(move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file) && $db->execute()) {
+            $_SESSION['errorMsg'] = true;
+            $_SESSION['errorTitle'] = "Success";
+            $_SESSION['sessionMsg'] = "Record added!";
+            $_SESSION['sessionIcon'] = "success";
+            $_SESSION['location'] = "student-reg";
+          }else {
+            $_SESSION['errorMsg'] = true;
+            $_SESSION['errorTitle'] = "Error";
+            $_SESSION['sessionMsg'] = "Error occured!";
+            $_SESSION['sessionIcon'] = "error";
+            $_SESSION['location'] = "student-reg";
+            die($db->getError());
           }
         }
       } elseif ($section == "SS/") { //Secondary School
@@ -229,10 +279,19 @@ if (isset($_POST['submit_btn'])) {
             $db->bind(':student_state', $data['student_state']);
             $db->bind(':lga', $data['lga']);
 
-            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file) && $db->execute()) {
-              $successMsg = "Record added successfully";
-            } else {
-              $warningMsg = "Error! record could not be uploaded";
+            if(move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file) && $db->execute()) {
+              $_SESSION['errorMsg'] = true;
+              $_SESSION['errorTitle'] = "Success";
+              $_SESSION['sessionMsg'] = "Record added!";
+              $_SESSION['sessionIcon'] = "success";
+              $_SESSION['location'] = "student-reg";
+            }else {
+              $_SESSION['errorMsg'] = true;
+              $_SESSION['errorTitle'] = "Error";
+              $_SESSION['sessionMsg'] = "Error occured!";
+              $_SESSION['sessionIcon'] = "error";
+              $_SESSION['location'] = "student-reg";
+              die($db->getError());
             }
           }
         } else { //Initial admission number if no record in the database
@@ -260,10 +319,19 @@ if (isset($_POST['submit_btn'])) {
           $db->bind(':student_state', $data['student_state']);
           $db->bind(':lga', $data['lga']);
 
-          if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file) && $db->execute()) {
-            $successMsg = "Record added successfully";
-          } else {
-            $warningMsg = "Error! record could not be uploaded";
+          if(move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file) && $db->execute()) {
+            $_SESSION['errorMsg'] = true;
+            $_SESSION['errorTitle'] = "Success";
+            $_SESSION['sessionMsg'] = "Record added!";
+            $_SESSION['sessionIcon'] = "success";
+            $_SESSION['location'] = "student-reg";
+          }else {
+            $_SESSION['errorMsg'] = true;
+            $_SESSION['errorTitle'] = "Error";
+            $_SESSION['sessionMsg'] = "Error occured!";
+            $_SESSION['sessionIcon'] = "error";
+            $_SESSION['location'] = "student-reg";
+            die($db->getError());
           }
         }
       }
@@ -302,11 +370,22 @@ if (isset($_POST['submit_btn'])) {
             $db->bind(':nationality', $data['nationality']);
             $db->bind(':student_state', $data['student_state']);
             $db->bind(':lga', $data['lga']);
-            if ($db->execute()) {
-              $successMsg = "Record added successfully";
-            } else {
-              //unlink($target_file);TODO
-              $warningMsg = "Submittion failed!";
+            
+            if(!$db->execute()) {
+              $_SESSION['errorMsg'] = true;
+              $_SESSION['errorTitle'] = "Error";
+              $_SESSION['sessionMsg'] = "Error occured!";
+              $_SESSION['sessionIcon'] = "error";
+              $_SESSION['location'] = "student-reg";
+              die($db->getError());
+            } 
+            else 
+            {
+              $_SESSION['errorMsg'] = true;
+              $_SESSION['errorTitle'] = "Success";
+              $_SESSION['sessionMsg'] = "Record added!";
+              $_SESSION['sessionIcon'] = "success";
+              $_SESSION['location'] = "student-reg";
             }
           }
         } else { //Initial admission number if no record in the database
@@ -332,10 +411,21 @@ if (isset($_POST['submit_btn'])) {
           $db->bind(':student_state', $data['student_state']);
           $db->bind(':lga', $data['lga']);
 
-          if ($db->execute()) {
-            $successMsg = "Record added successfully";
-          } else {
-            $warningMsg = "Submittion failed!";
+          if(!$db->execute()) {
+            $_SESSION['errorMsg'] = true;
+            $_SESSION['errorTitle'] = "Error";
+            $_SESSION['sessionMsg'] = "Error occured!";
+            $_SESSION['sessionIcon'] = "error";
+            $_SESSION['location'] = "student-reg";
+            die($db->getError());
+          } 
+          else 
+          {
+            $_SESSION['errorMsg'] = true;
+            $_SESSION['errorTitle'] = "Success";
+            $_SESSION['sessionMsg'] = "Record added!";
+            $_SESSION['sessionIcon'] = "success";
+            $_SESSION['location'] = "student-reg";
           }
         }
       } elseif ($section == "PS/") { //Primary school
@@ -370,11 +460,21 @@ if (isset($_POST['submit_btn'])) {
             $db->bind(':student_state', $data['student_state']);
             $db->bind(':lga', $data['lga']);
 
-            if ($db->execute()) {
-              $successMsg = "Record added successfully";
-            } else {
-              //unlink($target_file);TODO
-              $warningMsg = "Submittion failed!";
+            if(!$db->execute()) {
+              $_SESSION['errorMsg'] = true;
+              $_SESSION['errorTitle'] = "Error";
+              $_SESSION['sessionMsg'] = "Error occured!";
+              $_SESSION['sessionIcon'] = "error";
+              $_SESSION['location'] = "student-reg";
+              die($db->getError());
+            } 
+            else 
+            {
+              $_SESSION['errorMsg'] = true;
+              $_SESSION['errorTitle'] = "Success";
+              $_SESSION['sessionMsg'] = "Record added!";
+              $_SESSION['sessionIcon'] = "success";
+              $_SESSION['location'] = "student-reg";
             }
           }
         } else { //Initial admission number if no record in the database
@@ -400,10 +500,22 @@ if (isset($_POST['submit_btn'])) {
           $db->bind(':nationality', $data['nationality']);
           $db->bind(':student_state', $data['student_state']);
           $db->bind(':lga', $data['lga']);
-          if ($db->execute()) {
-            $successMsg = "Record added successfully";
-          } else {
-            $warningMsg = "Submittion failed!";
+          
+          if(!$db->execute()) {
+            $_SESSION['errorMsg'] = true;
+            $_SESSION['errorTitle'] = "Error";
+            $_SESSION['sessionMsg'] = "Error occured!";
+            $_SESSION['sessionIcon'] = "error";
+            $_SESSION['location'] = "student-reg";
+            die($db->getError());
+          } 
+          else 
+          {
+            $_SESSION['errorMsg'] = true;
+            $_SESSION['errorTitle'] = "Success";
+            $_SESSION['sessionMsg'] = "Record added!";
+            $_SESSION['sessionIcon'] = "success";
+            $_SESSION['location'] = "student-reg";
           }
         }
       } elseif ($section == "SS/") { //Secondary School
@@ -438,11 +550,21 @@ if (isset($_POST['submit_btn'])) {
             $db->bind(':student_state', $data['student_state']);
             $db->bind(':lga', $data['lga']);
 
-            if ($db->execute()) {
-              $successMsg = "Record added successfully";
-            } else {
-              //unlink($target_file);TODO
-              $warningMsg = "Submittion failed!";
+            if(!$db->execute()) {
+              $_SESSION['errorMsg'] = true;
+              $_SESSION['errorTitle'] = "Error";
+              $_SESSION['sessionMsg'] = "Error occured!";
+              $_SESSION['sessionIcon'] = "error";
+              $_SESSION['location'] = "student-reg";
+              die($db->getError());
+            } 
+            else 
+            {
+              $_SESSION['errorMsg'] = true;
+              $_SESSION['errorTitle'] = "Success";
+              $_SESSION['sessionMsg'] = "Record added!";
+              $_SESSION['sessionIcon'] = "success";
+              $_SESSION['location'] = "student-reg";
             }
           }
         } else { //Initial admission number if no record in the database
@@ -468,10 +590,21 @@ if (isset($_POST['submit_btn'])) {
           $db->bind(':student_state', $data['student_state']);
           $db->bind(':lga', $data['lga']);
 
-          if ($db->execute()) {
-            $successMsg = "Record added successfully";
-          } else {
-            $warningMsg = "Submittion failed!";
+          if(!$db->execute()) {
+            $_SESSION['errorMsg'] = true;
+            $_SESSION['errorTitle'] = "Error";
+            $_SESSION['sessionMsg'] = "Error occured!";
+            $_SESSION['sessionIcon'] = "error";
+            $_SESSION['location'] = "student-reg";
+            die($db->getError());
+          } 
+          else 
+          {
+            $_SESSION['errorMsg'] = true;
+            $_SESSION['errorTitle'] = "Success";
+            $_SESSION['sessionMsg'] = "Record added!";
+            $_SESSION['sessionIcon'] = "success";
+            $_SESSION['location'] = "student-reg";
           }
         }
       }
@@ -490,19 +623,31 @@ if (isset($_POST['submit_btn'])) {
     <h3 class="alert-primary" style="font-weight: bold; font-family: Georgia, 'Times New Roman', Times, serif; border-radius: 5px; padding: 2px; margin-bottom: 10px;"> Student Registration Page </h3>
     <p> Fields with asterisk (*) are to be filled </p>
   </div><br>
-  <center>
-    <?php
-    if (isset($successMsg)) {
-    ?>
-      <label class="text-success"><i class="fas fa-fw fa-check-square"></i> <?php echo $successMsg; ?></label>
-    <?php
-    } elseif (isset($warningMsg)) {
-    ?>
-      <label class="text-danger"><i class="fas fa-fw fa-user-times"></i><?php echo $warningMsg; ?></label>
-    <?php
-    }
-    ?>
-  </center>
+
+  <!-- Alerts messages -->
+  <?php
+  if (isset($_SESSION['errorMsg'])) {
+    echo '<script>
+              Swal.fire({
+                title: "' . $_SESSION['errorTitle'] . '",
+                text: "' . $_SESSION['sessionMsg'] . '",
+                icon: "' . $_SESSION['sessionIcon'] . '",
+                showConfirmButton: true,
+                confirmButtonText: "ok"
+              }).then((result) => {
+                  if(result.value){
+                      window.location = "' . $_SESSION['location'] . '";
+                  }
+              })
+          </script>';
+    unset($_SESSION['errorTitle']);
+    unset($_SESSION['errorMsg']);
+    unset($_SESSION['sessionMsg']);
+    unset($_SESSION['location']);
+    unset($_SESSION['sessionIcon']);
+  }
+  ?>
+  
   <!-- Student Content Row -->
   <form method="post" action="student-reg" enctype="multipart/form-data">
     <div class="form-row">
