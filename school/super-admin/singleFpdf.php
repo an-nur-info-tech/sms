@@ -3,27 +3,12 @@ include('../database/Database.php');
 require('./includes/fpdf8/fpdf.php');
 
 if (isset($_POST['single_view_btn'])) {
-    $error = false;
     $admNo = $_POST['admNo'];
     $session_name = $_POST['session_name'];
     $term_name = $_POST['term_name'];
 
-    if (empty($admNo)) {
-        $error = true;
-        echo "AdmNo Number is required";
-        exit();
-    }
-    if (empty($session_name)) {
-        $error = true;
-        echo "Session is required";
-        exit();
-    }
-    if (empty($term_name)) {
-        $error = true;
-        echo "Term is required";
-        exit();
-    }
-    if (!$error) {
+    
+    
         $db = new Database();
         $db->query(
             "SELECT * FROM result_tbl AS rt
@@ -48,9 +33,8 @@ if (isset($_POST['single_view_btn'])) {
             $session_name = $result->session_name;
             $term_name = $result->term_name;
 
-            //Checking if term is 1 2 and 3 Term
+            //Checking if term is 1 2 and 3 Term TODO
             if ($term_name == "FIRST TERM") {
-                //require_once('includes/fpdf8/fpdf.php');
                 class PDF extends FPDF
                 {
                     // Page footer
@@ -170,7 +154,6 @@ if (isset($_POST['single_view_btn'])) {
                         'B',
                         10
                     );
-                    
                     $pdf->Cell(75, 5, 'SUBJECTS', 1, 0, 'L');
                     $pdf->Cell(15, 5, 'CA', 1, 0, 'C');
                     $pdf->Cell(20, 5, 'EXAM', 1, 0, 'C');
@@ -384,6 +367,10 @@ if (isset($_POST['single_view_btn'])) {
                 //making it downloadable
                 //$pdf->Output($class_name.' ('.$session_name.' - '.$term_name.')', 'D');
                 $pdf->Output();
+            }
+            else
+            {
+                echo "No term available";
             }
         } 
         else 
@@ -1468,7 +1455,7 @@ if (isset($_POST['single_view_btn'])) {
             
             }
         } */
-    }
+    
 }
 
 /*****************************Making Downloadable ***********************************/
