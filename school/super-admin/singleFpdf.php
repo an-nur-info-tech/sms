@@ -170,7 +170,6 @@ if (isset($_POST['single_view_btn'])) {
                         'B',
                         10
                     );
-                    
                     $pdf->Cell(75, 5, 'SUBJECTS', 1, 0, 'L');
                     $pdf->Cell(15, 5, 'CA', 1, 0, 'C');
                     $pdf->Cell(20, 5, 'EXAM', 1, 0, 'C');
