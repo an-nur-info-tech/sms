@@ -1,7 +1,7 @@
 <?php
 //include('includes/dbcon.php');
 include('../database/Database.php');
-require('includes/fpdf8/fpdf.php');
+require('./includes/fpdf8/fpdf.php');
 
 if(isset($_POST['view_class_btn']))
 {
@@ -10,7 +10,23 @@ if(isset($_POST['view_class_btn']))
     $term_name = $_POST['term_name'];    
     
     $db = new Database();
-    
+    /* $db->query(
+        "SELECT * 
+        FROM result_tbl
+        JOIN class_tbl ON class_tbl.class_id = result_tbl.class_id 
+        JOIN subject_tbl ON subject_tbl.subject_id = result_tbl.subject_id 
+        WHERE result_tbl.class_id = :class_id && result_tbl.session_name = :session_name 
+                && result_tbl.term_name = :term_name;  
+        "
+    );
+    $db->bind(':class_id', $class_id);
+    $db->bind(':session_name', $session_name);
+    $db->bind(':term_name', $term_name);
+    $res = $db->resultset();
+    foreach($res as $row)
+    {
+        echo $row->admNo.PHP_EOL;
+    } */
     //Checking if term is 1 2 and 3 Term
     if($term_name == "FIRST TERM")
     {
