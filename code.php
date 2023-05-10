@@ -294,7 +294,6 @@ if(isset($_POST['login-btn']))
         else{//TODO
           //$db->getLogger($_POST['email'], "Account not exist");
           $_SESSION['errorMsg'] = true;
-          //header('Location: index');
           $_SESSION['errorTitle'] = "Bad request";
           $_SESSION['sessionMsg'] = "Account not exist";
           $_SESSION['sessionIcon'] = "error";

@@ -1262,3 +1262,91 @@ Stack trace:
 [09-May-2023 18:46:34 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 215
 [09-May-2023 18:57:51 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 215
 [09-May-2023 18:57:56 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 215
+[10-May-2023 09:01:06 Europe/Berlin] PHP Notice:  Undefined variable: con in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 71
+[10-May-2023 09:01:06 Europe/Berlin] PHP Warning:  mysqli_query() expects parameter 1 to be mysqli, null given in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 71
+[10-May-2023 09:01:06 Europe/Berlin] PHP Notice:  Undefined variable: con in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 77
+[10-May-2023 09:01:06 Europe/Berlin] PHP Warning:  mysqli_error() expects parameter 1 to be mysqli, null given in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 77
+[10-May-2023 09:13:38 Europe/Berlin] PHP Notice:  Undefined variable: con in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 66
+[10-May-2023 09:13:38 Europe/Berlin] PHP Warning:  mysqli_query() expects parameter 1 to be mysqli, null given in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 66
+[10-May-2023 09:13:38 Europe/Berlin] PHP Notice:  Undefined variable: con in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 72
+[10-May-2023 09:13:38 Europe/Berlin] PHP Warning:  mysqli_error() expects parameter 1 to be mysqli, null given in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 72
+[10-May-2023 09:28:25 Europe/Berlin] PHP Notice:  Undefined property: stdClass::$subject_id in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 102
+[10-May-2023 09:28:25 Europe/Berlin] PHP Notice:  Undefined property: stdClass::$subject_name in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 102
+[10-May-2023 09:28:25 Europe/Berlin] PHP Notice:  Undefined property: stdClass::$subject_id in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 102
+[10-May-2023 09:28:25 Europe/Berlin] PHP Notice:  Undefined property: stdClass::$subject_name in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 102
+[10-May-2023 09:28:25 Europe/Berlin] PHP Notice:  Undefined property: stdClass::$subject_id in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 102
+[10-May-2023 09:28:25 Europe/Berlin] PHP Notice:  Undefined property: stdClass::$subject_name in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 102
+[10-May-2023 09:28:25 Europe/Berlin] PHP Notice:  Undefined property: stdClass::$subject_id in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 102
+[10-May-2023 09:28:25 Europe/Berlin] PHP Notice:  Undefined property: stdClass::$subject_name in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 102
+[10-May-2023 09:28:25 Europe/Berlin] PHP Notice:  Undefined property: stdClass::$subject_id in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 102
+[10-May-2023 09:28:25 Europe/Berlin] PHP Notice:  Undefined property: stdClass::$subject_name in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 102
+[10-May-2023 09:28:25 Europe/Berlin] PHP Notice:  Undefined property: stdClass::$subject_id in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 102
+[10-May-2023 09:28:25 Europe/Berlin] PHP Notice:  Undefined property: stdClass::$subject_name in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 102
+[10-May-2023 09:28:25 Europe/Berlin] PHP Notice:  Undefined property: stdClass::$subject_id in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 102
+[10-May-2023 09:28:25 Europe/Berlin] PHP Notice:  Undefined property: stdClass::$subject_name in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 102
+[10-May-2023 09:28:25 Europe/Berlin] PHP Notice:  Undefined property: stdClass::$subject_id in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 102
+[10-May-2023 09:28:25 Europe/Berlin] PHP Notice:  Undefined property: stdClass::$subject_name in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 102
+[10-May-2023 09:28:25 Europe/Berlin] PHP Notice:  Undefined property: stdClass::$subject_id in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 102
+[10-May-2023 09:28:25 Europe/Berlin] PHP Notice:  Undefined property: stdClass::$subject_name in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 102
+[10-May-2023 09:28:25 Europe/Berlin] PHP Notice:  Undefined property: stdClass::$subject_id in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 102
+[10-May-2023 09:28:25 Europe/Berlin] PHP Notice:  Undefined property: stdClass::$subject_name in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 102
+[10-May-2023 09:28:25 Europe/Berlin] PHP Notice:  Undefined property: stdClass::$subject_id in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 102
+[10-May-2023 09:28:25 Europe/Berlin] PHP Notice:  Undefined property: stdClass::$subject_name in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 102
+[10-May-2023 09:28:25 Europe/Berlin] PHP Notice:  Undefined property: stdClass::$subject_id in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 102
+[10-May-2023 09:28:25 Europe/Berlin] PHP Notice:  Undefined property: stdClass::$subject_name in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 102
+[10-May-2023 09:28:25 Europe/Berlin] PHP Notice:  Undefined property: stdClass::$subject_id in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 102
+[10-May-2023 09:28:25 Europe/Berlin] PHP Notice:  Undefined property: stdClass::$subject_name in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 102
+[10-May-2023 09:28:25 Europe/Berlin] PHP Notice:  Undefined property: stdClass::$subject_id in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 102
+[10-May-2023 09:28:25 Europe/Berlin] PHP Notice:  Undefined property: stdClass::$subject_name in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 102
+[10-May-2023 09:28:25 Europe/Berlin] PHP Notice:  Undefined property: stdClass::$subject_id in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 102
+[10-May-2023 09:28:25 Europe/Berlin] PHP Notice:  Undefined property: stdClass::$subject_name in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 102
+[10-May-2023 09:28:25 Europe/Berlin] PHP Notice:  Undefined property: stdClass::$subject_id in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 102
+[10-May-2023 09:28:25 Europe/Berlin] PHP Notice:  Undefined property: stdClass::$subject_name in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 102
+[10-May-2023 09:28:25 Europe/Berlin] PHP Notice:  Undefined property: stdClass::$subject_id in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 102
+[10-May-2023 09:28:25 Europe/Berlin] PHP Notice:  Undefined property: stdClass::$subject_name in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 102
+[10-May-2023 09:28:25 Europe/Berlin] PHP Notice:  Undefined property: stdClass::$subject_id in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 102
+[10-May-2023 09:28:25 Europe/Berlin] PHP Notice:  Undefined property: stdClass::$subject_name in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 102
+[10-May-2023 09:28:25 Europe/Berlin] PHP Notice:  Undefined property: stdClass::$subject_id in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 102
+[10-May-2023 09:28:25 Europe/Berlin] PHP Notice:  Undefined property: stdClass::$subject_name in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 102
+[10-May-2023 09:28:25 Europe/Berlin] PHP Notice:  Undefined property: stdClass::$subject_id in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 102
+[10-May-2023 09:28:25 Europe/Berlin] PHP Notice:  Undefined property: stdClass::$subject_name in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 102
+[10-May-2023 09:28:25 Europe/Berlin] PHP Notice:  Undefined property: stdClass::$subject_id in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 102
+[10-May-2023 09:28:25 Europe/Berlin] PHP Notice:  Undefined property: stdClass::$subject_name in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 102
+[10-May-2023 09:28:25 Europe/Berlin] PHP Notice:  Undefined variable: con in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 119
+[10-May-2023 09:28:25 Europe/Berlin] PHP Warning:  mysqli_query() expects parameter 1 to be mysqli, null given in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 119
+[10-May-2023 09:28:25 Europe/Berlin] PHP Notice:  Undefined variable: con in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 125
+[10-May-2023 09:28:25 Europe/Berlin] PHP Warning:  mysqli_error() expects parameter 1 to be mysqli, null given in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 125
+[10-May-2023 09:29:23 Europe/Berlin] PHP Notice:  Undefined variable: con in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 120
+[10-May-2023 09:29:23 Europe/Berlin] PHP Warning:  mysqli_query() expects parameter 1 to be mysqli, null given in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 120
+[10-May-2023 09:29:23 Europe/Berlin] PHP Notice:  Undefined variable: con in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 126
+[10-May-2023 09:29:23 Europe/Berlin] PHP Warning:  mysqli_error() expects parameter 1 to be mysqli, null given in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 126
+[10-May-2023 09:36:47 Europe/Berlin] PHP Notice:  Undefined variable: con in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 162
+[10-May-2023 09:36:47 Europe/Berlin] PHP Warning:  mysqli_query() expects parameter 1 to be mysqli, null given in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 162
+[10-May-2023 09:36:47 Europe/Berlin] PHP Notice:  Undefined variable: con in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 168
+[10-May-2023 09:36:47 Europe/Berlin] PHP Warning:  mysqli_error() expects parameter 1 to be mysqli, null given in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 168
+[10-May-2023 10:06:22 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'class_id' in on clause is ambiguous in C:\xampp\htdocs\sms\school\database\Database.php:64
+Stack trace:
+#0 C:\xampp\htdocs\sms\school\database\Database.php(64): PDOStatement->execute()
+#1 C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php(212): Database->execute()
+#2 {main}
+  thrown in C:\xampp\htdocs\sms\school\database\Database.php on line 64
+[10-May-2023 10:08:10 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'cst.sfaff_id' in 'on clause' in C:\xampp\htdocs\sms\school\database\Database.php:64
+Stack trace:
+#0 C:\xampp\htdocs\sms\school\database\Database.php(64): PDOStatement->execute()
+#1 C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php(212): Database->execute()
+#2 {main}
+  thrown in C:\xampp\htdocs\sms\school\database\Database.php on line 64
+[10-May-2023 11:47:39 Europe/Berlin] PHP Notice:  Undefined variable: error in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 20
+[10-May-2023 12:03:29 Europe/Berlin] PHP Notice:  Undefined variable: error in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 24
+[10-May-2023 22:19:49 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\sms\school\database\Database.php:59
+Stack trace:
+#0 C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php(83): Database->query('SELECT * FROM c...')
+#1 {main}
+  thrown in C:\xampp\htdocs\sms\school\database\Database.php on line 59
+[10-May-2023 22:32:03 Europe/Berlin] PHP Notice:  Trying to get property 'class_id' of non-object in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 18
+[10-May-2023 22:58:21 Europe/Berlin] PHP Notice:  Trying to get property 'staff_id' of non-object in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 18
+[10-May-2023 22:58:48 Europe/Berlin] PHP Notice:  Trying to get property 'staff_id' of non-object in C:\xampp\htdocs\sms\school\super-admin\class-subject-page.php on line 18
+[10-May-2023 23:41:21 Europe/Berlin] PHP Notice:  Undefined variable: con in C:\xampp\htdocs\sms\school\super-admin\session-term-page.php on line 83
+[10-May-2023 23:41:21 Europe/Berlin] PHP Warning:  mysqli_query() expects parameter 1 to be mysqli, null given in C:\xampp\htdocs\sms\school\super-admin\session-term-page.php on line 83
+[10-May-2023 23:41:21 Europe/Berlin] PHP Notice:  Undefined variable: con in C:\xampp\htdocs\sms\school\super-admin\session-term-page.php on line 88
+[10-May-2023 23:41:21 Europe/Berlin] PHP Warning:  mysqli_error() expects parameter 1 to be mysqli, null given in C:\xampp\htdocs\sms\school\super-admin\session-term-page.php on line 88
