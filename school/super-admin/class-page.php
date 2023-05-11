@@ -5,25 +5,51 @@ $db = new Database();
   
 
 if (isset($_POST['class_btn'])) {
-  $class = strtoupper($_POST['class_name']);
-  $db->query("INSERT INTO class_tbl(class_name) VALUES(:class);");
-  $db->bind(':class', $class);
-
-  if (!$db->execute()) {
+  $class_name = strtoupper($_POST['class_name']);
+  //Check if class exist
+  $db->query("SELECT * FROM class_tbl WHERE class_name = :class_name;");
+  $db->bind(':class_name', $class_name);
+  if($db->execute())
+  {
+    if($db->rowCount() > 0)
+    {
+      $_SESSION['errorMsg'] = true;
+      $_SESSION['errorTitle'] = "Ooops...";
+      $_SESSION['sessionMsg'] = "Class existed!";
+      $_SESSION['sessionIcon'] = "error";
+      $_SESSION['location'] = "class-page";
+    }
+    else 
+    {
+      $db->query("INSERT INTO class_tbl(class_name) VALUES(:class_name);");
+      $db->bind(':class_name', $class_name);
+    
+      if (!$db->execute()) {
+        $_SESSION['errorMsg'] = true;
+        $_SESSION['errorTitle'] = "Error";
+        $_SESSION['sessionMsg'] = "Error occured!";
+        $_SESSION['sessionIcon'] = "error";
+        $_SESSION['location'] = "class-page";
+        die($db->getError());
+      } 
+      else 
+      {
+        $_SESSION['errorMsg'] = true;
+        $_SESSION['errorTitle'] = "Success";
+        $_SESSION['sessionMsg'] = "Record added!";
+        $_SESSION['sessionIcon'] = "success";
+        $_SESSION['location'] = "class-page";
+      }
+    }
+  }
+  else
+  {
     $_SESSION['errorMsg'] = true;
     $_SESSION['errorTitle'] = "Error";
     $_SESSION['sessionMsg'] = "Error occured!";
     $_SESSION['sessionIcon'] = "error";
     $_SESSION['location'] = "class-page";
     die($db->getError());
-  } 
-  else 
-  {
-    $_SESSION['errorMsg'] = true;
-    $_SESSION['errorTitle'] = "Success";
-    $_SESSION['sessionMsg'] = "Record added!";
-    $_SESSION['sessionIcon'] = "success";
-    $_SESSION['location'] = "class-page";
   }
 }
 /* if (isset($_POST['update_btn'])) {
@@ -119,7 +145,7 @@ if (isset($_POST['class_btn'])) {
           <tbody>
             <?php
 
-            $db->query("SELECT * FROM class_tbl;");
+            $db->query("SELECT * FROM class_tbl ORDER BY class_id DESC;");
             $data = $db->resultset();
             if (!$db->isConnected()) {
               die("Error " . $db->getError());
@@ -173,7 +199,7 @@ if (isset($_POST['class_btn'])) {
               } else {
                 ?>
                 <tr>
-                  <td>No record found</td>
+                  <td>No record found (Input class name and click Submit to register class)</td>
                 </tr>
             <?php
               }

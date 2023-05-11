@@ -60,41 +60,8 @@ if (isset($_POST['submit_btn'])) {
   $fname = $title . " " . trim($_POST['fname']);
   $sname = trim($_POST['sname']);
   $oname = trim($_POST['oname']);
-  /* $data = array(
-    'email' => trim($_POST['email']), 
-    'user_type' => $_POST['user_type'],
-    'user_role' => $_POST['user_role'],
-    'fname' => $title." ".trim($_POST['fname']),
-    'sname' => trim(strtoupper($_POST['sname'])),
-    'oname' => trim(strtoupper($_POST['oname']))
-  ); */
 
   $hashed_P = password_hash('123654', PASSWORD_BCRYPT);
-  //$hash_md = md5($pwd);
-  /*   if(empty($email)){
-    $error= true;
-    $warningMsg = "Enter email";
-  }
-  if(empty($user_type)){
-    $error= true;
-    $warningMsg = "Select User type";
-  }
-  if(empty($title)){
-    $error= true;
-    $warningMsg = "Select User staff title";
-  }
-  if(empty($fname)){
-    $error= true;
-    $warningMsg = "Enter First name";
-  }
-  if(empty($sname)){
-    $error= true;
-    $warningMsg = "Enter Surname";
-  }
-  if(empty($user_role)){
-    $error= true;
-    $warningMsg = "Select User Role";
-  } */
 
   //if error free
   if (!$error) {
@@ -102,37 +69,67 @@ if (isset($_POST['submit_btn'])) {
     $db = new Database();
     $db->query("SELECT email FROM staff_tbl WHERE email =:email LIMIT 1;");
     $db->bind(':email', $email);
-    $db->single();
-    if (!$db->isConnected()) {
+    //$db->single();
+    if (!$db->execute()) {
       die("No conncection " . $db->getError());
     }
-
-    if ($db->rowCount() > 0) {
-      echo '<script>
-              Swal.fire({
-                title: "warning",
-                text: "Email supplied exist",
-                icon: "warning",
-                showConfirmButton: true,
-                confirmButtonText: "ok"
-              });
-          </script>';
-    } else {
-      //Enter data new data if no record before
-      $staff = "Stf/" . date('y') . "/";
-      $db->query("SELECT id FROM staff_tbl ORDER BY id DESC LIMIT 1;");
-      $data = $db->resultset();
+    else 
+    {
       if ($db->rowCount() > 0) {
-        foreach ($data as $row) {
-          $get_staff = $row->id;
-          $getNumber = str_replace($staff, "", $get_staff);
-          $id_increase = $getNumber + 1;
-          $get_string = str_pad($id_increase, 4, 0, STR_PAD_LEFT);
-          $staff_id = $staff . $get_string;
-
+        $_SESSION['errorMsg'] = true;
+        $_SESSION['errorTitle'] = "Ooops...";
+        $_SESSION['sessionMsg'] = "Email exist!";
+        $_SESSION['sessionIcon'] = "error";
+        $_SESSION['location'] = "staff-reg-page";
+      } 
+      else {
+        //Enter data new data if no record before
+        $staff = "Stf/" . date('y') . "/";
+        $db->query("SELECT id FROM staff_tbl ORDER BY id DESC LIMIT 1;");
+        $data = $db->resultset();
+        if ($db->rowCount() > 0) {
+          foreach ($data as $row) {
+            $get_staff = $row->id;
+            $getNumber = str_replace($staff, "", $get_staff);
+            $id_increase = $getNumber + 1;
+            $get_string = str_pad($id_increase, 4, 0, STR_PAD_LEFT);
+            $staff_id = $staff . $get_string;
+  
+            $db->query(
+              "INSERT INTO staff_tbl(staff_id, user_type, user_role, email, pwd, fname, sname, oname)
+              VALUES(:staff_id, :user_type, :user_role, :email, :hashed_P, :fname, :sname, :oname);"
+            );
+            $db->bind(':staff_id', $staff_id);
+            $db->bind(':user_type', $user_type);
+            $db->bind(':user_role', $user_role);
+            $db->bind(':email', $email);
+            $db->bind(':hashed_P', $hashed_P);
+            $db->bind(':fname', $fname);
+            $db->bind(':sname', $sname);
+            $db->bind(':oname', $oname);
+            
+            if (!$db->execute()) {
+              $_SESSION['errorMsg'] = true;
+              $_SESSION['errorTitle'] = "Error";
+              $_SESSION['sessionMsg'] = "Error occured!";
+              $_SESSION['sessionIcon'] = "error";
+              $_SESSION['location'] = "staff-reg-page";
+              die($db->getError());
+            } else {
+              $_SESSION['errorMsg'] = true;
+              $_SESSION['errorTitle'] = "Success";
+              $_SESSION['sessionMsg'] = "Record added!";
+              $_SESSION['sessionIcon'] = "success";
+              $_SESSION['location'] = "staff-reg-page";
+            }
+          }
+        } else {
+          //Enter record if the table is empty 
+          $staff_id = "Stf/" . date('y') . "/0001";
           $db->query(
             "INSERT INTO staff_tbl(staff_id, user_type, user_role, email, pwd, fname, sname, oname)
-            VALUES(:staff_id, :user_type, :user_role, :email, :hashed_P, :fname, :sname, :oname);"
+            VALUES(:staff_id, :user_type, :user_role, :email, :hashed_P, :fname, :sname, :oname);
+            "
           );
           $db->bind(':staff_id', $staff_id);
           $db->bind(':user_type', $user_type);
@@ -142,69 +139,26 @@ if (isset($_POST['submit_btn'])) {
           $db->bind(':fname', $fname);
           $db->bind(':sname', $sname);
           $db->bind(':oname', $oname);
-          /* $db->bind(':staff_id', $staff_id);
-          $db->bind(':user_type', $data['user_type']);
-          $db->bind(':user_role', $data['user_role']);
-          $db->bind(':email', $data['email']);
-          $db->bind(':hashed_P', $hashed_P);
-          $db->bind(':fname', $data['fname']);
-          $db->bind(':sname', $data['sname']);
-          $db->bind(':oname', $data['oname']); */
-
+  
           if (!$db->execute()) {
-            die("Error " . $db->getError());
+            $_SESSION['errorMsg'] = true;
+            $_SESSION['errorTitle'] = "Error";
+            $_SESSION['sessionMsg'] = "Error occured!";
+            $_SESSION['sessionIcon'] = "error";
+            $_SESSION['location'] = "staff-reg-page";
+            die($db->getError());
           } else {
-            //Sending mail to the user
-            //sendmail_verify("$staff_id", "$data['email']", "$data['fname']", "$data['sname']", "$data['oname']");
-            echo '<script>
-                  Swal.fire({
-                    title: "success",
-                    text: "Record submitted",
-                    icon: "success",
-                    showConfirmButton: true,
-                    confirmButtonText: "ok"
-                  });
-              </script>';
-            //$successMsg = "Record submitted";
+            $_SESSION['errorMsg'] = true;
+            $_SESSION['errorTitle'] = "Success";
+            $_SESSION['sessionMsg'] = "Record added!";
+            $_SESSION['sessionIcon'] = "success";
+            $_SESSION['location'] = "staff-reg-page";
           }
-        }
-      } else {
-        //Enter record if the table is empty 
-        $staff_id = "Stf/" . date('y') . "/0001";
-        $db->query(
-          "INSERT INTO staff_tbl(staff_id, user_type, user_role, email, pwd, fname, sname, oname)
-          VALUES(:staff_id, :user_type, :user_role, :email, :hashed_P, :fname, :sname, :oname);
-          "
-        );
-        $db->bind(':staff_id', $staff_id);
-        $db->bind(':user_type', $user_type);
-        $db->bind(':user_role', $user_role);
-        $db->bind(':email', $email);
-        $db->bind(':hashed_P', $hashed_P);
-        $db->bind(':fname', $fname);
-        $db->bind(':sname', $sname);
-        $db->bind(':oname', $oname);
-
-        if (!$db->execute()) {
-          $warningMsg = "Submittion failed!";
-        } else {
-          //Sending mail to the user
-          //sendmail_verify("$staff_id", "$email","$fname","$sname","$oname");
-          echo '<script>
-                  Swal.fire({
-                    title: "success",
-                    text: "Record submitted",
-                    icon: "success",
-                    showConfirmButton: true,
-                    confirmButtonText: "ok"
-                  });
-              </script>';
-          //$successMsg = "Record submitted";
         }
       }
     }
-    $db->Disconect();
   }
+  $db->Disconect();
 }
 //Disabling and Enabling users
 if (isset($_POST['act_enabled'])) {
@@ -213,17 +167,18 @@ if (isset($_POST['act_enabled'])) {
   $db->query("UPDATE staff_tbl SET act_status = 0 WHERE staff_id =:staff_id;");
   $db->bind(':staff_id', $staff_id);
   if (!$db->execute()) {
-    die("Error " . $db->getError());
+    $_SESSION['errorMsg'] = true;
+    $_SESSION['errorTitle'] = "Error";
+    $_SESSION['sessionMsg'] = "Error occured!";
+    $_SESSION['sessionIcon'] = "error";
+    $_SESSION['location'] = "staff-reg-page";
+    die($db->getError());
   } else {
-    echo '<script>
-              Swal.fire({
-                title: "success",
-                text: "Account deactivated!",
-                icon: "success",
-                showConfirmButton: true,
-                confirmButtonText: "ok"
-              });
-          </script>';
+    $_SESSION['errorMsg'] = true;
+    $_SESSION['errorTitle'] = "Success";
+    $_SESSION['sessionMsg'] = "Account deactivated!";
+    $_SESSION['sessionIcon'] = "success";
+    $_SESSION['location'] = "staff-reg-page";
   }
   $db->Disconect();
 }
@@ -233,17 +188,18 @@ if (isset($_POST['act_disabled'])) {
   $db->query("UPDATE staff_tbl SET act_status = 1 WHERE staff_id =:staff_id;");
   $db->bind(':staff_id', $staff_id);
   if (!$db->execute()) {
-    die("Error " . $db->getError());
+    $_SESSION['errorMsg'] = true;
+    $_SESSION['errorTitle'] = "Error";
+    $_SESSION['sessionMsg'] = "Error occured!";
+    $_SESSION['sessionIcon'] = "error";
+    $_SESSION['location'] = "staff-reg-page";
+    die($db->getError());
   } else {
-    echo '<script>
-              Swal.fire({
-                title: "success",
-                text: "Account activated!",
-                icon: "success",
-                showConfirmButton: true,
-                confirmButtonText: "ok"
-              });
-          </script>';
+    $_SESSION['errorMsg'] = true;
+    $_SESSION['errorTitle'] = "Success";
+    $_SESSION['sessionMsg'] = "Account activated!";
+    $_SESSION['sessionIcon'] = "success";
+    $_SESSION['location'] = "staff-reg-page";
   }
   $db->Disconect();
 }
@@ -257,19 +213,29 @@ if (isset($_POST['act_disabled'])) {
   <div class="align-items-center justify-content-center ">
     <h2 class="alert-primary" style="font-weight: bold; font-family: Georgia, 'Times New Roman', Times, serif; border-radius: 5px; padding: 2px; margin-bottom: 10px;"> Staff registration Page</h2>
   </div><br>
-  <center>
-    <?php
-    if (isset($successMsg)) {
-    ?>
-      <label class="alert alert-dismissible alert-success"><i class="fas fa-fw fa-envelope"></i> <?php echo $successMsg; ?></label>
-    <?php
-    } elseif (isset($warningMsg)) {
-    ?>
-      <label class="alert alert-dismissible alert-danger"><i class="fas fa-fw fa-user-times"></i><?php echo $warningMsg; ?></label>
-    <?php
-    }
-    ?>
-  </center>
+  <!-- Alerts messages -->
+  <?php
+  if (isset($_SESSION['errorMsg'])) {
+    echo '<script>
+              Swal.fire({
+                title: "' . $_SESSION['errorTitle'] . '",
+                text: "' . $_SESSION['sessionMsg'] . '",
+                icon: "' . $_SESSION['sessionIcon'] . '",
+                showConfirmButton: true,
+                confirmButtonText: "ok"
+              }).then((result) => {
+                  if(result.value){
+                      window.location = "' . $_SESSION['location'] . '";
+                  }
+              })
+          </script>';
+    unset($_SESSION['errorTitle']);
+    unset($_SESSION['errorMsg']);
+    unset($_SESSION['sessionMsg']);
+    unset($_SESSION['location']);
+    unset($_SESSION['sessionIcon']);
+  }
+  ?>
   <!-- Register Modal-->
   <div class="modal fade" id="staffReg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -370,7 +336,7 @@ if (isset($_POST['act_disabled'])) {
             <!-- Fetching Data from the Staff  table -->
             <?php
             $db = new Database();
-            $db->query("SELECT * FROM staff_tbl;");
+            $db->query("SELECT * FROM staff_tbl ORDER BY id DESC;");
             $data = $db->resultset();
 
             if (!$db->isConnected()) {

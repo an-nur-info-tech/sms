@@ -236,7 +236,7 @@ if (isset($_POST['submit_btn'])) {
               JOIN class_tbl ON class_tbl.class_id = cst.class_id
               JOIN staff_tbl ON staff_tbl.staff_id = cst.staff_id
               JOIN subject_tbl ON subject_tbl.subject_id = cst.subject_id
-              WHERE cst.class_id = :class_select;"
+              WHERE cst.class_id = :class_select ORDER BY cst_id DESC;"
             );
             $db->bind(':class_select', $class_select);
 

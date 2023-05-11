@@ -66,12 +66,6 @@ if (isset($_POST['subject_btn'])) {
     unset($_SESSION['sessionIcon']);
   }
   ?>
-
-  <?php
-  $db->query("SELECT * FROM subject_tbl;");
-  $data = $db->resultset();
-  ?>
-
   <!-- DataTales Example -->
   <div class="card shadow mb-4">
     <div class="card-header py-3">
@@ -88,6 +82,9 @@ if (isset($_POST['subject_btn'])) {
           </thead>
           <tbody>
             <?php
+            
+            $db->query("SELECT * FROM subject_tbl ORDER BY subject_id DESC;");
+            $data = $db->resultset();
             if (!$db->isConnected()) {
               die("Error " . $db->getError());
             } else {
@@ -117,7 +114,7 @@ if (isset($_POST['subject_btn'])) {
                 ?>
                 <tr>
                   <td>
-                    Subject Table is empty
+                    Subject Table is empty(Input subject and click Submit)
                   </td>
                 </tr>
             <?php
