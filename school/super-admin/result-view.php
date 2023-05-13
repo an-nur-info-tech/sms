@@ -48,7 +48,7 @@ include('includes/header.php');
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <select name="session_name" class="form-control" required>
+                    <select name="session_id" class="form-control" required>
                         <option value=""> Select Session...</option>
                         <!-- Fetching data from Session table -->
                         <?php
@@ -60,7 +60,7 @@ include('includes/header.php');
                             if ($db->rowCount() > 0) {
                                 foreach ($data as $row) {
                         ?>
-                                    <option value="<?php echo $row->session_name; ?>"> <?php echo $row->session_name; ?> </option>
+                                    <option value="<?php echo $row->session_id; ?>"> <?php echo $row->session_name; ?> </option>
                                 <?php
                                 }
                             } else {
@@ -75,7 +75,7 @@ include('includes/header.php');
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <select name="term_name" class="form-control" required>
+                    <select name="term_id" class="form-control" required>
                         <option value=""> Select Term...</option>
                         <!-- Fetching data from Term table -->
                         <?php
@@ -87,7 +87,7 @@ include('includes/header.php');
                             if ($db->rowCount() > 0) {
                                 foreach ($data as $row) {
                         ?>
-                                    <option value="<?php echo $row->term_name; ?>"> <?php echo $row->term_name; ?> </option>
+                                    <option value="<?php echo $row->term_id; ?>"> <?php echo $row->term_name; ?> </option>
                                 <?php
                                 }
                             } else {
@@ -142,7 +142,7 @@ include('includes/header.php');
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <select name="session_name" class="form-control" required>
+                    <select name="session_id" class="form-control" required>
                         <option value=""> Select Session...</option>
                         <!-- Fetching data from Session table -->
                         <?php
@@ -154,7 +154,7 @@ include('includes/header.php');
                             if ($db->rowCount() > 0) {
                                 foreach ($data as $row) {
                         ?>
-                                    <option value="<?php echo $row->session_name; ?>"> <?php echo $row->session_name; ?> </option>
+                                    <option value="<?php echo $row->session_id; ?>"> <?php echo $row->session_name; ?> </option>
                                 <?php
                                 }
                             } else {
@@ -169,7 +169,7 @@ include('includes/header.php');
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <select name="term_name" class="form-control" required>
+                    <select name="term_id" class="form-control" required>
                         <option value=""> Select term...</option>
                         <!-- Fetching data from Session table -->
                         <?php
@@ -181,7 +181,7 @@ include('includes/header.php');
                             if ($db->rowCount() > 0) {
                                 foreach ($data as $row) {
                         ?>
-                                    <option value="<?php echo $row->term_name; ?>"> <?php echo $row->term_name; ?> </option>
+                                    <option value="<?php echo $row->term_id; ?>"> <?php echo $row->term_name; ?> </option>
                                 <?php
                                 }
                             } else {
@@ -240,7 +240,7 @@ include('includes/header.php');
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <select name="session_name" class="form-control" required>
+                    <select name="session_id" class="form-control" required>
                         <option value=""> Select Session...</option>
                         <!-- Fetching data from Session table -->
                         <?php
@@ -252,7 +252,7 @@ include('includes/header.php');
                             if ($db->rowCount() > 0) {
                                 foreach ($data as $row) {
                         ?>
-                                    <option value="<?php echo $row->session_name; ?>"> <?php echo $row->session_name; ?> </option>
+                                    <option value="<?php echo $row->session_id; ?>"> <?php echo $row->session_name; ?> </option>
                                 <?php
                                 }
                             } else {
@@ -267,7 +267,7 @@ include('includes/header.php');
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <select name="term_name" class="form-control" required>
+                    <select name="term_id" class="form-control" required>
                         <option value=""> Select term...</option>
                         <!-- Fetching data from Session table -->
                         <?php
@@ -279,7 +279,7 @@ include('includes/header.php');
                             if ($db->rowCount() > 0) {
                                 foreach ($data as $row) {
                         ?>
-                                    <option value="<?php echo $row->term_name; ?>"> <?php echo $row->term_name; ?> </option>
+                                    <option value="<?php echo $row->term_id; ?>"> <?php echo $row->term_name; ?> </option>
                                 <?php
                                 }
                             } else {
@@ -333,7 +333,7 @@ include('includes/header.php');
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <select name="session_name" class="form-control" required>
+                    <select name="session_id" class="form-control" required>
                         <option value=""> Select session...</option>
                         <!-- Fetching data from class table -->
                         <?php
@@ -345,7 +345,7 @@ include('includes/header.php');
                             if ($db->rowCount() > 0) {
                                 foreach ($data as $row) {
                         ?>
-                                    <option value="<?php echo $row->session_name; ?>"> <?php echo $row->session_name; ?> </option>
+                                    <option value="<?php echo $row->session_id; ?>"> <?php echo $row->session_name; ?> </option>
                                 <?php
                                 }
                             } else {
@@ -360,7 +360,7 @@ include('includes/header.php');
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <select name="term_name" class="form-control" required>
+                    <select name="term_id" class="form-control" required>
                         <option value=""> Select term...</option>
                         <!-- Fetching data from class table -->
                         <?php
@@ -372,7 +372,7 @@ include('includes/header.php');
                             if ($db->rowCount() > 0) {
                                 foreach ($data as $row) {
                         ?>
-                                    <option value="<?php echo $row->term_name; ?>"> <?php echo $row->term_name; ?> </option>
+                                    <option value="<?php echo $row->term_id; ?>"> <?php echo $row->term_name; ?> </option>
                                 <?php
                                 }
                             } else {
@@ -430,7 +430,7 @@ include('includes/header.php');
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <select name="session_name" class="form-control" required>
+                    <select name="session_id" class="form-control" required>
                         <option value=""> Select Session...</option>
                         <!-- Fetching data from Session table -->
                         <?php
@@ -442,7 +442,7 @@ include('includes/header.php');
                             if ($db->rowCount() > 0) {
                                 foreach ($data as $row) {
                         ?>
-                                    <option value="<?php echo $row->session_name; ?>"> <?php echo $row->session_name; ?> </option>
+                                    <option value="<?php echo $row->session_id; ?>"> <?php echo $row->session_name; ?> </option>
                                 <?php
                                 }
                             } else {
@@ -457,7 +457,7 @@ include('includes/header.php');
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <select name="term_name" class="form-control" required>
+                    <select name="term_id" class="form-control" required>
                         <option value=""> Select Term...</option>
                         <!-- Fetching data from Term table -->
                         <?php
@@ -469,7 +469,7 @@ include('includes/header.php');
                             if ($db->rowCount() > 0) {
                                 foreach ($data as $row) {
                         ?>
-                                    <option value="<?php echo $row->term_name; ?>"> <?php echo $row->term_name; ?> </option>
+                                    <option value="<?php echo $row->term_id; ?>"> <?php echo $row->term_name; ?> </option>
                                 <?php
                                 }
                             } else {
@@ -524,7 +524,7 @@ include('includes/header.php');
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <select name="session_name" class="form-control" required>
+                    <select name="session_id" class="form-control" required>
                         <option value=""> Select Session...</option>
                         <!-- Fetching data from Session table -->
                         <?php
@@ -536,7 +536,7 @@ include('includes/header.php');
                             if ($db->rowCount() > 0) {
                                 foreach ($data as $row) {
                         ?>
-                                    <option value="<?php echo $row->session_name; ?>"> <?php echo $row->session_name; ?> </option>
+                                    <option value="<?php echo $row->session_id; ?>"> <?php echo $row->session_name; ?> </option>
                                 <?php
                                 }
                             } else {
@@ -551,7 +551,7 @@ include('includes/header.php');
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <select name="term_name" class="form-control" required>
+                    <select name="term_id" class="form-control" required>
                         <option value=""> Select Term...</option>
                         <!-- Fetching data from Term table -->
                         <?php
@@ -563,7 +563,7 @@ include('includes/header.php');
                             if ($db->rowCount() > 0) {
                                 foreach ($data as $row) {
                         ?>
-                                    <option value="<?php echo $row->term_name; ?>"> <?php echo $row->term_name; ?> </option>
+                                    <option value="<?php echo $row->term_id; ?>"> <?php echo $row->term_name; ?> </option>
                                 <?php
                                 }
                             } else {

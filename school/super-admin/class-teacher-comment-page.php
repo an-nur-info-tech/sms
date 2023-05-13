@@ -1,96 +1,79 @@
 <?php
 include('includes/header.php');
+$db = new Database();
 
 if (isset($_POST['submit_btn'])) {
-    $error = false;
+    $session_id = $_POST['session_id'];
+    $term_id = $_POST['term_id'];
+    $admNo = $_POST['admNo'];
+    
+    $attendance = $_POST['attendance'];
+    $honesty = $_POST['honesty'];
+    $neatness = $_POST['neatness'];
+    $punctuality = $_POST['punctuality'];
+    $tolerance = $_POST['tolerance'];
+    $creativity = $_POST['creativity'];
+    $dexterity = $_POST['dexterity'];
+    $fluency = $_POST['fluency'];
+    $handwriting = $_POST['handwriting'];
+    $obedience = $_POST['obedience'];
+    $teacher_comment = $_POST['teacher_comment'];
 
-    $session_name = mysqli_real_escape_string($con, $_POST['session_name']);
-    $term_name = mysqli_real_escape_string($con, $_POST['term_name']);
-
-    $admNo = mysqli_real_escape_string($con, $_POST['admNo']);
-    $attendance = mysqli_real_escape_string($con, $_POST['attendance']);
-    $honesty = mysqli_real_escape_string($con, $_POST['honesty']);
-    $neatness = mysqli_real_escape_string($con, $_POST['neatness']);
-    $punctuality = mysqli_real_escape_string($con, $_POST['punctuality']);
-    $relationship = mysqli_real_escape_string($con, $_POST['relationship']);
-    $creativity = mysqli_real_escape_string($con, $_POST['creativity']);
-    $dexterity = mysqli_real_escape_string($con, $_POST['dexterity']);
-    $fluency = mysqli_real_escape_string($con, $_POST['fluency']);
-    $handwriting = mysqli_real_escape_string($con, $_POST['handwriting']);
-    $laboratory = mysqli_real_escape_string($con, $_POST['laboratory']);
-    $teacher_comment = mysqli_real_escape_string($con, $_POST['teacher_comment']);
-
-    if (empty($admNo)) {
-        $error = true;
-        $warningMsg = "Registration number is required";
-    }
-    if (empty($session_name)) {
-        $error = true;
-        $warningMsg = "Session is required";
-    }
-    if (empty($term_name)) {
-        $error = true;
-        $warningMsg = "Term is required";
-    }
-    if (empty($attendance)) {
-        $error = true;
-        $warningMsg = "Attendance in class required";
-    }
-    if (empty($honesty)) {
-        $error = true;
-        $warningMsg = "Honesty is required";
-    }
-    if (empty($neatness)) {
-        $error = true;
-        $warningMsg = "Neatness is required";
-    }
-    if (empty($punctuality)) {
-        $error = true;
-        $warningMsg = "Punctuality is required";
-    }
-    if (empty($relationship)) {
-        $error = true;
-        $warningMsg = "Relationship with other is required";
-    }
-    if (empty($creativity)) {
-        $error = true;
-        $warningMsg = "Creativity is required";
-    }
-    if (empty($dexterity)) {
-        $error = true;
-        $warningMsg = "Dexterity is required";
-    }
-    if (empty($fluency)) {
-        $error = true;
-        $warningMsg = "Fluency is required";
-    }
-    if (empty($handwriting)) {
-        $error = true;
-        $warningMsg = "Handwriting is required";
-    }
-    if (empty($laboratory)) {
-        $error = true;
-        $warningMsg = "Laboratory is required";
-    }
-    if (empty($teacher_comment)) {
-        $error = true;
-        $warningMsg = "Comment is required";
-    }
     //CHECKING IF COMMENT HAVE BEEN ENTER ALREADY
-    $com_check = mysqli_query($con, "SELECT * FROM comments_tbl WHERE admNo='$admNo' AND session_name='$session_name' AND term_name='$term_name'");
-    if (mysqli_num_rows($com_check) > 0) {
-        $error = true;
-        $warningMsg = "Comment already added for this student";
-    }
-    if (!$error) {
-        $query_run = mysqli_query($con, "INSERT INTO comments_tbl(admNo, session_name, term_name, attendance, honesty, neatness, punctuality, relationship, creativity, dexterity, fluency, handwriting, laboratory, teacher_comment) 
-        VALUES('$admNo', '$session_name', '$term_name', '$attendance', '$honesty', '$neatness', '$punctuality', '$relationship', '$creativity', '$dexterity', '$fluency', '$handwriting', '$laboratory', '$teacher_comment')");
-        if (!$query_run) {
-            $warningMsg = "Submittion failed";
-        } else {
-            $successMsg = "Submitted";
+    $db->query("SELECT * FROM comments_tbl WHERE admNo = :admNo AND session_id = :session_id AND term_id = :term_id;");
+    $db->bind(':admNo', $admNo);
+    $db->bind(':session_id', $session_id);
+    $db->bind(':term_id', $term_id);
+
+    if($db->execute())
+    {
+        if ($db->rowCount() > 0) {
+            $_SESSION['errorMsg'] = true;
+            $_SESSION['errorTitle'] = "Ooops...";
+            $_SESSION['sessionMsg'] = "Student has comments!";
+            $_SESSION['sessionIcon'] = "error";
+            $_SESSION['location'] = "class-teacher-comment-page";
         }
-    }
+        else 
+        {
+            $db->query(
+                "INSERT INTO 
+                comments_tbl(admNo, session_id, term_id, attendance, honesty, neatness, punctuality, tolerance, creativity, dexterity, fluency, handwriting, obedience, teacher_comment) 
+                VALUES(:admNo, :session_id, :term_id, :attendance, :honesty, :neatness, :punctuality, :tolerance, :creativity, :dexterity, :fluency, :handwriting, :obedience, :teacher_comment);
+                ");
+            $db->bind(':admNo', $admNo);
+            $db->bind(':session_id', $session_id);
+            $db->bind(':term_id', $term_id);
+            $db->bind(':attendance', $attendance);
+            $db->bind(':honesty', $honesty);
+            $db->bind(':neatness', $neatness);
+            $db->bind(':punctuality', $punctuality);
+            $db->bind(':tolerance', $tolerance);
+            $db->bind(':creativity', $creativity);
+            $db->bind(':dexterity', $dexterity);
+            $db->bind(':fluency', $fluency);
+            $db->bind(':handwriting', $handwriting);
+            $db->bind(':obedience', $obedience);
+            $db->bind(':teacher_comment', $teacher_comment);
+            
+            if(!$db->execute()) {
+                $_SESSION['errorMsg'] = true;
+                $_SESSION['errorTitle'] = "Error";
+                $_SESSION['sessionMsg'] = "Error occured!";
+                $_SESSION['sessionIcon'] = "error";
+                $_SESSION['location'] = "class-teacher-comment-page";
+                die($db->getError());
+              } 
+              else 
+              {
+                $_SESSION['errorMsg'] = true;
+                $_SESSION['errorTitle'] = "Success";
+                $_SESSION['sessionMsg'] = "Comment successfully!";
+                $_SESSION['sessionIcon'] = "success";
+                $_SESSION['location'] = "class-teacher-comment-page";
+              }
+        }
+    }    
 }
 
 ?>
@@ -109,253 +92,283 @@ if (isset($_POST['submit_btn'])) {
         <div class="form-row">
             <div class="col-md-3">
                 <div class="form-group">
-                    <input type="text" list="admNo" name="admNo" class="form-control" autocomplete="off" placeholder="Admission No..." required>
-                    <datalist id="admNo">
+                    <input type="text" name="student_id" list="studentData" class="form-control" required autocomplete="off">
+                    <datalist id="studentData">
+                        <option value=""> Select Class...</option>
                         <?php
-                        $studentlist = mysqli_query($con, "SELECT * FROM students_tbl");
-                        $student_num = mysqli_num_rows($studentlist);
-                        if ($student_num > 0) {
-                            while ($student_fetched = mysqli_fetch_assoc($studentlist)) {
+                        $db->query("SELECT * FROM students_tbl;");
+                        if ($db->execute()) {
+                            $student_num = $db->rowCount();
+                            if ($student_num > 0) {
+                                $result = $db->resultset();
+                                foreach ($result as $student_fetched) {
                         ?>
-                                <option value="<?php echo $student_fetched['admNo']; ?>"> <?php echo $student_fetched['admNo']; ?></option>
+                                    <option value="<?php echo $student_fetched->admNo; ?>"> <?php echo $student_fetched->admNo; ?></option>
                         <?php
+                                }
                             }
                         }
                         ?>
-                    </datalist>
+                    </datalist>&nbsp;
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <select name="session_name" class="form-control" required>
+                    <select class="form-control" name="session_id" required>
                         <option value=""> Select session...</option>
                         <?php
-                        $session_query = mysqli_query($con, "SELECT * FROM session_tbl");
-                        $session_num = mysqli_num_rows($session_query);
-                        if ($student_num > 0) {
-                            while ($session_fetched = mysqli_fetch_assoc($session_query)) {
-
+                        $db->query("SELECT * FROM session_tbl;");
+                        if ($db->execute()) {
+                            $session_num = $db->rowCount();
+                            if ($session_num > 0) {
+                                $result = $db->resultset();
+                                foreach ($result as $session_fetched) {
                         ?>
-                                <option value="<?php echo $session_fetched['session_name']; ?>"> <?php echo $session_fetched['session_name']; ?></option>
-
+                                    <option value="<?php echo $session_fetched->session_id; ?>"> <?php echo $session_fetched->session_name; ?></option>
                         <?php
+                                }
                             }
                         }
                         ?>
-                    </select>
+                    </select> &nbsp;
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <select name="term_name" class="form-control" required>
+                    <select class="form-control" name="term_id" required>
                         <option value=""> Select term...</option>
                         <?php
-                        $term_query = mysqli_query($con, "SELECT * FROM term_tbl");
-                        $term_num = mysqli_num_rows($term_query);
-                        if ($term_num > 0) {
-                            while ($term_fetched = mysqli_fetch_assoc($term_query)) {
-
+                        $db->query("SELECT * FROM term_tbl;");
+                        if ($db->execute()) {
+                            $term_num = $db->rowCount();
+                            if ($term_num > 0) {
+                                $result = $db->resultset();
+                                foreach ($result as $term_fetched) {
                         ?>
-                                <option value="<?php echo $term_fetched['term_name']; ?>"> <?php echo $term_fetched['term_name']; ?></option>
+                                    <option value="<?php echo $term_fetched->term_id; ?>"> <?php echo $term_fetched->term_name; ?></option>
                         <?php
+                                }
                             }
                         }
                         ?>
-                    </select>
+                    </select> &nbsp;
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <button name="view_btn" type="submit" class="btn btn-outline-primary"> View </button>
+                    <button name="view_btn" type="submit" class="btn btn-outline-primary"> View </button><br /><br /><br />
                 </div>
             </div>
         </div>
     </form>
-    <center>
-        <?php
-        if (isset($successMsg)) {
-        ?>
-            <div class="alert alert-success">
-                <span class="glyphicon glyphicon-saved"></span>
-                <?php echo $successMsg; ?>
-            </div>
-        <?php
-        } elseif (isset($warningMsg)) {
-        ?>
-            <div class="alert alert-warning">
-                <span class="glyphicon glyphicon-ban-circle"></span>
-                <?php echo $warningMsg; ?>
-            </div>
-        <?php
-        }
-        ?>
-    </center>
-    <?php
-    if (isset($_POST['view_btn'])) {
-        $error = false;
-        $admNo = mysqli_real_escape_string($con, $_POST['admNo']);
-        $session_name = mysqli_real_escape_string($con, $_POST['session_name']);
-        $term_name = mysqli_real_escape_string($con, $_POST['term_name']);
+  <!-- Alerts messages -->
+  <?php
+  if (isset($_SESSION['errorMsg'])) {
+    echo '<script>
+              Swal.fire({
+                title: "' . $_SESSION['errorTitle'] . '",
+                text: "' . $_SESSION['sessionMsg'] . '",
+                icon: "' . $_SESSION['sessionIcon'] . '",
+                showConfirmButton: true,
+                confirmButtonText: "ok"
+              }).then((result) => {
+                  if(result.value){
+                      window.location = "' . $_SESSION['location'] . '";
+                  }
+              })
+          </script>';
+    unset($_SESSION['errorTitle']);
+    unset($_SESSION['errorMsg']);
+    unset($_SESSION['sessionMsg']);
+    unset($_SESSION['location']);
+    unset($_SESSION['sessionIcon']);
+  }
+  ?>
+        <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+            <table class="table table-bordered table-hover">
+                <tbody>
+                    <tr align="center">
+                        <td colspan="6">
+                            <p> <b>KEY RATING: <br> A -> [Excellent], B -> [Very Good], C -> [Satisfactory], D -> [Poor], E -> [Very Poor] </b></p>
+                        </td>
+                    </tr>
+                    <tr align="center">
+                        <th colspan="6">
+                        <?php
+                        if (isset($_POST['view_btn'])) {
 
-        if (empty($admNo)) {
-            $error = true;
-            echo "Please select student reg. no.";
-        }
-        if (!$error) {
-    ?>
-            <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-                <table class="table table-bordered table-responsive">
-                    <tbody>
-                        <input type="hidden" name="admNo" value="<?php echo $admNo; ?>"> <input type="hidden" name="session_name" value="<?php echo $session_name; ?>"> <input type="hidden" name="term_name" value="<?php echo $term_name; ?>">
-                        <tr align="center">
-                            <td colspan="6">
-                                <p> <b>KEY RATING: <br> A -> [Excellent] B -> [Very Good] C -> [Satisfactory] D -> [Poor] E -> [Very Poor] </b></p>
-                            </td>
-                        </tr>
-                        <tr align="center">
-                            <th colspan="6">
-                                <?php
-                                $get = mysqli_query($con, "SELECT * FROM students_tbl WHERE admNo='$admNo'");
-                                if (mysqli_num_rows($get) > 0) {
-                                    while ($get_fetch = mysqli_fetch_assoc($get)) {
-                                ?><img src="<?php echo $get_fetch['passport']; ?>" height="70" width="70" /><?php
+                            $admNo = $_POST['student_id'];
+                            $session_id = $_POST['session_id'];
+                            $term_id = $_POST['term_id'];
 
-                                                                                                                    ?>
-                            </th>
-                        </tr>
-                        <tr>
-                            <th colspan="6">
-                        <?php echo $get_fetch['sname'] . " " . $get_fetch['lname'] . " " . $get_fetch['oname'];
+                            $db->query("SELECT * FROM students_tbl WHERE admNo = :admNo;");
+                            $db->bind(':admNo', $admNo);
+                            if($db->execute())
+                            {
+                                if ($db->rowCount() > 0) {
+                                    $result = $db->single();
+                                    if($result->passport == null)
+                                    {
+                                    ?>
+                                        <img src="../uploads/student_image.jpg" height="70" width="70" />
+                                    <?php
                                     }
-                                } ?>
-                            </th>
-                        </tr>
-                        <tr class="table-primary">
-                            <th colspan="6">CHARACTER DEVELOPMENT</th>
-                        </tr>
-                        <tr>
-                            <td>
-                                <select class="form-control" name="attendance" required>
-                                    <option value=""> Attentiveness...</option>
-                                    <option value="A"> A </option>
-                                    <option value="B"> B </option>
-                                    <option value="C"> C </option>
-                                    <option value="D"> D </option>
-                                    <option value="E"> E </option>
-                                </select>
-                            </td>
-                            <td>
-                                <select class="form-control" name="honesty" required>
-                                    <option value=""> Honesty...</option>
-                                    <option value="A"> A </option>
-                                    <option value="B"> B </option>
-                                    <option value="C"> C </option>
-                                    <option value="D"> D </option>
-                                    <option value="E"> E </option>
-                                </select>
-                            </td>
-                            <td>
-                                <select class="form-control" name="neatness" required>
-                                    <option value=""> Neatness...</option>
-                                    <option value="A"> A </option>
-                                    <option value="B"> B </option>
-                                    <option value="C"> C </option>
-                                    <option value="D"> D </option>
-                                    <option value="E"> E </option>
-                                </select>
-                            </td>
-                            <td>
-                                <select class="form-control" name="punctuality" required>
-                                    <option value=""> Punctuality...</option>
-                                    <option value="A"> A </option>
-                                    <option value="B"> B </option>
-                                    <option value="C"> C </option>
-                                    <option value="D"> D </option>
-                                    <option value="E"> E </option>
-                                </select>
-                            </td>
-                            <td>
-                                <select class="form-control" name="relationship" required>
-                                    <option value=""> Relationship with others...</option>
-                                    <option value="A"> A </option>
-                                    <option value="B"> B </option>
-                                    <option value="C"> C </option>
-                                    <option value="D"> D </option>
-                                    <option value="E"> E </option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr class="table-primary">
-                            <th colspan="6">PRACTICAL SKILLS</th>
-                        </tr>
-                        <tr>
-                            <td>
-                                <select class="form-control" name="creativity" required>
-                                    <option value=""> Creativity...</option>
-                                    <option value="A"> A </option>
-                                    <option value="B"> B </option>
-                                    <option value="C"> C </option>
-                                    <option value="D"> D </option>
-                                    <option value="E"> E </option>
-                                </select>
-                            </td>
-                            <td>
-                                <select class="form-control" name="dexterity" required>
-                                    <option value=""> Dexterity...</option>
-                                    <option value="A"> A </option>
-                                    <option value="B"> B </option>
-                                    <option value="C"> C </option>
-                                    <option value="D"> D </option>
-                                    <option value="E"> E </option>
-                                </select>
-                            </td>
-                            <td>
-                                <select class="form-control" name="fluency" required>
-                                    <option value=""> Fluency...</option>
-                                    <option value="A"> A </option>
-                                    <option value="B"> B </option>
-                                    <option value="C"> C </option>
-                                    <option value="D"> D </option>
-                                    <option value="E"> E </option>
-                                </select>
-                            </td>
-                            <td>
-                                <select class="form-control" name="handwriting" required>
-                                    <option value=""> Handwriting...</option>
-                                    <option value="A"> A </option>
-                                    <option value="B"> B </option>
-                                    <option value="C"> C </option>
-                                    <option value="D"> D </option>
-                                    <option value="E"> E </option>
-                                </select>
-                            </td>
-                            <td>
-                                <select class="form-control" name="laboratory" required>
-                                    <option value=""> Laboratory work...</option>
-                                    <option value="A"> A </option>
-                                    <option value="B"> B </option>
-                                    <option value="C"> C </option>
-                                    <option value="D"> D </option>
-                                    <option value="E"> E </option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr class="table-primary">
-                            <th colspan="6">COMMENTS [50 Word Characters]</th>
-                        </tr>
-                        <tr>
-                            <td colspan="6"> <textarea placeholder="Comments" maxlength="50" rows="2" name="teacher_comment" class="form-control"> </textarea></td>
-                        </tr>
-                        <tr>
-                            <td colspan="6" align="center"> <button name="submit_btn" class="btn btn-outline-primary"> Submit </button> </td>
-                        </tr>
-                    </tbody>
-            <?php
-        }
+                                    else 
+                                    {             
+                                    ?>
+                                        <img src="<?php echo $result->passport; ?>" height="70" width="70" />
+                                    <?php   
+                                    }                                                                                                         
+                        ?>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th colspan="6">
+                            <?php echo $result->sname." ".$result->lname." ".$result->oname." [ ".$result->admNo." ] from ".$result->class_name;
+                                        //}
+                                    }
+                                    else 
+                                    {
+                                        ?>
+                                        <tr>
+                                            <td> No record found </td>
+                                        </tr>
+                                        <?php
+                                    }
+                            }
+                         
+                            ?>
+                        </th>
+                    </tr>
+                    <tr class="table-primary">
+                        <th colspan="6">CHARACTER DEVELOPMENT</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select class="form-control" name="attendance" required>
+                                <option value=""> Attentiveness...</option>
+                                <option value="A"> A </option>
+                                <option value="B"> B </option>
+                                <option value="C"> C </option>
+                                <option value="D"> D </option>
+                                <option value="E"> E </option>
+                            </select>
+                        </td>
+                        <td>
+                            <select class="form-control" name="honesty" required>
+                                <option value=""> Honesty...</option>
+                                <option value="A"> A </option>
+                                <option value="B"> B </option>
+                                <option value="C"> C </option>
+                                <option value="D"> D </option>
+                                <option value="E"> E </option>
+                            </select>
+                        </td>
+                        <td>
+                            <select class="form-control" name="neatness" required>
+                                <option value=""> Neatness...</option>
+                                <option value="A"> A </option>
+                                <option value="B"> B </option>
+                                <option value="C"> C </option>
+                                <option value="D"> D </option>
+                                <option value="E"> E </option>
+                            </select>
+                        </td>
+                        <td>
+                            <select class="form-control" name="punctuality" required>
+                                <option value=""> Punctuality...</option>
+                                <option value="A"> A </option>
+                                <option value="B"> B </option>
+                                <option value="C"> C </option>
+                                <option value="D"> D </option>
+                                <option value="E"> E </option>
+                            </select>
+                        </td>
+                        <td>
+                            <select class="form-control" name="tolerance" required>
+                                <option value=""> Tolerance </option>
+                                <option value="A"> A </option>
+                                <option value="B"> B </option>
+                                <option value="C"> C </option>
+                                <option value="D"> D </option>
+                                <option value="E"> E </option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr class="table-primary">
+                        <th colspan="6">PRACTICAL SKILLS</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select class="form-control" name="creativity" required>
+                                <option value=""> Creativity...</option>
+                                <option value="A"> A </option>
+                                <option value="B"> B </option>
+                                <option value="C"> C </option>
+                                <option value="D"> D </option>
+                                <option value="E"> E </option>
+                            </select>
+                        </td>
+                        <td>
+                            <select class="form-control" name="dexterity" required>
+                                <option value=""> Dexterity...</option>
+                                <option value="A"> A </option>
+                                <option value="B"> B </option>
+                                <option value="C"> C </option>
+                                <option value="D"> D </option>
+                                <option value="E"> E </option>
+                            </select>
+                        </td>
+                        <td>
+                            <select class="form-control" name="fluency" required>
+                                <option value=""> Fluency...</option>
+                                <option value="A"> A </option>
+                                <option value="B"> B </option>
+                                <option value="C"> C </option>
+                                <option value="D"> D </option>
+                                <option value="E"> E </option>
+                            </select>
+                        </td>
+                        <td>
+                            <select class="form-control" name="handwriting" required>
+                                <option value=""> Handwriting...</option>
+                                <option value="A"> A </option>
+                                <option value="B"> B </option>
+                                <option value="C"> C </option>
+                                <option value="D"> D </option>
+                                <option value="E"> E </option>
+                            </select>
+                        </td>
+                        <td>
+                            <select class="form-control" name="obedience" required>
+                                <option value=""> Obedience...</option>
+                                <option value="A"> A </option>
+                                <option value="B"> B </option>
+                                <option value="C"> C </option>
+                                <option value="D"> D </option>
+                                <option value="E"> E </option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr class="table-primary">
+                        <th colspan="6">COMMENTS [50 Word Characters]</th>
+                    </tr>
+                    <tr>
+                        <td colspan="6"> <textarea placeholder="Comments" maxlength="50" rows="2" name="teacher_comment" class="form-control"> </textarea></td>
+                    </tr>
+                    <tr>
+                        <input type="hidden" name="admNo" value="<?php echo $admNo; ?>"> <input type="hidden" name="session_id" value="<?php echo $session_id; ?>"> 
+                        <input type="hidden" name="term_id" value="<?php echo $term_id; ?>">
+                        <input type="hidden" name="session_id" value="<?php echo $session_id; ?>">
+                        <td colspan="6" class="text-center"> <button name="submit_btn" class="btn btn-outline-primary"> Submit </button> </td>
+                    </tr>
+                </tbody>
+        <?php
     }
-            ?>
-                </table>
-            </form>
+
+        ?>
+            </table>
+        </form>
 </div>
 <!-- /.container-fluid -->
 

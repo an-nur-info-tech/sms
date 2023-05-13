@@ -3,29 +3,12 @@ include('includes/header.php');
 $db = new Database();
 
 if (isset($_POST['comment_btn'])) {
-    $error = false;
-
     $admNo = $_POST['student_id'];
     $session_id = $_POST['session_id'];
     $term_id = $_POST['term_id'];
     $principal_comment = $_POST['principal_comment'];
 
-    if ($admNo == "") {
-        $error = true;
-        $warningMsg = "Student Reg. No. require";
-    }
-    if (empty($session_name)) {
-        $error = true;
-        $warningMsg = "Session is require";
-    }
-    if (empty($term_name)) {
-        $error = true;
-        $warningMsg = "Term is require";
-    }
-    if ($principal_comment == "") {
-        $error = true;
-        $warningMsg = "Comment is require";
-    }
+    
 
     //check if class teacher has enter student comment
     $com_check = mysqli_query($con, "SELECT * FROM comments_tbl WHERE admNo='$admNo' AND session_name='$session_name' AND term_name='$term_name'");
@@ -204,7 +187,7 @@ if (isset($_POST['comment_btn'])) {
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="7" class="text-center"><button class="btn btn-outline-primary" type="submit" name="comment_btn"> Submit </button></td>
+                                <td colspan="7" class="text-center"><button class="btn btn-outline-primary" type="submit" disabled name="comment_btn"> Submit </button></td>
                             </tr>
                 <?php
                         } else 

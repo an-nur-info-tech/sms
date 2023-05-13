@@ -199,7 +199,7 @@ if (isset($_POST['class_btn'])) {
               } else {
                 ?>
                 <tr>
-                  <td>No record found (Input class name and click Submit to register class)</td>
+                  <td colspan="4" class="text-center">No record found (Input class name and click Submit to register class)</td>
                 </tr>
             <?php
               }

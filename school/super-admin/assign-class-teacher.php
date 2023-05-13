@@ -4,23 +4,48 @@ include('includes/header.php');
 if (isset($_POST['assigning_btn'])) {
   $db = new Database();
   $class_id = $_POST['class_id'];
-  $teacher_class = $_POST['teacher_class'];
+  $teacher_id = $_POST['teacher_id'];
 
-  $db->query("SELECT * FROM class_tbl WHERE instructor_id =:teacher_class;");
-  $db->bind(':teacher_class', $teacher_class);
-  $teacher_nums = $db->single();  //mysqli_num_rows($check_teacher);
-  if ($db->rowCount() > 0) {
-    $warningMsg = "Teacher assigned to a class already";
-  } else {
-    $db->query("UPDATE class_tbl SET instructor_id = :teacher_class WHERE class_id = :class_id;");
-    $db->bind(':teacher_class', $teacher_class);
-    $db->bind(':class_id', $class_id);
-    if (!$db->execute()) {
-      die("Error " .$db->getError());
-    } else {
-      $successMsg = "Teacher Assigned successfully";
+  $db->query("SELECT * FROM class_tbl WHERE instructor_id =:teacher_id;");
+  $db->bind(':teacher_id', $teacher_id);
+  if($db->execute())
+  {
+    if ($db->rowCount() > 0) {
+      $_SESSION['errorMsg'] = true;
+      $_SESSION['errorTitle'] = "Ooops...";
+      $_SESSION['sessionMsg'] = "Class has a teacher!";
+      $_SESSION['sessionIcon'] = "error";
+      $_SESSION['location'] = "class-page";
+    } 
+    else 
+    {
+      $db->query("UPDATE class_tbl SET instructor_id = :teacher_id WHERE class_id = :class_id;");
+      $db->bind(':teacher_id', $teacher_id);
+      $db->bind(':class_id', $class_id);
+      if(!$db->execute()) {
+        $_SESSION['errorMsg'] = true;
+        $_SESSION['errorTitle'] = "Error";
+        $_SESSION['sessionMsg'] = "Error occured!";
+        $_SESSION['sessionIcon'] = "error";
+        $_SESSION['location'] = "class-page";
+        die($db->getError());
+      } 
+      else 
+      {
+        $_SESSION['errorMsg'] = true;
+        $_SESSION['errorTitle'] = "Success";
+        $_SESSION['sessionMsg'] = "Teacher assigned!";
+        $_SESSION['sessionIcon'] = "success";
+        $_SESSION['location'] = "class-page";
+      }
     }
   }
+  else
+  {
+    die($db->getError());
+    exit();
+  }
+  $db->Disconect();
 }
 
 ?>
@@ -32,45 +57,44 @@ if (isset($_POST['assigning_btn'])) {
     <p>Please select a Teacher from the select option to assign a class teacher</p>
   </div><br>
 
-  <center>
-    <?php
-    if (isset($successMsg)) {
-    ?>
-      <div class="alert alert-success">
-        <span class="glyphicon glyphicon-saved"></span>
-        <?php echo $successMsg; ?>
-      </div>
-    <?php
-    } elseif (isset($warningMsg)) {
-    ?>
-      <div class="alert alert-warning">
-        <span class="glyphicon glyphicon-ban-circle"></span>
-        <?php echo $warningMsg; ?>
-      </div>
-    <?php
-    }
-    ?>
-  </center>
+  <!-- Alerts messages -->
+  <?php
+  if (isset($_SESSION['errorMsg'])) {
+    echo '<script>
+              Swal.fire({
+                title: "' . $_SESSION['errorTitle'] . '",
+                text: "' . $_SESSION['sessionMsg'] . '",
+                icon: "' . $_SESSION['sessionIcon'] . '",
+                showConfirmButton: true,
+                confirmButtonText: "ok"
+              }).then((result) => {
+                  if(result.value){
+                      window.location = "' . $_SESSION['location'] . '";
+                  }
+              })
+          </script>';
+    unset($_SESSION['errorTitle']);
+    unset($_SESSION['errorMsg']);
+    unset($_SESSION['sessionMsg']);
+    unset($_SESSION['location']);
+    unset($_SESSION['sessionIcon']);
+  }
+  ?>
 
   <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
     <div class="col-md-9 form-inline">
-      <input type="hidden" name="class_id" value="<?php $class_id = $_POST['class_id'];
-                                                  echo  $class_id; ?>">
-      <!-- Fetching data from staff table -->
-      <?php
-      $db = new Database();
-      $db->query("SELECT * FROM staff_tbl;");
-      $data = $db->resultset();
-      ?>
-      <label for="teacher_class">Select Teacher: </label> &nbsp;&nbsp;
-      <select name="teacher_class" class="form-control" required>
+      <input type="hidden" name="class_id" value="<?php echo $_POST['class_id']; ?>">
+      <label for="teacher_id">Select Teacher: </label> &nbsp;&nbsp;
+      <select name="teacher_id" class="form-control" required>
         <option value=""> Select Teacher...</option>
         <?php
-        if (!$db->isConnected()) {
+        $db = new Database();
+        $db->query("SELECT * FROM staff_tbl;");
+        if (!$db->execute()) {
           die("Error " .$db->getError());
         } else {
           if ($db->rowCount() > 0) {
-            //$class_id = $row->class_id;
+            $data = $db->resultset();
             foreach ($data as $row) {
         ?>
               <option value="<?php echo $row->staff_id; ?>"> <?php echo $row->fname . " " . $row->sname . " " . $row->oname; ?> </option>
