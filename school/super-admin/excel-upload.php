@@ -1,9 +1,7 @@
 <?php
-session_start();
-
 include('includes/header.php');
 
-require 'Exceltodatabase/vendor/autoload.php';
+require '../assets/phpspreadsheet/vendor/autoload.php';
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -45,43 +43,34 @@ if (isset($_POST['xport_btn'])) {
                 $db->bind(':dob', $dob);
                 $db->bind(':religion', $religion);
                 $db->bind(':gender', $gender);
+
                 if (!$db->execute()) {
-                    $_SESSION['message'] = $db->getError();
+                    $_SESSION['errorMsg'] = true;
+                    $_SESSION['errorTitle'] = "Error";
+                    $_SESSION['sessionMsg'] = "Error occured!";
+                    $_SESSION['sessionIcon'] = "error";
+                    $_SESSION['location'] = "excel-upload";
+                    die($db->getError());
                 } else {
-                    echo '<script>
-                            Swal.fire({
-                                icon: "success",
-                                title: "Success",
-                                showConfirmButton: true,
-                                confirmButtonText: "close",
-                                closeOnConfirm: false
-                            }).then((result) => {
-                                if(result.value){
-                                    window.location = "excel-upload";
-                                }
-                            })
-                        </script>';
+                    $_SESSION['errorMsg'] = true;
+                    $_SESSION['errorTitle'] = "Success";
+                    $_SESSION['sessionMsg'] = "Result uploaded";
+                    $_SESSION['sessionIcon'] = "success";
+                    $_SESSION['location'] = "excel-upload";
                     //$_SESSION['message'] = "Successfully";
                 }
-            } else {
+            } 
+            else {
                 $count = 1;
             }
         }
-    } else {
-        echo '<script>
-                Swal.fire({
-                    icon: "warning",
-                    title: "File not supported",
-                    showConfirmButton: true,
-                    confirmButtonText: "close",
-                    closeOnConfirm: false
-                }).then((result) => {
-                    if(result.value){
-                        window.location = "excel-upload";
-                    }
-                })
-            </script>';
-        //$_SESSION['message'] = "File not supported!";
+    } 
+    else {
+        $_SESSION['errorMsg'] = true;
+        $_SESSION['errorTitle'] = "Error";
+        $_SESSION['sessionMsg'] = "File not supported!";
+        $_SESSION['sessionIcon'] = "error";
+        $_SESSION['location'] = "excel-upload";
     }
     //$spreadsheet = new Spreadsheet();
     //$sheet = $spreadsheet->getActiveSheet();
@@ -95,12 +84,15 @@ if (isset($_POST['xport_btn'])) {
 
 if (isset($_POST['result_btn'])) {
     $db = new Database();
+
     $fileName = $_FILES['result_import_file']['name'];
     $fileExist = pathinfo($fileName, PATHINFO_EXTENSION);
 
     $allow_ext = ['xls', 'csv', 'xlsx'];
 
     if (in_array($fileExist, $allow_ext)) {
+        $error = false;
+        
         $inputFileNamePath = $_FILES['result_import_file']['tmp_name'];
         $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($inputFileNamePath);
         $data = $spreadsheet->getActiveSheet()->toArray();
@@ -109,123 +101,113 @@ if (isset($_POST['result_btn'])) {
         foreach ($data as $row) {
             if ($count > 0) {
                 $class_id = trim($row[0]);
-                $session_name = trim($row[1]);
-                $term_name = trim($row[2]);
+                $session_id = trim($row[1]);
+                $term_id = trim($row[2]);
                 $subject_id = trim($row[3]);
                 $admNo = trim($row[4]);
                 $ca = trim($row[5]);
                 $exam = trim($row[6]);
-                $total = $ca + $exam;
-                //Getting Grade and Remark
-                if ($total <= 39) {
-                    $grade = "F9";
-                    $remark = "Fail";
+                if(($ca < 0) || ($ca > 40))
+                {
+                    $error = true;
+                    $_SESSION['errorMsg'] = true;
+                    $_SESSION['errorTitle'] = "Error";
+                    $_SESSION['sessionMsg'] = "C.A should <= 40";
+                    $_SESSION['sessionIcon'] = "error";
+                    $_SESSION['location'] = "excel-upload";
                 }
-                if ($total >= 40 || $total >= 44) {
-                    $grade = "E8";
-                    $remark = "Pass";
+                if(($exam < 0) || ($exam > 60))
+                {
+                    $error = true;
+                    $_SESSION['errorMsg'] = true;
+                    $_SESSION['errorTitle'] = "Error";
+                    $_SESSION['sessionMsg'] = "Exam should <= 60";
+                    $_SESSION['sessionIcon'] = "error";
+                    $_SESSION['location'] = "excel-upload";
                 }
-                if ($total >= 45 || $total >= 49) {
-                    $grade = "D7";
-                    $remark = "Pass";
-                }
-                if ($total >= 50 || $total >= 59) {
-                    $grade = "C6";
-                    $remark = "Credit";
-                }
-                if ($total >= 60 || $total >= 64) {
-                    $grade = "C5";
-                    $remark = "Credit";
-                }
-                if ($total >= 65 || $total >= 69) {
-                    $grade = "C4";
-                    $remark = "Credit";
-                }
-                if ($total >= 70 || $total >= 74) {
-                    $grade = "B3";
-                    $remark = "Good";
-                }
-                if ($total >= 75 || $total >= 79) {
-                    $grade = "B2";
-                    $remark = "Good";
-                }
-                if ($total >= 80 || $total >= 100) {
-                    $grade = "A1";
-                    $remark = "Excellent";
-                }
+                if(!$error)
+                {
+                    $total = $ca + $exam;
+                    //Getting Grade and Remark
+                    if ($total <= 39) {
+                        $grade = "F9";
+                        $remark = "Fail";
+                    }
+                    if ($total >= 40 || $total >= 44) {
+                        $grade = "E8";
+                        $remark = "Pass";
+                    }
+                    if ($total >= 45 || $total >= 49) {
+                        $grade = "D7";
+                        $remark = "Pass";
+                    }
+                    if ($total >= 50 || $total >= 59) {
+                        $grade = "C6";
+                        $remark = "Credit";
+                    }
+                    if ($total >= 60 || $total >= 64) {
+                        $grade = "C5";
+                        $remark = "Credit";
+                    }
+                    if ($total >= 65 || $total >= 69) {
+                        $grade = "C4";
+                        $remark = "Credit";
+                    }
+                    if ($total >= 70 || $total >= 74) {
+                        $grade = "B3";
+                        $remark = "Good";
+                    }
+                    if ($total >= 75 || $total >= 79) {
+                        $grade = "B2";
+                        $remark = "Good";
+                    }
+                    if ($total >= 80 || $total >= 100) {
+                        $grade = "A1";
+                        $remark = "Excellent";
+                    }
 
-                $db->query("INSERT INTO 
-                        result_tbl(class_id, session_name, term_name, subject_id, admNo, ca, exam, total, grade, remark) 
-                        VALUES(:class_id, :session_name, :term_name, :subject_id, :admNo, :ca, :exam, :total, :grade, :remark);
-                    ");
-                $db->bind('class_id', $class_id);
-                $db->bind('session_name', $session_name);
-                $db->bind('term_name', $term_name);
-                $db->bind('subject_id', $subject_id);
-                $db->bind('admNo', $admNo);
-                $db->bind('ca', $ca);
-                $db->bind('exam', $exam);
-                $db->bind('total', $total);
-                $db->bind('grade', $grade);
-                $db->bind('remark', $remark);
+                    $db->query("INSERT INTO 
+                            result_tbl(class_id, session_id, term_id, subject_id, admNo, ca, exam, total, grade, remark) 
+                            VALUES(:class_id, :session_id, :term_id, :subject_id, :admNo, :ca, :exam, :total, :grade, :remark);
+                        ");
+                    $db->bind('class_id', $class_id);
+                    $db->bind('session_id', $session_id);
+                    $db->bind('term_id', $term_id);
+                    $db->bind('subject_id', $subject_id);
+                    $db->bind('admNo', $admNo);
+                    $db->bind('ca', $ca);
+                    $db->bind('exam', $exam);
+                    $db->bind('total', $total);
+                    $db->bind('grade', $grade);
+                    $db->bind('remark', $remark);
 
-                if ($db->execute()) {
-                    $msg = true;
-                    return $msg;
-                } else {
-                    return false;
+                    if (!$db->execute()) {
+                        $_SESSION['errorMsg'] = true;
+                        $_SESSION['errorTitle'] = "Error";
+                        $_SESSION['sessionMsg'] = "Error occured!";
+                        $_SESSION['sessionIcon'] = "error";
+                        $_SESSION['location'] = "excel-upload";
+                        die($db->getError());
+                    } else {
+                        $_SESSION['errorMsg'] = true;
+                        $_SESSION['errorTitle'] = "Success";
+                        $_SESSION['sessionMsg'] = "Result uploaded";
+                        $_SESSION['sessionIcon'] = "success";
+                        $_SESSION['location'] = "excel-upload";
+                    }
                 }
-            } else {
+            } 
+            else {
                 $count = 1;
             }
         }
-        if (isset($msg)) {
-            echo '<script>
-                    Swal.fire({
-                        icon: "success",
-                        title: "Success",
-                        showConfirmButton: true,
-                        confirmButtonText: "close",
-                        closeOnConfirm: false
-                    }).then((result) => {
-                        if(result.value){
-                            window.location = "excel-upload";
-                        }
-                    })
-                </script>';
-            //$_SESSION['message'] = "Successfully";
-        } else {
-            echo '<script>
-                    Swal.fire({
-                        icon: "warning",
-                        title: "Error",
-                        showConfirmButton: true,
-                        confirmButtonText: "close",
-                        closeOnConfirm: false
-                    }).then((result) => {
-                        if(result.value){
-                            window.location = "excel-upload";
-                        }
-                    })
-                </script>';
-            //$_SESSION['message'] = die("Error ". mysqli_error($con));
-        }
-    } else {
-        echo '<script>
-                    Swal.fire({
-                        icon: "warning",
-                        title: "File format error",
-                        showConfirmButton: true,
-                        confirmButtonText: "close",
-                        closeOnConfirm: false
-                    }).then((result) => {
-                        if(result.value){
-                            window.location = "excel-upload";
-                        }
-                    })
-                </script>';
-
-        //$_SESSION['message'] = "File not supported!";
+    } 
+    else {
+        $_SESSION['errorMsg'] = true;
+        $_SESSION['errorTitle'] = "Error";
+        $_SESSION['sessionMsg'] = "File not supported!";
+        $_SESSION['sessionIcon'] = "error";
+        $_SESSION['location'] = "excel-upload";
     }
 
     //return $con = null;
@@ -243,27 +225,21 @@ if (isset($_POST['result_btn'])) {
         <p class="text-danger">Please upload only Excel file format </p>
     </div><br>
 
-    <div class="row">
-        <div class="col-md-12  col-sm-12">
-
-            <?php
-            if (isset($_SESSION['message'])) {
-            ?>
-                <h1 class="alert alert-success"> <?php echo $_SESSION['message'];
-                                                    unset($_SESSION['message']); ?></h1>
-            <?php
-            }
-            ?>
-        </div>
-    </div>
-    <form method="POST" action="excel-upload.php" enctype="multipart/form-data">
-        <div class="form-row form-inline">
-            <div class="col-md-12 col-sm-4 p-3">
-                Students data: <input type="file" class="form-control" name="import_file" required>
+    <form method="POST" action="excel-upload" enctype="multipart/form-data">
+        <div class="form-row ">
+            <div class="col-md-8">
+                <div class="form-group">
+                    Student data:<input type="file" class="form-control" name="import_file" required>
+                </div>
+            </div>
+            <div class="col-md-4">
                 <button class="btn btn-primary" type="submit" name="xport_btn">Upload</button>
             </div>
+            <!-- <div class="col-md-2">
+                <button class="btn btn-primary" type="submit" name="xport_btn">Upload</button>
+            </div> -->
         </div>
-        <hr>
+        <hr />
     </form>
 
     <form method="POST" action="excel-upload.php" enctype="multipart/form-data">
@@ -275,6 +251,29 @@ if (isset($_POST['result_btn'])) {
         </div>
     </form>
 
+    <!-- Alerts messages -->
+    <?php
+    if (isset($_SESSION['errorMsg'])) {
+        echo '<script>
+              Swal.fire({
+                title: "' . $_SESSION['errorTitle'] . '",
+                text: "' . $_SESSION['sessionMsg'] . '",
+                icon: "' . $_SESSION['sessionIcon'] . '",
+                showConfirmButton: true,
+                confirmButtonText: "ok"
+              }).then((result) => {
+                  if(result.value){
+                      window.location = "' . $_SESSION['location'] . '";
+                  }
+              })
+          </script>';
+        unset($_SESSION['errorTitle']);
+        unset($_SESSION['errorMsg']);
+        unset($_SESSION['sessionMsg']);
+        unset($_SESSION['location']);
+        unset($_SESSION['sessionIcon']);
+    }
+    ?>    
 </div>
 <?php
 include('includes/footer.php');
