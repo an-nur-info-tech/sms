@@ -157,11 +157,11 @@ if (isset($_POST['deleteBtn'])) {
             ?>
                   <tr>
                     <td> <?php echo $count; ?></td>
-                    <td> <img src="<?php if ($record->passport == null) {
+                    <td> <img src="<?php if ($record->passport == null || empty($record->passport)) {
                                       echo '../uploads/student_image.jpg';
                                     } else {
                                       echo $record->passport;
-                                    } ?>" class="rounded-circle img-fluid" height="50" width="50"> </td>
+                                    } ?>" class="rounded-circle" height="50" width="50"> </td>
                     <td> <?php echo $record->admNo; ?> </td>
                     <td> <?php echo $record->sname . " " . $record->lname . " " . $record->oname; ?> </td>
                     <td> <?php echo $record->class_name; ?> </td>

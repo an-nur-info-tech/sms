@@ -68,7 +68,8 @@
         <div id="collapseFour" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Manage result:</h6>
-            <a class="collapse-item" href="result-view.php"> View Result</a>
+            <a class="collapse-item" href="add-result"> Add result</a>
+            <a class="collapse-item" href="result-view"> View Result</a>
           </div>
         </div>
       </li>

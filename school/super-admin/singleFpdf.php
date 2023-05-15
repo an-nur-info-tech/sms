@@ -115,9 +115,18 @@ if (isset($_POST['single_view_btn'])) {
                         $pdf->ln(-3);
                         //Add Student image
                         //Controlling image
-                        if (!empty($passport)) {
+                        if (!empty($passport) || $passport != null) {
                             $pdf->Image(
                                 $passport,
+                                170,
+                                30,
+                                30,
+                                30
+                            );
+                        }
+                        else{
+                            $pdf->Image(
+                                "../uploads/student_image.jpg",
                                 170,
                                 30,
                                 30,

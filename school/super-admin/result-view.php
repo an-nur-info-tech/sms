@@ -26,11 +26,11 @@ include('includes/header.php');
                         <!-- Fetching data from class table -->
                         <?php
                         $db->query("SELECT * FROM class_tbl WHERE class_name LIKE '%JSS%' OR class_name LIKE '%SS%';");
-                        $data = $db->resultset();
-                        if (!$db->isConnected()) {
-                            die("Error " . $db->getError());
+                        if (!$db->execute()) {
+                            die("Error ".$db->getError());
                         } else {
                             if ($db->rowCount() > 0) {
+                                $data = $db->resultset();
                                 foreach ($data as $row) {
                         ?>
                                     <option value="<?php echo $row->class_id; ?>"> <?php echo $row->class_name; ?> </option>
@@ -53,11 +53,11 @@ include('includes/header.php');
                         <!-- Fetching data from Session table -->
                         <?php
                         $db->query("SELECT * FROM session_tbl;");
-                        $data = $db->resultset();
-                        if (!$db->isConnected()) {
+                        if (!$db->execute()) {
                             die("Error " . $db->getError());
                         } else {
                             if ($db->rowCount() > 0) {
+                                $data = $db->resultset();
                                 foreach ($data as $row) {
                         ?>
                                     <option value="<?php echo $row->session_id; ?>"> <?php echo $row->session_name; ?> </option>
@@ -80,11 +80,11 @@ include('includes/header.php');
                         <!-- Fetching data from Term table -->
                         <?php
                         $db->query("SELECT * FROM term_tbl;");
-                        $data = $db->resultset();
-                        if (!$db->isConnected()) {
-                            die("Error " . $db->getError());
+                        if (!$db->execute()) {
+                            die("Error ".$db->getError());
                         } else {
                             if ($db->rowCount() > 0) {
+                                $data = $db->resultset();
                                 foreach ($data as $row) {
                         ?>
                                     <option value="<?php echo $row->term_id; ?>"> <?php echo $row->term_name; ?> </option>
@@ -147,11 +147,11 @@ include('includes/header.php');
                         <!-- Fetching data from Session table -->
                         <?php
                         $db->query("SELECT * FROM session_tbl;");
-                        $data = $db->resultset();
-                        if (!$db->isConnected()) {
-                            die("Error " . $db->getError());
+                        if (!$db->execute()) {
+                            die("Error ".$db->getError());
                         } else {
                             if ($db->rowCount() > 0) {
+                                $data = $db->resultset();
                                 foreach ($data as $row) {
                         ?>
                                     <option value="<?php echo $row->session_id; ?>"> <?php echo $row->session_name; ?> </option>
@@ -174,11 +174,11 @@ include('includes/header.php');
                         <!-- Fetching data from Session table -->
                         <?php
                         $db->query("SELECT * FROM term_tbl;");
-                        $data = $db->resultset();
-                        if (!$db->isConnected()) {
-                            die("Error " . $db->getError());
+                        if (!$db->execute()) {
+                            die("Error ".$db->getError());
                         } else {
                             if ($db->rowCount() > 0) {
+                                $data = $db->resultset();
                                 foreach ($data as $row) {
                         ?>
                                     <option value="<?php echo $row->term_id; ?>"> <?php echo $row->term_name; ?> </option>
