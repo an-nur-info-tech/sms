@@ -4,16 +4,16 @@ $db = new Database();
 
 if (isset($_POST['submit_btn'])) {
 
-    $admNo = $_POST['admNo'];
+    $admNo = trim($_POST['admNo']);
     $class_id = $_POST['class_id'];
     $session_id = $_POST['session_id'];
     $term_id = $_POST['term_id'];
     $subject_id = $_POST['subject_id'];
-    $ca = $_POST['ca'];
-    $exam = $_POST['exam'];
-    $total = $_POST['total'];
-    $grade = $_POST['grade'];
-    $remark = $_POST['remark'];
+    $ca = trim($_POST['ca']);
+    $exam = trim($_POST['exam']);
+    $total = trim($_POST['total']);
+    $grade = trim($_POST['grade']);
+    $remark = trim($_POST['remark']);
     /* 
     if ($ca > 40) {
         $error = true;
@@ -68,7 +68,7 @@ if (isset($_POST['submit_btn'])) {
         $warningMsg = "Subject ID is required";
     }
      */
-    echo "Subjid [$subject_id] class id [$class_id] session id [$session_id] and term_id [$term_id]";
+    //echo "Subjid [$subject_id] class id [$class_id] session id [$session_id] and term_id [$term_id]";
 
     //Checking if result uploaded already or not
     $db->query(
@@ -77,7 +77,7 @@ if (isset($_POST['submit_btn'])) {
         AND subject_id = :subject_id 
         AND session_id = :session_id 
         AND term_id = :term_id;
-        AND class_id = :class_id
+        AND class_id = :class_id;
         "
     );
     $db->bind(':admNo', $admNo);
@@ -100,7 +100,6 @@ if (isset($_POST['submit_btn'])) {
             $_SESSION['sessionMsg'] = "Result exist...";
             $_SESSION['sessionIcon'] = "error";
             $_SESSION['location'] = "add-result";
-            exit();
         } else {
             $db->query(
                 "INSERT INTO 
@@ -255,7 +254,7 @@ if (isset($_POST['submit_btn'])) {
             </thead>
             <?php
             if (isset($_POST['single_pre_btn'])) {
-                $admNo = $_POST['admNo'];
+                $admNo = trim($_POST['admNo']);
                 $term_id = $_POST['term_id'];
                 $session_id = $_POST['session_id'];
 
@@ -319,7 +318,7 @@ if (isset($_POST['submit_btn'])) {
 
                                     ?>
                                 </select>
-                                <input name="admNo" type="hidden" value="<?php echo $result->admNo; ?>">
+                                <input name="admNo" type="hidden" value="<?php echo $admNo; ?>">
                                 <input name="class_id" type="hidden" value="<?php echo $class_id; ?>">
                                 <input name="session_id" type="hidden" value="<?php echo $session_id; ?>">
                                 <input name="term_id" type="hidden" value="<?php echo $term_id; ?>">
@@ -551,8 +550,8 @@ if (isset($_POST['submit_btn'])) {
                                                     }
                                                     ?>
                                                     <tr>
-                                                        <td colspan="6" class="text-center">
-                                                            <button class="btn m-2 btn-outline-primary btn-sm " name="submit_btn">Submit </button>
+                                                        <td colspan="7" class="text-center">
+                                                            <button class="btn m-2 btn-outline-primary btn-sm " name="submit_btn" disabled >Submit </button>
                                                         </td>
                                                     </tr>
                                                 <?php

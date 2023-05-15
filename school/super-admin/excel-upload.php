@@ -104,7 +104,7 @@ if (isset($_POST['result_btn'])) {
                 $session_id = trim($row[1]);
                 $term_id = trim($row[2]);
                 $subject_id = trim($row[3]);
-                $admNo = trim($row[4]);
+                $admNo = trim(strtoupper($row[4]));
                 $ca = trim($row[5]);
                 $exam = trim($row[6]);
                 if(($ca < 0) || ($ca > 40))
@@ -166,34 +166,54 @@ if (isset($_POST['result_btn'])) {
                         $remark = "Excellent";
                     }
 
-                    $db->query("INSERT INTO 
+                    $db->query("SELECT * FROM result_tbl WHERE class_id = :class_id AND session_id = :session_id AND term_id = :term_id AND subject_id = :subject_id AND admNo = :admNo;");
+                    $db->bind(':class_id', $class_id);
+                    $db->bind(':session_id', $session_id);
+                    $db->bind(':term_id', $term_id);
+                    $db->bind(':subject_id', $subject_id);
+                    $db->bind(':admNo', $admNo);
+                    if($db->execute())
+                    {
+                        if($db->rowCount() > 0)
+                        {
+                            $_SESSION['errorMsg'] = true;
+                            $_SESSION['errorTitle'] = "Ooops...";
+                            $_SESSION['sessionMsg'] = "Result exist";
+                            $_SESSION['sessionIcon'] = "error";
+                            $_SESSION['location'] = "excel-upload";
+                        }
+                        else 
+                        {
+                            $db->query("INSERT INTO 
                             result_tbl(class_id, session_id, term_id, subject_id, admNo, ca, exam, total, grade, remark) 
                             VALUES(:class_id, :session_id, :term_id, :subject_id, :admNo, :ca, :exam, :total, :grade, :remark);
-                        ");
-                    $db->bind('class_id', $class_id);
-                    $db->bind('session_id', $session_id);
-                    $db->bind('term_id', $term_id);
-                    $db->bind('subject_id', $subject_id);
-                    $db->bind('admNo', $admNo);
-                    $db->bind('ca', $ca);
-                    $db->bind('exam', $exam);
-                    $db->bind('total', $total);
-                    $db->bind('grade', $grade);
-                    $db->bind('remark', $remark);
+                                ");
+                            $db->bind('class_id', $class_id);
+                            $db->bind('session_id', $session_id);
+                            $db->bind('term_id', $term_id);
+                            $db->bind('subject_id', $subject_id);
+                            $db->bind('admNo', $admNo);
+                            $db->bind('ca', $ca);
+                            $db->bind('exam', $exam);
+                            $db->bind('total', $total);
+                            $db->bind('grade', $grade);
+                            $db->bind('remark', $remark);
 
-                    if (!$db->execute()) {
-                        $_SESSION['errorMsg'] = true;
-                        $_SESSION['errorTitle'] = "Error";
-                        $_SESSION['sessionMsg'] = "Error occured!";
-                        $_SESSION['sessionIcon'] = "error";
-                        $_SESSION['location'] = "excel-upload";
-                        die($db->getError());
-                    } else {
-                        $_SESSION['errorMsg'] = true;
-                        $_SESSION['errorTitle'] = "Success";
-                        $_SESSION['sessionMsg'] = "Result uploaded";
-                        $_SESSION['sessionIcon'] = "success";
-                        $_SESSION['location'] = "excel-upload";
+                            if (!$db->execute()) {
+                                $_SESSION['errorMsg'] = true;
+                                $_SESSION['errorTitle'] = "Error";
+                                $_SESSION['sessionMsg'] = "Error occured!";
+                                $_SESSION['sessionIcon'] = "error";
+                                $_SESSION['location'] = "excel-upload";
+                                die($db->getError());
+                            } else {
+                                $_SESSION['errorMsg'] = true;
+                                $_SESSION['errorTitle'] = "Success";
+                                $_SESSION['sessionMsg'] = "Result uploaded";
+                                $_SESSION['sessionIcon'] = "success";
+                                $_SESSION['location'] = "excel-upload";
+                            }
+                        }
                     }
                 }
             } 

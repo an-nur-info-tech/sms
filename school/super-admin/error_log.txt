@@ -11683,3 +11683,15 @@ Stack trace:
 [15-May-2023 16:23:46 Europe/Berlin] PHP Notice:  Undefined variable: rowadmNo in C:\xampp\htdocs\sms\school\super-admin\result-view.php on line 321
 [15-May-2023 16:23:46 Europe/Berlin] PHP Notice:  Undefined variable: rowadmNo in C:\xampp\htdocs\sms\school\super-admin\result-view.php on line 321
 [15-May-2023 16:23:46 Europe/Berlin] PHP Notice:  Undefined variable: rowadmNo in C:\xampp\htdocs\sms\school\super-admin\result-view.php on line 321
+[15-May-2023 22:41:34 Europe/Berlin] PHP Notice:  Trying to get property 'class_id' of non-object in C:\xampp\htdocs\sms\school\super-admin\add-result.php on line 287
+[15-May-2023 22:41:34 Europe/Berlin] PHP Notice:  Trying to get property 'admNo' of non-object in C:\xampp\htdocs\sms\school\super-admin\add-result.php on line 322
+[15-May-2023 22:42:07 Europe/Berlin] PHP Notice:  Undefined property: stdClass::$admNo in C:\xampp\htdocs\sms\school\super-admin\add-result.php on line 322
+[15-May-2023 22:42:27 Europe/Berlin] PHP Notice:  Undefined property: stdClass::$admNo in C:\xampp\htdocs\sms\school\super-admin\add-result.php on line 322
+[15-May-2023 22:42:49 Europe/Berlin] PHP Notice:  Undefined property: stdClass::$admNo in C:\xampp\htdocs\sms\school\super-admin\add-result.php on line 322
+[15-May-2023 22:43:02 Europe/Berlin] PHP Notice:  Trying to get property 'class_id' of non-object in C:\xampp\htdocs\sms\school\super-admin\add-result.php on line 287
+[15-May-2023 22:43:02 Europe/Berlin] PHP Notice:  Trying to get property 'admNo' of non-object in C:\xampp\htdocs\sms\school\super-admin\add-result.php on line 322
+[15-May-2023 22:43:07 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 215
+[15-May-2023 22:43:10 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 215
+[15-May-2023 22:43:32 Europe/Berlin] PHP Notice:  Undefined property: stdClass::$admNo in C:\xampp\htdocs\sms\school\super-admin\add-result.php on line 322
+[15-May-2023 22:45:19 Europe/Berlin] PHP Notice:  Undefined property: stdClass::$admNo in C:\xampp\htdocs\sms\school\super-admin\add-result.php on line 322
+[15-May-2023 22:47:17 Europe/Berlin] PHP Notice:  Undefined property: stdClass::$admNo in C:\xampp\htdocs\sms\school\super-admin\add-result.php on line 322
