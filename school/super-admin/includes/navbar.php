@@ -26,6 +26,7 @@
 
               $db->query("SELECT * FROM staff_tbl WHERE staff_id = :id;");
               $db->bind(':id', $id);
+              $db->execute();
               $value = $db->single();
               
           ?>          

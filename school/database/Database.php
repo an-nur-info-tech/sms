@@ -34,12 +34,12 @@ class Database {
 		}// Catch database message errors
 		catch ( PDOException $e ) {
 			//Make Directory 'logs' if not exist
-			if(!scandir("../../../sms1/databaselogs")){
-				mkdir('../../../sms1/databaselogs/');
-			}
-			date_default_timezone_set('Africa/Lagos');
-			date_default_timezone_get();
-			file_put_contents("../../../sms1/databaselogs/dberror.log", "Date: " . date('M j Y - G:i:sa') . " ---- Error: " . $e->getMessage().PHP_EOL, FILE_APPEND);
+			// if(!scandir("../../../sms/databaselogs")){
+			// 	mkdir('../../../sms/databaselogs/');
+			// }
+			// date_default_timezone_set('Africa/Lagos');
+			// date_default_timezone_get();
+			// file_put_contents("../../../sms/databaselogs/dberror.log", "Date: " . date('M j Y - G:i:sa') . " ---- Error: " . $e->getMessage().PHP_EOL, FILE_APPEND);
 			//echo '<script type="text/javascript"> alert("'.$e->getMessage().'")</script>';
 			die($e->getMessage());// Log and display error in the event that there is an issue connecting
 		}
@@ -110,7 +110,7 @@ class Database {
 	}
 
 	//TODO
-	public function getLogger($user, $logMessage){
+	/* public function getLogger($user, $logMessage){
 		$at = strpos($user, '@');
 		
 		$result = substr($user, 0, $at);
@@ -126,5 +126,5 @@ class Database {
 			file_put_contents($location, "Message:  (".$logMessage.") Login from ".$user." with the ip address: [ ".$_SERVER['REMOTE_ADDR']. " ] Date: " . date('M j Y - G:i:s A').PHP_EOL, FILE_APPEND);
 		}
 		
-	}
+	} */
 }
