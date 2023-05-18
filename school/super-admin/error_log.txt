@@ -12281,3 +12281,320 @@ Stack trace:
 [16-May-2023 19:27:47 Europe/Berlin] PHP Notice:  Undefined index: name in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 35
 [16-May-2023 19:27:47 Europe/Berlin] PHP Notice:  Trying to get property 'passport' of non-object in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 36
 [16-May-2023 19:27:47 Europe/Berlin] PHP Notice:  Undefined index: name in C:\xampp\htdocs\sms\school\super-admin\dashboard.php on line 21
+[16-May-2023 21:37:23 Europe/Berlin] PHP Notice:  Undefined index: staff_id in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 20
+[16-May-2023 21:37:23 Europe/Berlin] PHP Notice:  Undefined index: name in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 35
+[16-May-2023 21:37:23 Europe/Berlin] PHP Notice:  Trying to get property 'passport' of non-object in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 36
+[16-May-2023 21:42:14 Europe/Berlin] PHP Notice:  Undefined index: staff_id in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 20
+[16-May-2023 21:42:14 Europe/Berlin] PHP Notice:  Undefined index: name in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 35
+[16-May-2023 21:42:14 Europe/Berlin] PHP Notice:  Trying to get property 'passport' of non-object in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 36
+[17-May-2023 08:49:43 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 215
+[17-May-2023 08:49:43 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 215
+[17-May-2023 08:50:36 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 215
+[17-May-2023 09:21:17 Europe/Berlin] PHP Notice:  Undefined index: staff_id in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 20
+[17-May-2023 09:21:17 Europe/Berlin] PHP Notice:  Undefined index: name in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 35
+[17-May-2023 09:21:17 Europe/Berlin] PHP Notice:  Trying to get property 'passport' of non-object in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 36
+[17-May-2023 09:21:17 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 215
+[17-May-2023 09:21:36 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 215
+[17-May-2023 09:22:02 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 215
+[17-May-2023 09:22:12 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 215
+[17-May-2023 09:22:57 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 244
+[17-May-2023 09:25:49 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 250
+[17-May-2023 09:26:10 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 250
+[17-May-2023 09:26:34 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 250
+[17-May-2023 09:31:01 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 259
+[17-May-2023 09:32:29 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 259
+[17-May-2023 09:33:10 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 259
+[17-May-2023 09:33:50 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 259
+[17-May-2023 09:37:15 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 267
+[17-May-2023 09:37:55 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 266
+[17-May-2023 09:59:13 Europe/Berlin] PHP Notice:  Undefined index: staff_id in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 20
+[17-May-2023 09:59:13 Europe/Berlin] PHP Notice:  Undefined index: name in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 35
+[17-May-2023 09:59:13 Europe/Berlin] PHP Notice:  Trying to get property 'passport' of non-object in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 36
+[17-May-2023 09:59:13 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 296
+[17-May-2023 09:59:21 Europe/Berlin] PHP Notice:  Undefined index: staff_id in C:\xampp\htdocs\sms\school\super-admin\includes\security.php on line 10
+[17-May-2023 09:59:21 Europe/Berlin] PHP Notice:  Undefined index: staff_id in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 20
+[17-May-2023 09:59:21 Europe/Berlin] PHP Notice:  Undefined index: name in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 35
+[17-May-2023 09:59:21 Europe/Berlin] PHP Notice:  Trying to get property 'passport' of non-object in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 36
+[17-May-2023 09:59:21 Europe/Berlin] PHP Notice:  Undefined index: name in C:\xampp\htdocs\sms\school\super-admin\dashboard.php on line 21
+[17-May-2023 09:59:38 Europe/Berlin] PHP Notice:  Undefined variable: staff_id in C:\xampp\htdocs\sms\school\super-admin\staff-reg-page.php on line 435
+[17-May-2023 09:59:38 Europe/Berlin] PHP Notice:  Undefined variable: staff_id in C:\xampp\htdocs\sms\school\super-admin\staff-reg-page.php on line 443
+[17-May-2023 09:59:38 Europe/Berlin] PHP Notice:  Undefined variable: staff_id in C:\xampp\htdocs\sms\school\super-admin\staff-reg-page.php on line 450
+[17-May-2023 09:59:40 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 296
+[17-May-2023 10:00:08 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 296
+[17-May-2023 10:05:02 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 296
+[17-May-2023 10:05:02 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 296
+[17-May-2023 10:07:15 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 296
+[17-May-2023 10:19:02 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 276
+[17-May-2023 10:19:15 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 276
+[17-May-2023 10:19:15 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 276
+[17-May-2023 10:19:30 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 276
+[17-May-2023 10:19:30 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 276
+[17-May-2023 10:19:36 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 276
+[17-May-2023 10:19:41 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 276
+[17-May-2023 10:20:10 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 276
+[17-May-2023 10:20:16 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 276
+[17-May-2023 10:20:22 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 276
+[17-May-2023 10:20:28 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 276
+[17-May-2023 10:20:35 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 276
+[17-May-2023 10:52:57 Europe/Berlin] PHP Notice:  Undefined index: staff_id in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 20
+[17-May-2023 10:52:57 Europe/Berlin] PHP Notice:  Undefined index: name in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 35
+[17-May-2023 10:52:57 Europe/Berlin] PHP Notice:  Trying to get property 'passport' of non-object in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 36
+[17-May-2023 10:52:57 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 328
+[17-May-2023 10:53:10 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 328
+[17-May-2023 10:53:18 Europe/Berlin] PHP Notice:  Trying to get property 'class_name' of non-object in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 36
+[17-May-2023 10:53:19 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 328
+[17-May-2023 10:56:43 Europe/Berlin] PHP Notice:  Undefined index: class_name in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 36
+[17-May-2023 10:56:43 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 328
+[17-May-2023 10:57:26 Europe/Berlin] PHP Notice:  Trying to get property 'class_name' of non-object in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 36
+[17-May-2023 10:57:26 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 328
+[17-May-2023 10:59:45 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 330
+[17-May-2023 11:01:08 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 328
+[17-May-2023 11:01:28 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 328
+[17-May-2023 11:09:15 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 332
+[17-May-2023 11:09:24 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 332
+[17-May-2023 11:11:03 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 332
+[17-May-2023 11:14:27 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 327
+[17-May-2023 11:15:07 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 327
+[17-May-2023 11:15:11 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 327
+[17-May-2023 11:22:06 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 337
+[17-May-2023 11:26:06 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 341
+[17-May-2023 11:26:11 Europe/Berlin] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\sms\school\super-admin\includes\sidebar.php:1) in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 71
+[17-May-2023 11:26:11 Europe/Berlin] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\sms\school\super-admin\includes\sidebar.php:1) in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 72
+[17-May-2023 11:26:11 Europe/Berlin] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\sms\school\super-admin\includes\sidebar.php:1) in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 73
+[17-May-2023 11:26:11 Europe/Berlin] PHP Warning:  readfile(JSS 1 BLUE Record.xlsx): failed to open stream: No such file or directory in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 74
+[17-May-2023 11:26:11 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 341
+[17-May-2023 11:30:06 Europe/Berlin] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\sms\school\super-admin\includes\sidebar.php:1) in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 72
+[17-May-2023 11:30:06 Europe/Berlin] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\sms\school\super-admin\includes\sidebar.php:1) in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 73
+[17-May-2023 11:30:06 Europe/Berlin] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\sms\school\super-admin\includes\sidebar.php:1) in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 74
+[17-May-2023 11:30:06 Europe/Berlin] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\sms\school\super-admin\includes\sidebar.php:1) in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 75
+[17-May-2023 11:30:06 Europe/Berlin] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\sms\school\super-admin\includes\sidebar.php:1) in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 76
+[17-May-2023 11:30:06 Europe/Berlin] PHP Warning:  filesize(): stat failed for JSS 1 BLUE Record.xlsx in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 77
+[17-May-2023 11:30:06 Europe/Berlin] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\sms\school\super-admin\includes\sidebar.php:1) in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 77
+[17-May-2023 11:30:06 Europe/Berlin] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\sms\school\super-admin\includes\sidebar.php:1) in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 78
+[17-May-2023 11:30:06 Europe/Berlin] PHP Warning:  readfile(JSS 1 BLUE Record.xlsx): failed to open stream: No such file or directory in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 84
+[17-May-2023 11:34:37 Europe/Berlin] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\sms\school\super-admin\includes\sidebar.php:1) in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 72
+[17-May-2023 11:34:37 Europe/Berlin] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\sms\school\super-admin\includes\sidebar.php:1) in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 73
+[17-May-2023 11:34:37 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 340
+[17-May-2023 11:35:35 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 340
+[17-May-2023 11:35:40 Europe/Berlin] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\sms\school\super-admin\includes\sidebar.php:1) in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 72
+[17-May-2023 11:35:40 Europe/Berlin] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\sms\school\super-admin\includes\sidebar.php:1) in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 73
+[17-May-2023 11:35:40 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 340
+[17-May-2023 11:37:46 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 260
+[17-May-2023 11:37:55 Europe/Berlin] PHP Fatal error:  Uncaught Error: Class 'Database' not found in C:\xampp\htdocs\sms\school\super-admin\export.php:11
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\sms\school\super-admin\export.php on line 11
+[17-May-2023 11:39:38 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 260
+[17-May-2023 11:42:02 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 261
+[17-May-2023 11:42:06 Europe/Berlin] PHP Fatal error:  Uncaught Error: Class 'Database' not found in C:\xampp\htdocs\sms\school\super-admin\export.php:12
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\sms\school\super-admin\export.php on line 12
+[17-May-2023 11:42:54 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 260
+[17-May-2023 11:49:18 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 260
+[17-May-2023 11:52:23 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 260
+[17-May-2023 11:54:17 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 260
+[17-May-2023 11:56:38 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 340
+[17-May-2023 11:56:43 Europe/Berlin] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\sms\school\super-admin\includes\sidebar.php:1) in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 72
+[17-May-2023 11:56:43 Europe/Berlin] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\sms\school\super-admin\includes\sidebar.php:1) in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 73
+[17-May-2023 11:56:43 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 340
+[17-May-2023 11:57:32 Europe/Berlin] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\sms\school\super-admin\includes\sidebar.php:1) in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 72
+[17-May-2023 11:57:32 Europe/Berlin] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\sms\school\super-admin\includes\sidebar.php:1) in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 73
+[17-May-2023 11:57:32 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 340
+[17-May-2023 11:57:35 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 340
+[17-May-2023 11:57:41 Europe/Berlin] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\sms\school\super-admin\includes\sidebar.php:1) in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 72
+[17-May-2023 11:57:41 Europe/Berlin] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\sms\school\super-admin\includes\sidebar.php:1) in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 73
+[17-May-2023 11:57:41 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 340
+[17-May-2023 11:58:13 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 340
+[17-May-2023 12:00:11 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 340
+[17-May-2023 12:00:24 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 340
+[17-May-2023 12:02:59 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 340
+[17-May-2023 12:21:25 Europe/Berlin] PHP Notice:  Undefined index: staff_id in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 20
+[17-May-2023 12:21:25 Europe/Berlin] PHP Notice:  Undefined index: name in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 35
+[17-May-2023 12:21:25 Europe/Berlin] PHP Notice:  Trying to get property 'passport' of non-object in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 36
+[17-May-2023 12:21:25 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 340
+[17-May-2023 12:21:30 Europe/Berlin] PHP Notice:  Undefined index: staff_id in C:\xampp\htdocs\sms\school\super-admin\includes\security.php on line 10
+[17-May-2023 12:21:30 Europe/Berlin] PHP Notice:  Undefined index: staff_id in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 20
+[17-May-2023 12:21:30 Europe/Berlin] PHP Notice:  Undefined index: name in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 35
+[17-May-2023 12:21:30 Europe/Berlin] PHP Notice:  Trying to get property 'passport' of non-object in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 36
+[17-May-2023 12:21:30 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 340
+[17-May-2023 12:21:43 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 340
+[17-May-2023 12:25:40 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 340
+[17-May-2023 12:26:22 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 340
+[17-May-2023 12:28:27 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[17-May-2023 12:28:40 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[17-May-2023 12:28:54 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[17-May-2023 12:29:54 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[17-May-2023 12:51:21 Europe/Berlin] PHP Notice:  Undefined index: staff_id in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 20
+[17-May-2023 12:51:21 Europe/Berlin] PHP Notice:  Undefined index: name in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 35
+[17-May-2023 12:51:21 Europe/Berlin] PHP Notice:  Trying to get property 'passport' of non-object in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 36
+[17-May-2023 12:51:21 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[17-May-2023 12:52:17 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[17-May-2023 12:52:23 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[17-May-2023 12:54:36 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[17-May-2023 12:54:38 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[17-May-2023 12:55:00 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[17-May-2023 12:55:03 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[17-May-2023 13:00:05 Europe/Berlin] PHP Warning:  Illegal string offset 'size' in C:\xampp\htdocs\sms\school\super-admin\student-edit-page.php on line 35
+[17-May-2023 13:00:05 Europe/Berlin] PHP Warning:  Illegal string offset 'size' in C:\xampp\htdocs\sms\school\super-admin\student-edit-page.php on line 35
+[17-May-2023 13:00:30 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[17-May-2023 13:00:33 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[17-May-2023 13:01:15 Europe/Berlin] PHP Warning:  unlink(../uploads/students/img-20201014-wa0018.jpg): No such file or directory in C:\xampp\htdocs\sms\school\super-admin\student-edit-page.php on line 64
+[17-May-2023 13:01:54 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[17-May-2023 13:01:57 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[17-May-2023 17:10:44 Europe/Berlin] PHP Notice:  Undefined index: staff_id in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 20
+[17-May-2023 17:10:44 Europe/Berlin] PHP Notice:  Undefined index: name in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 35
+[17-May-2023 17:10:44 Europe/Berlin] PHP Notice:  Trying to get property 'passport' of non-object in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 36
+[17-May-2023 17:15:29 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[17-May-2023 17:30:26 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 14:35:16 Europe/Berlin] PHP Notice:  Undefined variable: staff_id in C:\xampp\htdocs\sms\school\super-admin\staff-reg-page.php on line 435
+[18-May-2023 14:35:16 Europe/Berlin] PHP Notice:  Undefined variable: staff_id in C:\xampp\htdocs\sms\school\super-admin\staff-reg-page.php on line 443
+[18-May-2023 14:35:16 Europe/Berlin] PHP Notice:  Undefined variable: staff_id in C:\xampp\htdocs\sms\school\super-admin\staff-reg-page.php on line 450
+[18-May-2023 14:35:22 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 14:35:47 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 14:36:10 Europe/Berlin] PHP Warning:  unlink(../uploads/students/img-20201014-wa0018.jpg): No such file or directory in C:\xampp\htdocs\sms\school\super-admin\student-edit-page.php on line 64
+[18-May-2023 14:36:20 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 14:36:23 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 14:37:38 Europe/Berlin] PHP Warning:  unlink(../uploads/students/img-20201014-wa0018.jpg): No such file or directory in C:\xampp\htdocs\sms\school\super-admin\student-edit-page.php on line 64
+[18-May-2023 14:38:53 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 14:38:56 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 14:39:10 Europe/Berlin] PHP Warning:  unlink(../uploads/students/img-20201014-wa0018.jpg): No such file or directory in C:\xampp\htdocs\sms\school\super-admin\student-edit-page.php on line 64
+[18-May-2023 14:39:17 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 14:39:20 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 14:42:12 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 14:42:21 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 14:42:45 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 14:52:01 Europe/Berlin] PHP Notice:  Undefined variable: date in C:\xampp\htdocs\sms\school\super-admin\student-edit-page.php on line 26
+[18-May-2023 14:52:01 Europe/Berlin] PHP Notice:  Trying to access array offset on value of type null in C:\xampp\htdocs\sms\school\super-admin\student-edit-page.php on line 26
+[18-May-2023 14:56:50 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 14:56:54 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 14:57:13 Europe/Berlin] PHP Warning:  unlink($_POST[&quot;oldImage&quot;]): No such file or directory in C:\xampp\htdocs\sms\school\super-admin\student-edit-page.php on line 64
+[18-May-2023 14:57:13 Europe/Berlin] PHP Warning:  move_uploaded_file(../uploads/students/$_FILES[&quot;fileToUpload&quot;][&quot;name&quot;]): failed to open stream: No such file or directory in C:\xampp\htdocs\sms\school\super-admin\student-edit-page.php on line 93
+[18-May-2023 14:57:13 Europe/Berlin] PHP Warning:  move_uploaded_file(): Unable to move 'C:\xampp\tmp\php6863.tmp' to '../uploads/students/$_FILES[&quot;fileToUpload&quot;][&quot;name&quot;]' in C:\xampp\htdocs\sms\school\super-admin\student-edit-page.php on line 93
+[18-May-2023 15:04:13 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:04:17 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:04:29 Europe/Berlin] PHP Warning:  unlink(../uploads/students/img-20201014-wa0018.jpg): No such file or directory in C:\xampp\htdocs\sms\school\super-admin\student-edit-page.php on line 63
+[18-May-2023 15:04:33 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:04:36 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:06:42 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:06:46 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:07:05 Europe/Berlin] PHP Warning:  unlink(): Invalid argument in C:\xampp\htdocs\sms\school\super-admin\student-edit-page.php on line 63
+[18-May-2023 15:07:10 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:07:13 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:07:34 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:07:45 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:07:49 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:10:04 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:10:08 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:10:19 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:10:22 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:13:41 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:13:49 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:13:54 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:17:47 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:17:56 Europe/Berlin] PHP Warning:  unlink(../uploads/students/img-20201014-wa0018.jpg): No such file or directory in C:\xampp\htdocs\sms\school\super-admin\student-edit-page.php on line 78
+[18-May-2023 15:17:59 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:18:02 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:18:28 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:18:31 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:18:47 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:18:50 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:18:54 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:20:07 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:20:10 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:21:25 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:21:28 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:27:10 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:27:14 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:27:24 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:27:27 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:28:12 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:28:15 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:29:18 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:29:23 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:30:42 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:30:46 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:31:32 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:35:29 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:35:52 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:36:49 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:37:24 Europe/Berlin] PHP Warning:  unlink(../uploads/students/IMG-20200617-WA0042.jpg): No such file or directory in C:\xampp\htdocs\sms\school\super-admin\student-edit-page.php on line 76
+[18-May-2023 15:37:27 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:37:33 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:37:45 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:39:58 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:50:19 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:50:22 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:51:05 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:51:08 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:55:33 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:56:55 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:57:07 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:57:15 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:57:31 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:57:34 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:57:53 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:57:56 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:58:46 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:58:49 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:59:18 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 15:59:59 Europe/Berlin] PHP Warning:  unlink(../uploads/students/img-20200913-wa0003~2.jpg): No such file or directory in C:\xampp\htdocs\sms\school\super-admin\student-edit-page.php on line 97
+[18-May-2023 16:00:26 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 16:00:32 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 16:01:16 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 16:03:15 Europe/Berlin] PHP Warning:  unlink(): Invalid argument in C:\xampp\htdocs\sms\school\super-admin\student-edit-page.php on line 97
+[18-May-2023 16:03:24 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 16:03:29 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 16:03:55 Europe/Berlin] PHP Warning:  unlink(): Invalid argument in C:\xampp\htdocs\sms\school\super-admin\student-edit-page.php on line 97
+[18-May-2023 16:04:01 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 16:04:03 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 16:04:08 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 16:04:25 Europe/Berlin] PHP Warning:  unlink(): Invalid argument in C:\xampp\htdocs\sms\school\super-admin\student-edit-page.php on line 97
+[18-May-2023 16:05:22 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 16:05:24 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 16:05:28 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 16:05:44 Europe/Berlin] PHP Warning:  unlink(): Invalid argument in C:\xampp\htdocs\sms\school\super-admin\student-edit-page.php on line 95
+[18-May-2023 16:05:45 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 16:05:48 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 16:06:00 Europe/Berlin] PHP Warning:  unlink(): Invalid argument in C:\xampp\htdocs\sms\school\super-admin\student-edit-page.php on line 95
+[18-May-2023 16:06:07 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 16:23:06 Europe/Berlin] PHP Notice:  Undefined index: staff_id in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 20
+[18-May-2023 16:23:06 Europe/Berlin] PHP Notice:  Undefined index: name in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 35
+[18-May-2023 16:23:06 Europe/Berlin] PHP Notice:  Trying to get property 'passport' of non-object in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 36
+[18-May-2023 16:23:18 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 16:23:21 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 16:23:37 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 16:23:40 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 16:26:57 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 16:27:00 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 16:31:08 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 16:31:12 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 17:16:49 Europe/Berlin] PHP Notice:  Undefined index: staff_id in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 20
+[18-May-2023 17:16:49 Europe/Berlin] PHP Notice:  Undefined index: name in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 35
+[18-May-2023 17:16:49 Europe/Berlin] PHP Notice:  Trying to get property 'passport' of non-object in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 36
+[18-May-2023 17:17:01 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 418
+[18-May-2023 17:17:44 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 418
+[18-May-2023 17:18:54 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 418
+[18-May-2023 17:20:22 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 418
+[18-May-2023 17:21:02 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 418
+[18-May-2023 17:22:15 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 418
+[18-May-2023 17:23:25 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 418
+[18-May-2023 17:27:48 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 354
+[18-May-2023 17:30:28 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 417
+[18-May-2023 17:31:09 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 353
+[18-May-2023 17:34:17 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 17:35:49 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 17:38:09 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 17:38:12 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 346
+[18-May-2023 17:43:12 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 348
+[18-May-2023 17:46:31 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 344
+[18-May-2023 17:46:55 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 344
+[18-May-2023 17:50:36 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 272
+[18-May-2023 17:52:44 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 263
+[18-May-2023 17:52:58 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 263
+[18-May-2023 17:54:13 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 263
+[18-May-2023 17:54:17 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 263
+[18-May-2023 17:54:50 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 263
+[18-May-2023 17:54:54 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 263
+[18-May-2023 17:55:12 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 263
+[18-May-2023 17:55:40 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 263

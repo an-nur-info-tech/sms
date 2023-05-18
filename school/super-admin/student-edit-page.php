@@ -3,199 +3,63 @@
 include('includes/header.php');
 
 if (isset($_POST['update_btn'])) {
-  $error = false;
-
+  $db1 = new Database();
   $data = array(
     'admNo' => $_POST['admNo'],
     'student_sname' => trim(strtoupper($_POST['student_sname'])),
     'student_lname' => trim(strtoupper($_POST['student_lname'])),
     'student_oname' => trim(strtoupper($_POST['student_oname'])),
-    'class_name' => $_POST['class_name'],
+    'class_name' => trim(strtoupper($_POST['class_name'])),
     'dob' => $_POST['dob'],
-    'religion' => $_POST['religion'],
-    'gender' => $_POST['gender'],
-    'nationality' => $_POST['nationality'],
-    'student_state' => $_POST['student_state'],
-    'lga' => $_POST['lga'],
-    'oldImage' => $_POST['oldImage'],
-    'fileToUpload' => strtolower($_FILES["fileToUpload"]["name"])
+    'religion' => trim(strtoupper($_POST['religion'])),
+    'gender' => trim(strtoupper($_POST['gender'])),
+    'nationality' => trim(strtoupper($_POST['nationality'])),
+    'student_state' => trim(strtoupper($_POST['student_state'])),
+    'lga' => trim(strtoupper($_POST['lga'])),
+    'oldImage' => $_POST['oldImage']
   );
 
-  /* if(empty($student_sname)){
-        $error = true;
-        $warningMsg = "Surname is required";
-    }
-    if(empty($student_lname)){
-        $error = true;
-        $warningMsg = "Last name is required";
-    }
-    if(empty($class_name)){
-        $error = true;
-        $warningMsg = "Class name is required";
-    }
-    if(empty($dob)){
-        $error = true;
-        $warningMsg = "D.O.B is required";
-    }
-    if(empty($religion)){
-        $error = true;
-        $warningMsg = "Religion is required";
-    }
-    if(empty($nationality)){
-        $error = true;
-        $warningMsg = "Nationality is required";
-    }
-    if(empty($student_state)){
-        $error = true;
-        $warningMsg = "State is required";
-    }
-    if(empty($lga)){
-        $error = true;
-        $warningMsg = "LGA is required";
-    } */
-  if (!$error) {
-    //Checking if user changing previous image
-    /* if($_FILES["fileToUpload"]["tmp_name"]){
-        //Getting image file type
-        $imageFileType = strtolower(pathinfo($_FILES["fileToUpload"]["name"], PATHINFO_EXTENSION));
-        //check if file type is an image
-        if($imageFileType == "jpeg" || $imageFileType == "png" || $imageFileType == "jpg" || $imageFileType == "gif" )
-        {
-          //If there is new image added
-          if(!empty($_FILES["fileToUpload"]["tmp_name"])){
-            unlink($_POST["currentPhoto"]);//Removing the old image
-          }
+  $fileToUpload = $_FILES["fileToUpload"]["name"];
+  //specifying the directory where the file is going to be placed.
+  $target_dir = "../uploads/students/";
+  //specifying path of the file to be uploaded
+  $target_file = $target_dir . basename($fileToUpload);
+  //Getting the file extension
+  $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+  //check if file type is an image
+  $imgType = ["jpg", "gif", "jpeg", "png"];
 
-          list($width, $height) = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-          //var_dump($_FILES["fileToUpload"]["type"]);
-          
-          $newWidth = 500;
-          $newHeight = 500;
-          $directory = "img/";
-
-          if($_FILES['fileToUpload']['type'] == "image/jpeg"){
-            $ra = mt_rand(100, 999);
-            $root = "img/".$ra.".jpeg";
-
-            $source = imagecreatefromjpeg($_FILES["fileToUpload"]["tmp_name"]);
-            $destination = imagecreatetruecolor($newWidth, $newHeight);
-            imagecopyresized($destination, $source, 0,0,0,0, $newWidth, $newHeight, $width, $height);
-            imagejpeg($destination, $root);
-          }
-          
-          if($_FILES['fileToUpload']['type'] == "image/png"){
-            $ra = mt_rand(100, 999);
-            $root = "img/".$ra.".png";
-
-            $source = imagecreatefrompng($_FILES["fileToUpload"]["tmp_name"]);
-            $destination = imagecreatetruecolor($newWidth, $newHeight);
-            imagecopyresized($destination, $source, 0,0,0,0, $newWidth, $newHeight, $width, $height);
-            imagepng($destination, $root);
-          }
-
-          if($_FILES['fileToUpload']['type'] == "image/gif"){
-            $ra = mt_rand(100, 999);
-            $root = "img/".$ra.".gif";
-
-            $source = imagecreatefromgif($_FILES["fileToUpload"]["tmp_name"]);
-            $destination = imagecreatetruecolor($newWidth, $newHeight);
-            imagecopyresized($destination, $source, 0,0,0,0, $newWidth, $newHeight, $width, $height);
-            imagegif($destination, $root);
-          }
-
-          $query_run = mysqli_query($con, "UPDATE students_tbl SET class_name='$class_name', passport= '$root', sname='$student_sname', lname='$student_lname', oname='$student_oname', dob='$dob', religion='$religion', gender='$gender', nationality='$nationality', student_state='$student_state', lga='$lga' WHERE admNo ='$admNo'");
-          if(!$query_run){
-            echo '<script>
-                Swal.fire({
-                    icon: "warning",
-                    title: "Update failed",
-                    showConfirmButton: true,
-                    confirmButtonText: "close",
-                    closeOnConfirm: false
-                }).then((result) => {
-                    if(result.value){
-                        window.location = "student-view-page";
-                    }
-                })
-            </script>'; 
-            //$warningMsg = "Update Failed ".mysqli_error($con);
-          }else{
-            echo '<script>
-                    Swal.fire({
-                        icon: "success",
-                        title: "Update successful",
-                        showConfirmButton: true,
-                        confirmButtonText: "close",
-                        closeOnConfirm: false
-                        }).then((result) => {
-                        if(result.value){
-                            window.location = "student-view-page";
-                        }
-                      });
-                </script>';
-          }
-        }else{
-          echo '<script>
-                  Swal.fire({
-                      icon: "warning",
-                      title: "image type only",
-                      showConfirmButton: true,
-                      confirmButtonText: "close",
-                      closeOnConfirm: false
-                      }).then((result) => {
-                      if(result.value){
-                          window.location = "student-view-page";
-                      }
-                    });
-                </script>';            
-          //$warningMsg = "The file is not an image type";
-        }
-      } */
-
-    if ($data['fileToUpload']) { //Update with Image
-      //specifying the directory where the file is going to be placed.
-      $target_dir = "../uploads/students/";
-      //specifying path of the file to be uploaded
-      $target_file = $target_dir . basename($data['fileToUpload']);
-      //Getting the file extension
-      $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-
-      //check if file type is an image
-      $imgType = ["jpg", "gif", "jpeg", "png"];
-      if (!in_array($imageFileType, $imgType)) {
-        $error = true;
-        $warningMsg = "The file is not an image type";
-      }
-
-      // check if file exists
-      if (file_exists($target_file)) {
-        $error = true;
-        $warningMsg = "Picture exist";
-      }
-
-      //Checking for image size
-      if ($_FILES['fileToUpload']['size'] > 102405 or $_FILES['fileToUpload']['size'] < 10240) {
-        $error = true;
-        $warningMsg = "Image size should be in the range of 15KB to 100KB";
-      }
-      if (!empty($_FILES["fileToUpload"]["tmp_name"])) {
-        unlink($data["oldImage"]); //Removing the old image
-      }
-
-      $db1 = new Database();
-      if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+  if ($fileToUpload) { //Update with Image
+    //Checking for image size
+    if (!in_array($imageFileType, $imgType)) {
+      $error = true;
+      $_SESSION['errorMsg'] = true;
+      $_SESSION['errorTitle'] = "Error";
+      $_SESSION['sessionMsg'] = "The file is not an image type";
+      $_SESSION['sessionIcon'] = "error";
+      $_SESSION['location'] = "student-view-page";
+    } else if ($_FILES['fileToUpload']['size'] > 102405 or $_FILES['fileToUpload']['size'] < 10240) {
+      $error = true;
+      $_SESSION['errorMsg'] = true;
+      $_SESSION['errorTitle'] = "Error";
+      $_SESSION['sessionMsg'] = "Image size within 15KB to 100KB";
+      $_SESSION['sessionIcon'] = "error";
+      $_SESSION['location'] = "student-view-page";
+    } else {
+      if (!empty($data['oldImage'])) {
+        //Removing the old image if exist
         $db1->query("UPDATE students_tbl SET class_name=:class_name, 
-          passport = :target_file,
-          sname=:student_sname, 
-          lname=:student_lname, 
-          oname=:student_oname, 
-          dob=:dob, 
-          religion=:religion, 
-          gender=:gender, 
-          nationality=:nationality, 
-          student_state=:student_state, 
-          lga=:lga 
-          WHERE admNo =:admNo;");
+        passport = :target_file,
+        sname=:student_sname, 
+        lname=:student_lname, 
+        oname=:student_oname, 
+        dob=:dob, 
+        religion=:religion, 
+        gender=:gender, 
+        nationality=:nationality, 
+        student_state=:student_state, 
+        lga=:lga 
+        WHERE admNo =:admNo;");
         $db1->bind(':class_name', $data['class_name']);
         $db1->bind(':target_file', $target_file);
         $db1->bind(':student_sname', $data['student_sname']);
@@ -209,40 +73,23 @@ if (isset($_POST['update_btn'])) {
         $db1->bind(':lga', $data['lga']);
         $db1->bind(':admNo', $data['admNo']);
 
-        if (!$db1->execute()) {
-          echo '<script>
-                      Swal.fire({
-                          icon: "warning",
-                          title: "Update failed",
-                          showConfirmButton: true,
-                          confirmButtonText: "close",
-                          closeOnConfirm: false
-                          }).then((result) => {
-                          if(result.value){
-                              window.location = "student-view-page";
-                          }
-                        });
-                  </script>';
+        if (unlink($data['oldImage']) && move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file) && $db1->execute()) {
+          $_SESSION['errorMsg'] = true;
+          $_SESSION['errorTitle'] = "Success";
+          $_SESSION['sessionMsg'] = "Updated successfully";
+          $_SESSION['sessionIcon'] = "success";
+          $_SESSION['location'] = "student-view-page";
         } else {
-          echo '<script>
-                      Swal.fire({
-                          icon: "success",
-                          title: "Update successful",
-                          showConfirmButton: true,
-                          confirmButtonText: "close",
-                          closeOnConfirm: false
-                          }).then((result) => {
-                          if(result.value){
-                              window.location = "student-view-page";
-                          }
-                        });
-                  </script>';
+          $db1->Disconect();
+          $_SESSION['errorMsg'] = true;
+          $_SESSION['errorTitle'] = "Error";
+          $_SESSION['sessionMsg'] = "Update fail";
+          $_SESSION['sessionIcon'] = "error";
+          $_SESSION['location'] = "student-view-page";
         }
-      }
-      $db->Disconect();
-    } else { //Update without image file
-      $db1 = new Database();
-      $db1->query("UPDATE students_tbl SET class_name=:class_name, 
+      } else {
+        $db1->query("UPDATE students_tbl SET class_name=:class_name, 
+        passport = :target_file,
         sname=:student_sname, 
         lname=:student_lname, 
         oname=:student_oname, 
@@ -253,49 +100,76 @@ if (isset($_POST['update_btn'])) {
         student_state=:student_state, 
         lga=:lga 
         WHERE admNo =:admNo;");
-      $db1->bind(':class_name', $data['class_name']);
-      $db1->bind(':student_sname', $data['student_sname']);
-      $db1->bind(':student_lname', $data['student_lname']);
-      $db1->bind(':student_oname', $data['student_oname']);
-      $db1->bind(':dob', $data['dob']);
-      $db1->bind(':religion', $data['religion']);
-      $db1->bind(':gender', $data['gender']);
-      $db1->bind(':nationality', $data['nationality']);
-      $db1->bind(':student_state', $data['student_state']);
-      $db1->bind(':lga', $data['lga']);
-      $db1->bind(':admNo', $data['admNo']);
+        $db1->bind(':class_name', $data['class_name']);
+        $db1->bind(':target_file', $target_file);
+        $db1->bind(':student_sname', $data['student_sname']);
+        $db1->bind(':student_lname', $data['student_lname']);
+        $db1->bind(':student_oname', $data['student_oname']);
+        $db1->bind(':dob', $data['dob']);
+        $db1->bind(':religion', $data['religion']);
+        $db1->bind(':gender', $data['gender']);
+        $db1->bind(':nationality', $data['nationality']);
+        $db1->bind(':student_state', $data['student_state']);
+        $db1->bind(':lga', $data['lga']);
+        $db1->bind(':admNo', $data['admNo']);
 
-      if (!$db1->execute()) {
-        echo '<script>
-                    Swal.fire({
-                        icon: "warning",
-                        title: "Update failed",
-                        showConfirmButton: true,
-                        confirmButtonText: "close",
-                        closeOnConfirm: false
-                        }).then((result) => {
-                        if(result.value){
-                            window.location = "student-view-page";
-                        }
-                      });
-                </script>';
-      } else {
-        echo '<script>
-                    Swal.fire({
-                        icon: "success",
-                        title: "Update successful",
-                        showConfirmButton: true,
-                        confirmButtonText: "close",
-                        closeOnConfirm: false
-                        }).then((result) => {
-                        if(result.value){
-                            window.location = "student-view-page";
-                        }
-                      });
-                </script>';
+        if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file) && $db1->execute()) {
+          $db->Disconect();
+          $_SESSION['errorMsg'] = true;
+          $_SESSION['errorTitle'] = "Success";
+          $_SESSION['sessionMsg'] = "Updated successfully";
+          $_SESSION['sessionIcon'] = "success";
+          $_SESSION['location'] = "student-view-page";
+        } else {
+          $db->Disconect();
+          $_SESSION['errorMsg'] = true;
+          $_SESSION['errorTitle'] = "Error";
+          $_SESSION['sessionMsg'] = "Update fail";
+          $_SESSION['sessionIcon'] = "error";
+          $_SESSION['location'] = "student-view-page";
+        }
       }
     }
-    $db->Disconect();
+    $db1->Disconect();
+  } else { //Update without image file
+    $db1->query("UPDATE students_tbl SET class_name=:class_name, 
+    sname=:student_sname, 
+    lname=:student_lname, 
+    oname=:student_oname, 
+    dob=:dob, 
+    religion=:religion, 
+    gender=:gender, 
+    nationality=:nationality, 
+    student_state=:student_state, 
+    lga=:lga 
+    WHERE admNo =:admNo;");
+
+    $db1->bind(':class_name', $data['class_name']);
+    $db1->bind(':student_sname', $data['student_sname']);
+    $db1->bind(':student_lname', $data['student_lname']);
+    $db1->bind(':student_oname', $data['student_oname']);
+    $db1->bind(':dob', $data['dob']);
+    $db1->bind(':religion', $data['religion']);
+    $db1->bind(':gender', $data['gender']);
+    $db1->bind(':nationality', $data['nationality']);
+    $db1->bind(':student_state', $data['student_state']);
+    $db1->bind(':lga', $data['lga']);
+    $db1->bind(':admNo', $data['admNo']);
+
+    if (!$db1->execute()) {
+      $_SESSION['errorMsg'] = true;
+      $_SESSION['errorTitle'] = "Error";
+      $_SESSION['sessionMsg'] = "Update failed!";
+      $_SESSION['sessionIcon'] = "error";
+      $_SESSION['location'] = "student-view-page";
+      die($db->getError());
+    } else {
+      $_SESSION['errorMsg'] = true;
+      $_SESSION['errorTitle'] = "Success";
+      $_SESSION['sessionMsg'] = "Update successfully123";
+      $_SESSION['sessionIcon'] = "success";
+      $_SESSION['location'] = "student-view-page";
+    }
   }
 }
 ?>
@@ -307,19 +181,29 @@ if (isset($_POST['update_btn'])) {
     <h3 class="alert-primary" style="font-weight: bold; font-family: Georgia, 'Times New Roman', Times, serif; border-radius: 5px; padding: 2px; margin-bottom: 10px;"> Student Profile Edit Page </h3>
     <p>The students can be registered with or without an image. <br /> Fields with asterisk (*) are to be filled </p>
   </div><br>
-  <center>
-    <?php
-    if (isset($successMsg)) {
-    ?>
-      <label class="text-success"><i class="fas fa-fw fa-check-square"></i> <?php echo $successMsg; ?></label>
-    <?php
-    } elseif (isset($warningMsg)) {
-    ?>
-      <label class="text-danger"><i class="fas fa-fw fa-user-times"></i><?php echo $warningMsg; ?></label>
-    <?php
-    }
-    ?>
-  </center>
+  <!-- Alerts messages -->
+  <?php
+  if (isset($_SESSION['errorMsg'])) {
+    echo '<script>
+              Swal.fire({
+                title: "' . $_SESSION['errorTitle'] . '",
+                text: "' . $_SESSION['sessionMsg'] . '",
+                icon: "' . $_SESSION['sessionIcon'] . '",
+                showConfirmButton: true,
+                confirmButtonText: "ok"
+              }).then((result) => {
+                  if(result.value){
+                      window.location = "' . $_SESSION['location'] . '";
+                  }
+              })
+          </script>';
+    unset($_SESSION['errorTitle']);
+    unset($_SESSION['errorMsg']);
+    unset($_SESSION['sessionMsg']);
+    unset($_SESSION['location']);
+    unset($_SESSION['sessionIcon']);
+  }
+  ?>
   <!-- Student Content Row -->
   <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data">
     <div class="form-row">

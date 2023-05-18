@@ -496,7 +496,7 @@ if (isset($_POST['submit_btn'])) {
                         <table class="table table-resonsive table-hover" width="100%" cellspacing="0">
                             <thead>
                                 <th class="table-primary">#</th>
-                                <th class="table-primary"> <input type="checkbox" onchange="checkData()" id="checkbox"> </th>
+                                <th class="table-primary"> <input type="checkbox" id="check_All" onchange="checkAllSelect()"> </th>
                                 <th class="table-primary">Class</th>
                                 <th class="table-primary">Admission no.</th>
                                 <th class="table-primary">Names</th>
@@ -534,7 +534,7 @@ if (isset($_POST['submit_btn'])) {
                                 ?>
                                                         <tr>
                                                             <td><?php echo $count; ?></td>
-                                                            <td><input type="checkbox" onchange="checkData()" class="checkB" id="checkB"></td>
+                                                            <td><input type="checkbox" id="checkB"></td>
                                                             <td><?php echo $class_name; ?></td>
                                                             <td><?php echo $admNo; ?></td>
                                                             <td><?php echo $row->sname . " " . $row->lname . " " . $row->oname; ?></td>

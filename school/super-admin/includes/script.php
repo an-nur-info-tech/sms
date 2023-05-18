@@ -221,23 +221,36 @@
   }
 
   
-  const checkData = () => {
-    let checkbox = getById("checkbox");
-    // let checkB = getById("checkB");
-    let checkB = document.querySelectorAll("checkB");
+  const checkAllSelect = () => {
+    let check_All = document.getElementById("check_All");
+    let checkB = document.querySelectorAll("#checkB");
     
     //var ele=document.getElementsByName('chk');  
-    
-
-    for(let i=0; i<checkB.length; i++){  
+    if(check_All.checked = true)
+    {
+      for(let i=0; i<checkB.length; i++){  
         // if(checkB[i].type=='checkbox')  
         // checkB[i].checked=true;
-        if(checkB[i].checked)
-        {
-          console.log("HELLO");
-        }  
+        checkB[i].checked = true;
+        checkB[i].setAttribute('required', '');  
       }
-    if(checkbox.checked){
+    }else if(check_All.checked = false)
+    {
+      for(let i=0; i<checkB.length; i++){  
+        // if(checkB[i].type=='checkbox')  
+        // checkB[i].checked=true;
+        checkB[i].checked = false;
+        checkB[i].removeAttribute('required');  
+      }
+    }
+    
+
+    /* for(let i=0; i<checkB.length; i++){  
+        // if(checkB[i].type=='checkbox')  
+        // checkB[i].checked=true;
+        checkB[i].checked = true;  
+      } */
+    /* if(checkbox.checked){
       checkB.innerText = "Y";
       // for(let i=0; i<checkB.length; i++){  
       //   // if(checkB[i].type=='checkbox')  
@@ -250,7 +263,7 @@
       //checkB.checked;
     }else {
       console.log("Unchecked")
-    }
+    } */
     // console.log("Checked");
 
     // check_all.addEventListener.o

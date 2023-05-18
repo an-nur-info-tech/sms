@@ -246,27 +246,85 @@ if (isset($_POST['result_btn'])) {
     </div><br>
 
     <form method="POST" action="excel-upload" enctype="multipart/form-data">
-        <div class="form-row ">
-            <div class="col-md-8">
-                <div class="form-group">
-                    Student data:<input type="file" class="form-control" name="import_file" required>
+        <div class="card">
+            <div class="card-header">
+                Subject Result Template Download
+            </div>
+            <div class="card-body">
+                <p>Please read the content carefully</p>
+                <div class="form-row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <select class="form-control">
+                                <option value="">Select class...</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <select class="form-control">
+                                <option value="">Select subject...</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <select class="form-control">
+                                <option value="">Session...</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <select class="form-control">
+                                <option value="">Term...</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <button class="btn btn-primary" type="submit" name="" disabled>Download</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <button class="btn btn-primary" type="submit" name="xport_btn">Upload</button>
-            </div>
-            <!-- <div class="col-md-2">
-                <button class="btn btn-primary" type="submit" name="xport_btn">Upload</button>
-            </div> -->
         </div>
-        <hr />
     </form>
 
-    <form method="POST" action="excel-upload.php" enctype="multipart/form-data">
-        <div class="form-row form-inline mt-3">
-            <div class="col-md-12 col-sm-4 p-3">
-                Result upload: <input type="file" class="form-control" name="result_import_file" required>
-                <button class="btn btn-primary" type="submit" name="result_btn">Upload</button>
+    <form method="POST" action="excel-upload" enctype="multipart/form-data">
+        <div class="card mt-3">
+            <div class="card-header">
+                Subject Result Template Upload
+            </div>
+            <div class="card-body">
+                <div class="form-row form-inline">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            Result upload: &nbsp;<input type="file" class="form-control" name="result_import_file" required>
+                            &nbsp;&nbsp;<button class="btn btn-primary" disabled type="submit" name="result_btn">Upload</button>
+                        </div>
+                    </div>
+                    <div class="col-md-4"></div>
+                </div>
+            </div>
+        </div> 
+    </form>
+
+    <form method="POST" action="excel-upload" enctype="multipart/form-data">
+        <div class="card">
+            <div class="card-header">
+                Students data
+            </div>
+            <div class="card-body">
+                <div class="form-row form-inline">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            Student data: &nbsp; <input type="file" class="form-control" name="import_file" required>
+                            &nbsp;&nbsp; <button class="btn btn-primary" disabled type="submit" name="xport_btn">Upload</button>
+                        </div>
+                    </div>
+                    <div class="col-md-4"></div>
+                </div>
             </div>
         </div>
     </form>

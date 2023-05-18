@@ -83,8 +83,8 @@
         <div id="collapseSix" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Excel Panel:</h6>
-            <a class="collapse-item" href="excel-upload"> Upload excel file </a>
             <a class="collapse-item" href="#"> Download excel file </a>
+            <a class="collapse-item" href="excel-upload"> Upload excel file </a>
           </div>
         </div>
       </li>      
