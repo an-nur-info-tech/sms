@@ -12598,3 +12598,41 @@ Stack trace:
 [18-May-2023 17:54:54 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 263
 [18-May-2023 17:55:12 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 263
 [18-May-2023 17:55:40 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 263
+[19-May-2023 21:34:40 Europe/Berlin] PHP Notice:  Undefined index: staff_id in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 20
+[19-May-2023 21:34:41 Europe/Berlin] PHP Notice:  Undefined index: name in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 35
+[19-May-2023 21:34:41 Europe/Berlin] PHP Notice:  Trying to get property 'passport' of non-object in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 36
+[19-May-2023 22:12:05 Europe/Berlin] PHP Notice:  Undefined index: staff_id in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 20
+[19-May-2023 22:12:05 Europe/Berlin] PHP Notice:  Undefined index: name in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 35
+[19-May-2023 22:12:05 Europe/Berlin] PHP Notice:  Trying to get property 'passport' of non-object in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 36
+[20-May-2023 08:37:17 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\sms\school\database\Database.php:59
+Stack trace:
+#0 C:\xampp\htdocs\sms\school\super-admin\class-page.php(154): Database->query('SELECT * FROM c...')
+#1 {main}
+  thrown in C:\xampp\htdocs\sms\school\database\Database.php on line 59
+[20-May-2023 09:52:55 Europe/Berlin] PHP Notice:  Undefined index: staff_id in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 20
+[20-May-2023 09:52:56 Europe/Berlin] PHP Notice:  Undefined index: name in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 35
+[20-May-2023 09:52:56 Europe/Berlin] PHP Notice:  Trying to get property 'passport' of non-object in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 36
+[20-May-2023 10:20:44 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function str_contains() in C:\xampp\htdocs\sms\school\super-admin\class-page.php:98
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\sms\school\super-admin\class-page.php on line 98
+[20-May-2023 10:27:02 Europe/Berlin] PHP Warning:  preg_match(): Unknown modifier '2' in C:\xampp\htdocs\sms\school\super-admin\class-page.php on line 99
+[20-May-2023 10:27:21 Europe/Berlin] PHP Warning:  preg_match(): Unknown modifier '2' in C:\xampp\htdocs\sms\school\super-admin\class-page.php on line 99
+[20-May-2023 10:28:05 Europe/Berlin] PHP Warning:  preg_match(): Unknown modifier '2' in C:\xampp\htdocs\sms\school\super-admin\class-page.php on line 99
+[20-May-2023 10:28:13 Europe/Berlin] PHP Warning:  preg_match(): Unknown modifier '2' in C:\xampp\htdocs\sms\school\super-admin\class-page.php on line 99
+[20-May-2023 10:29:27 Europe/Berlin] PHP Warning:  preg_match(): Unknown modifier '2' in C:\xampp\htdocs\sms\school\super-admin\class-page.php on line 99
+[20-May-2023 10:30:51 Europe/Berlin] PHP Warning:  preg_match(): Unknown modifier '2' in C:\xampp\htdocs\sms\school\super-admin\class-page.php on line 99
+[20-May-2023 10:32:37 Europe/Berlin] PHP Warning:  preg_match(): Unknown modifier '2' in C:\xampp\htdocs\sms\school\super-admin\class-page.php on line 99
+[20-May-2023 12:06:17 Europe/Berlin] PHP Notice:  Undefined index: staff_id in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 20
+[20-May-2023 12:06:19 Europe/Berlin] PHP Notice:  Undefined index: name in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 35
+[20-May-2023 12:06:19 Europe/Berlin] PHP Notice:  Trying to get property 'passport' of non-object in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 36
+[20-May-2023 14:28:07 Europe/Berlin] PHP Notice:  Undefined index: staff_id in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 20
+[20-May-2023 14:28:07 Europe/Berlin] PHP Notice:  Undefined index: name in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 35
+[20-May-2023 14:28:07 Europe/Berlin] PHP Notice:  Trying to get property 'passport' of non-object in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 36
+[20-May-2023 14:28:07 Europe/Berlin] PHP Notice:  Undefined index: admNo in C:\xampp\htdocs\sms\school\super-admin\student-view-page.php on line 263
+[20-May-2023 15:56:09 Europe/Berlin] PHP Notice:  Undefined index: staff_id in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 20
+[20-May-2023 15:56:09 Europe/Berlin] PHP Notice:  Undefined index: name in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 35
+[20-May-2023 15:56:09 Europe/Berlin] PHP Notice:  Trying to get property 'passport' of non-object in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 36
+[20-May-2023 15:56:27 Europe/Berlin] PHP Notice:  Undefined index: class_id in C:\xampp\htdocs\sms\school\super-admin\assign-class-teacher.php on line 86
+[20-May-2023 16:00:39 Europe/Berlin] PHP Notice:  Undefined index: class_id in C:\xampp\htdocs\sms\school\super-admin\assign-class-teacher.php on line 86
+[20-May-2023 16:03:00 Europe/Berlin] PHP Notice:  Undefined index: class_id in C:\xampp\htdocs\sms\school\super-admin\assign-class-teacher.php on line 85

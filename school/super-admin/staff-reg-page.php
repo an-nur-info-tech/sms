@@ -429,25 +429,3 @@ if (isset($_POST['act_disabled'])) {
 include('includes/footer.php');
 include('includes/script.php');
 ?>
-
-<!-- <td>
-  <form method="" action="">
-    <input type="hidden" value="<?php echo $staff_id; ?>" >
-    <button title="Click to delete" type="submit" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash"></i></button>
-    <button title="Click to edit" type="submit" class="btn btn-sm btn-outline-primary"><i class="fas fa-fw fa-edit"></i></button>
-    <button title="Click to view" type="submit" class="btn btn-sm btn-outline-default"><i class="fa fa-eye"></i></button>
-  </form>
-</td>
-<td>
-  <form method="" action="">
-      <input type="hidden" value="<?php echo $staff_id; ?>" >
-      <button title="Click to delete" type="submit" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash"></i></button>
-      <button title="Click to edit" type="submit" class="btn btn-sm btn-outline-primary"><i class="fas fa-fw fa-edit"></i></button>
-  </form>
-</td>
-<td>
-  <form method="" action="">
-      <input type="hidden" value="<?php echo $staff_id; ?>" >
-      <button title="Click to delete" type="submit" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash"></i></button>
-  </form>
-</td> -->

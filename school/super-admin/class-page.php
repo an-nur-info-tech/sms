@@ -2,28 +2,24 @@
 include('includes/header.php');
 
 $db = new Database();
-  
+
 
 if (isset($_POST['class_btn'])) {
   $class_name = strtoupper($_POST['class_name']);
   //Check if class exist
   $db->query("SELECT * FROM class_tbl WHERE class_name = :class_name;");
   $db->bind(':class_name', $class_name);
-  if($db->execute())
-  {
-    if($db->rowCount() > 0)
-    {
+  if ($db->execute()) {
+    if ($db->rowCount() > 0) {
       $_SESSION['errorMsg'] = true;
       $_SESSION['errorTitle'] = "Ooops...";
       $_SESSION['sessionMsg'] = "Class existed!";
       $_SESSION['sessionIcon'] = "error";
       $_SESSION['location'] = "class-page";
-    }
-    else 
-    {
+    } else {
       $db->query("INSERT INTO class_tbl(class_name) VALUES(:class_name);");
       $db->bind(':class_name', $class_name);
-    
+
       if (!$db->execute()) {
         $_SESSION['errorMsg'] = true;
         $_SESSION['errorTitle'] = "Error";
@@ -31,9 +27,7 @@ if (isset($_POST['class_btn'])) {
         $_SESSION['sessionIcon'] = "error";
         $_SESSION['location'] = "class-page";
         die($db->getError());
-      } 
-      else 
-      {
+      } else {
         $_SESSION['errorMsg'] = true;
         $_SESSION['errorTitle'] = "Success";
         $_SESSION['sessionMsg'] = "Record added!";
@@ -41,9 +35,7 @@ if (isset($_POST['class_btn'])) {
         $_SESSION['location'] = "class-page";
       }
     }
-  }
-  else
-  {
+  } else {
     $_SESSION['errorMsg'] = true;
     $_SESSION['errorTitle'] = "Error";
     $_SESSION['sessionMsg'] = "Error occured!";
@@ -52,28 +44,130 @@ if (isset($_POST['class_btn'])) {
     die($db->getError());
   }
 }
-/* if (isset($_POST['update_btn'])) {
-  $class_id = $_POST['class_id'];
-  $class_name = strtoupper(mysqli_real_escape_string($con, $_POST['class_name']));
+//TODO
+/* if (isset($_POST['assignClassBtn'])) {
+  
+  $class_id = $_POST['assignClassID'];
+  $teacher_id = $_POST['teacher_id'];
 
-  $query_run = mysqli_query($con, "UPDATE class_tbl SET class_name='$class_name' WHERE class_id = '$class_id'");
-  if (!$query_run) {
-    $warningMsg = "Update failed " . mysqli_error($con);
-  } else {
-    $successMsg = "Record Updated";
+  // echo "ehllooooooooo".$class_id." And ".$teacher_id;
+
+  $db->query("SELECT * FROM class_tbl WHERE instructor_id =:teacher_id;");
+  $db->bind(':teacher_id', $teacher_id);
+  if($db->execute())
+  {
+    if ($db->rowCount() > 0) {
+      $_SESSION['errorMsg'] = true;
+      $_SESSION['errorTitle'] = "Ooops...";
+      $_SESSION['sessionMsg'] = "Teacher has been assigned to another class!";
+      $_SESSION['sessionIcon'] = "error";
+      $_SESSION['location'] = "class-page";
+    } 
+    else 
+    {
+      $db->query("UPDATE class_tbl SET instructor_id = :teacher_id WHERE class_id = :class_id;");
+      $db->bind(':teacher_id', $teacher_id);
+      $db->bind(':class_id', $class_id);
+      if(!$db->execute()) {
+        $_SESSION['errorMsg'] = true;
+        $_SESSION['errorTitle'] = "Error";
+        $_SESSION['sessionMsg'] = "Error occured!";
+        $_SESSION['sessionIcon'] = "error";
+        $_SESSION['location'] = "class-page";
+      } 
+      else 
+      {
+        $_SESSION['errorMsg'] = true;
+        $_SESSION['errorTitle'] = "Success";
+        $_SESSION['sessionMsg'] = "Teacher assigned!";
+        $_SESSION['sessionIcon'] = "success";
+        $_SESSION['location'] = "class-page";
+      }
+    }
+  }
+  else
+  {
+    die($db->getError());
   }
 } */
 
-/* if (isset($_POST['delete_btn'])) {
-  $class_id = $_POST['class_id'];
+if (isset($_POST['updateClassBtn'])) {
 
-  $query_run = mysqli_query($con, "DELETE FROM class_tbl WHERE class_id = '$class_id'");
-  if (!$query_run) {
-    $warningMsg = "Deletion failed " . mysqli_error($con);
+  $editClassID = $_POST['editClassID'];
+  $editClassName = strtoupper(trim($_POST['editClassName']));
+
+  // Check if class name does not exist
+  $db->query("SELECT * FROM class_tbl WHERE class_name = :editClassName;");
+  $db->bind(':editClassName', $editClassName);
+  if (!$db->execute()) {
+    $_SESSION['errorMsg'] = true;
+    $_SESSION['errorTitle'] = "Error";
+    $_SESSION['sessionMsg'] = "Something went wrong";
+    $_SESSION['sessionIcon'] = "error";
+    $_SESSION['location'] = "class-page";
   } else {
-    $successMsg = "Record Deleted";
+    if ($db->rowCount() > 0) {
+      $_SESSION['errorMsg'] = true;
+      $_SESSION['errorTitle'] = "Ooops...";
+      $_SESSION['sessionMsg'] = "The class name exist";
+      $_SESSION['sessionIcon'] = "error";
+      $_SESSION['location'] = "class-page";
+    } else {
+      //Updating record
+      $db->query("UPDATE class_tbl SET class_name = :editClassName WHERE class_id = :editClassID;");
+      $db->bind(':editClassID', $editClassID);
+      $db->bind(':editClassName', $editClassName);
+      if (!$db->execute()) {
+        $_SESSION['errorMsg'] = true;
+        $_SESSION['errorTitle'] = "Error";
+        $_SESSION['sessionMsg'] = "Something went wrong";
+        $_SESSION['sessionIcon'] = "error";
+        $_SESSION['location'] = "class-page";
+      } else {
+        $_SESSION['errorMsg'] = true;
+        $_SESSION['errorTitle'] = "Success";
+        $_SESSION['sessionMsg'] = "Record updated!";
+        $_SESSION['sessionIcon'] = "success";
+        $_SESSION['location'] = "class-page";
+      }
+    }
   }
-} */
+}
+
+if (isset($_POST['deleteClassBtn'])) {
+  $userID = $_POST['userID'];
+  $deleteClassID = $_POST['deleteClassID'];
+
+  $lookup = $_SESSION['staff_id']." deLEtED";
+  $search = $userID;
+
+  if ($search == $lookup) //Check if user input is equal to the lookup
+  {
+    $db->query("DELETE FROM class_tbl WHERE class_id = :deleteClassID;");
+    $db->bind(':deleteClassID', $deleteClassID);
+    if (!$db->execute()) {
+      $_SESSION['errorMsg'] = true;
+      $_SESSION['errorTitle'] = "Error";
+      $_SESSION['sessionMsg'] = "Something went wrong";
+      $_SESSION['sessionIcon'] = "error";
+      $_SESSION['location'] = "class-page";
+    } else {
+      $_SESSION['errorMsg'] = true;
+      $_SESSION['errorTitle'] = "Success";
+      $_SESSION['sessionMsg'] = "Record deleted";
+      $_SESSION['sessionIcon'] = "success";
+      $_SESSION['location'] = "class-page";
+    }
+  }
+  else
+  {
+    $_SESSION['errorMsg'] = true;
+    $_SESSION['errorTitle'] = "Ooops..";
+    $_SESSION['sessionMsg'] = "Input does not match, case are sensitive";
+    $_SESSION['sessionIcon'] = "error";
+    $_SESSION['location'] = "class-page";
+  }
+}
 ?>
 <!-- Begin Page Content -->
 <div class="container-fluid">
@@ -118,7 +212,7 @@ if (isset($_POST['class_btn'])) {
     unset($_SESSION['sessionIcon']);
   }
   ?>
-  
+
   <!-- DataTales Example -->
   <div class="card shadow mb-4">
     <div class="card-header py-3">
@@ -176,21 +270,17 @@ if (isset($_POST['class_btn'])) {
                       ?>
                     </td>
                     <td>
-                      <div class="form-inline">
+                      <div class="form-row">
                         <form method="POST" action="assign-class-teacher">
-                          <input type="hidden" name="class_id" value="<?php echo $row->class_id;  ?>">
-                          <button class="btn btn-outline-primary btn-sm" title="Click to assign teacher" name="assign_btn"> Assign </button>
+                          <input type="hidden" name="class_id" value="<?php echo $row->class_id; ?>">
+                        <!--Triger Button to Assign class teacher TODO  -->
+                        <button class="btn btn-outline-primary btn-sm assign_btn" assignClassID="<?php echo $row->class_id; ?>" data-toggle="modal" data-target="#assignClass"  title="Click to assign teacher" name="assign_btn"> Assign </button>
                         </form> &nbsp;
-                        <form method="POST" action="">
-                          <input type="hidden" name="class_id" value="<?php echo $row->class_id;  ?>">
-                          <!--Triger Button to edit  -->
-                          <button name="edit_btn" title="Edit record" class="btn btn-outline-primary btn-sm"><i class="fas fa-fw fa-edit"></i> Edit</button>
-                        </form>&nbsp;
-                        <form method="POST" action="">
-                          <input type="hidden" name="class_id" value="<?php echo $row->class_id;  ?>">
-                          <!--Triger Button to Delete  -->
-                          <button name="delete_btn" title="Delete record" class="btn btn-outline-danger btn-sm"><i class="fas fa-fw fa-trash"></i> Delete </button>
-                        </form>
+                        <!--Triger Button to edit  -->
+                        <button name="edit_btn" title="Edit record" editClassID="<?php echo $row->class_id; ?>" data-toggle="modal" data-target="#editClass" class="btn btn-outline-primary btn-sm editClass"><i class="fas fa-fw fa-edit"></i> Edit</button>
+                        &nbsp;
+                        <!--Triger Button to Delete  -->
+                        <button name="delete_btn" title="Delete record" deleteClassID="<?php echo $row->class_id; ?>" data-toggle="modal" data-target="#deleteClass" class="btn btn-outline-danger btn-sm deleteClassID"><i class="fas fa-fw fa-trash"></i> Delete </button>
                       </div>
                     </td>
                   </tr>
@@ -212,12 +302,93 @@ if (isset($_POST['class_btn'])) {
     </div>
   </div>
 
+  <!-- Assign Class teacher Modal-->
+  <div class="modal fade" id="assignClass" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Assign class teacher</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <form method="post" action="class-page">
+          <div class="modal-body">
+            <p>Please select a teacher from the dropdown select to assign to a class </p>
+            <select name="teacher_id" id="teacher_id" class="form-control" required>
+              <!-- <option value=""> Select Teacher...</option> -->
+            </select>
+            <input type="hidden" id="assignClassID" name="assignClassID" value="" class="form-control">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
+            <button type="submit" name="assignClassBtn" class="btn btn-sm btn-primary"> Assign </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 
+  <!-- Edit Class Modal-->
+  <div class="modal fade" id="editClass" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Edit class page</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <form method="post" action="class-page">
+          <div class="modal-body">
+            <div class="col-md-12">
+              <div class="form-row form-inline">
+                <div class="form-group">
+                  <label>Class name:</label> &nbsp;
+                  <input type="text" id="editClassName" name="editClassName" value="" class="form-control" required>
+                  <input type="hidden" id="editClassID" name="editClassID" value="" class="form-control">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
+            <button type="submit" name="updateClassBtn" class="btn btn-sm btn-primary"> Update </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Class Modal-->
+  <div class="modal fade" id="deleteClass" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Delete class page</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <form method="post" action="class-page">
+          <div class="modal-body">
+            <p>Are you sure to delete this record? if yes, type in your staff ID followed by deLEtED e.g stf/21/0001 deLEtED</p>
+            <input type="text" name="userID" autocomplete="off" placeholder="stf/21/0001 deLEtED"  class="form-control" required>
+            <input type="hidden" id="deleteClassID" name="deleteClassID" value="" class="form-control">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
+            <button type="submit" name="deleteClassBtn" class="btn btn-sm btn-primary"> Yes </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 
 </div>
 <!-- /.container-fluid -->
-
 <?php
+$db->Disconect();
 include('includes/footer.php');
 include('includes/script.php');
 ?>

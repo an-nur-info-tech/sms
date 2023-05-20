@@ -13,7 +13,7 @@ if (isset($_POST['assigning_btn'])) {
     if ($db->rowCount() > 0) {
       $_SESSION['errorMsg'] = true;
       $_SESSION['errorTitle'] = "Ooops...";
-      $_SESSION['sessionMsg'] = "Class has a teacher!";
+      $_SESSION['sessionMsg'] = "Teacher found in another class!";
       $_SESSION['sessionIcon'] = "error";
       $_SESSION['location'] = "class-page";
     } 
@@ -45,7 +45,6 @@ if (isset($_POST['assigning_btn'])) {
     die($db->getError());
     exit();
   }
-  $db->Disconect();
 }
 
 ?>
