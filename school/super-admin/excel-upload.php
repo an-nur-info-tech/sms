@@ -255,29 +255,108 @@ if (isset($_POST['result_btn'])) {
                 <div class="form-row">
                     <div class="col-md-3">
                         <div class="form-group">
-                            <select class="form-control">
-                                <option value="">Select class...</option>
+                            <select name="select_class" class="form-control" required>
+                                <option value=""> Select class...</option>
+                                <?php
+                                $db = new Database();
+                                $db->query("SELECT * FROM class_tbl;");
+                                if($db->execute())
+                                {
+                                    if ($db->rowCount() > 0) {
+                                        $data = $db->resultset();
+                                        foreach ($data as $record) {
+                                    ?>
+                                        <option value="<?php echo $record->class_name; ?>"> <?php echo $record->class_name; ?> </option>
+                                        <?php
+                                        }
+                                    } else {
+                                        ?>
+                                        <option value=""> No record </option>
+                                    <?php
+                                    }
+                                }
+                                ?>
                             </select>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
-                            <select class="form-control">
-                                <option value="">Select subject...</option>
+                            <select name="subject_id" class="form-control" required>
+                                <option value=""> Subject...</option>
+                                <!-- Fetching data from subject table -->
+                                <?php
+                                    $db->query("SELECT * FROM subject_tbl");
+                                    if (!$db->execute()) {
+                                    die($db->getError());
+                                    } else {
+                                    if ($db->rowCount() > 0) {
+                                        $result = $db->resultset();
+                                        foreach ($result as $row2) {
+                                    ?>
+                                        <option value="<?php echo $row2->subject_id; ?>"> <?php echo $row2->subject_name; ?></option>
+                                        <?php
+                                        }
+                                    } else {
+                                        ?>
+                                        <option value=""> No record found</option>
+                                    <?php
+                                    }
+                                }
+                                ?>
                             </select>
                         </div>
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
-                            <select class="form-control">
-                                <option value="">Session...</option>
+                            <select name="session_id" class="form-control" required>
+                                <option value=""> Select session...</option>
+                                <?php
+                                $db->query("SELECT * FROM session_tbl;");
+                                if (!$db->execute()) {
+                                    die($db->getError());
+                                } else {
+                                    if ($db->rowCount() > 0) {
+                                        $result = $db->resultset();
+                                        foreach ($result as $row) {
+                                ?>
+                                            <option value="<?php echo $row->session_id; ?>"> <?php echo $row->session_name; ?> </option>
+                                <?php
+
+                                        }
+                                    } else {
+                                        ?>
+                                        <option> No record found </option>
+                                        <?php
+                                    }
+                                }
+                                ?>
                             </select>
                         </div>
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
-                            <select class="form-control">
-                                <option value="">Term...</option>
+                            <select class="form-control" name="term_id" required>
+                                <option value=""> Select term...</option>
+                                <?php
+                                $db->query("SELECT * FROM term_tbl;");
+                                if (!$db->execute()) {
+                                    die($db->getError());
+                                } else {
+                                    if ($db->rowCount() > 0) {
+                                        $result = $db->resultset();
+                                        foreach ($result as $row) {
+                                ?>
+                                            <option value="<?php echo $row->term_id; ?>"> <?php echo $row->term_name; ?> </option>
+                                <?php
+
+                                        }
+                                    } else {
+                                        ?>
+                                        <option> No record found </option>
+                                        <?php
+                                    }
+                                }
+                                ?>
                             </select>
                         </div>
                     </div>

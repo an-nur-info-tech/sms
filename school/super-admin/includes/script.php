@@ -61,12 +61,12 @@
     }
   };
 
-    const getById = ele => {
-      return document.getElementById(ele);
-    }
-    const getBySelectAll = ele => {
-      return document.querySelectorAll(ele);
-    }
+  const getById = ele => {
+    return document.getElementById(ele);
+  }
+  const getBySelectAll = ele => {
+    return document.querySelectorAll(ele);
+  }
     
   const add = () => {
     let ca = getById("ca").value;
@@ -138,6 +138,8 @@
     }
   }
   const adds = () => {
+    
+
     // let ca = getById("ca").value;
     // let exam = getById("exam").value;
     let ca = getBySelectAll(".ca").value;
@@ -214,51 +216,45 @@
 
   
   const checkAllSelect = () => {
-    let check_All = document.getElementById("check_All");
-    let checkB = document.querySelectorAll("#checkB");
-    
-    //var ele=document.getElementsByName('chk');  
-    if(check_All.checked = true)
+    let check_All = getById("check_All");
+    let checkB = getBySelectAll("#checkB");
+    let submitBtn = document.querySelector("#submitBtn");
+
+    if(check_All.checked == true)
     {
       for(let i=0; i<checkB.length; i++){  
-        // if(checkB[i].type=='checkbox')  
-        // checkB[i].checked=true;
         checkB[i].checked = true;
         checkB[i].setAttribute('required', '');  
       }
-    }else if(check_All.checked = false)
+      submitBtn.removeAttribute('disabled');      
+    }
+
+    if(check_All.checked == false)
     {
       for(let i=0; i<checkB.length; i++){  
-        // if(checkB[i].type=='checkbox')  
-        // checkB[i].checked=true;
         checkB[i].checked = false;
-        checkB[i].removeAttribute('required');  
+        checkB[i].removeAttribute('required');
+      }
+      submitBtn.setAttribute('disabled', '');
+    }
+  }
+  const checkSingleSelect = () => {
+    let checkB = getBySelectAll("#checkB");
+    let submitBtn = document.querySelector("#submitBtn");
+    let caCheck = getBySelectAll("caCheck");
+    let examCheck = getBySelectAll("examCheck")
+
+    for(let j = 0; j < checkB.length; j++)
+    {
+      if(checkB[j].checked == true)
+      {
+        checkB[j].setAttribute('required', '');
+      }
+      if(checkB[j].checked == false)
+      {
+        checkB[j].removeAttribute('required');
       }
     }
-    
-
-    /* for(let i=0; i<checkB.length; i++){  
-        // if(checkB[i].type=='checkbox')  
-        // checkB[i].checked=true;
-        checkB[i].checked = true;  
-      } */
-    /* if(checkbox.checked){
-      checkB.innerText = "Y";
-      // for(let i=0; i<checkB.length; i++){  
-      //   // if(checkB[i].type=='checkbox')  
-      //   checkB[i].checked=true;  
-      // }
-      // for (let i=0; i < checkB.length; i++)
-      // {
-      //   checkB[i].checked;
-      // }
-      //checkB.checked;
-    }else {
-      console.log("Unchecked")
-    } */
-    // console.log("Checked");
-
-    // check_all.addEventListener.o
   }
   //check_all();
 

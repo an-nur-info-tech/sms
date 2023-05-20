@@ -3,7 +3,7 @@ include('includes/header.php');
 $db = new Database();
 
 if (isset($_POST['submit_btn'])) {
-
+/* 
     $admNo = trim($_POST['admNo']);
     $class_id = $_POST['class_id'];
     $session_id = $_POST['session_id'];
@@ -14,6 +14,7 @@ if (isset($_POST['submit_btn'])) {
     $total = trim($_POST['total']);
     $grade = trim($_POST['grade']);
     $remark = trim($_POST['remark']);
+     */
     /* 
     if ($ca > 40) {
         $error = true;
@@ -71,7 +72,7 @@ if (isset($_POST['submit_btn'])) {
     //echo "Subjid [$subject_id] class id [$class_id] session id [$session_id] and term_id [$term_id]";
 
     //Checking if result uploaded already or not
-    $db->query(
+    /* $db->query(
         "SELECT * FROM result_tbl 
         WHERE admNo = :admNo
         AND subject_id = :subject_id 
@@ -134,7 +135,7 @@ if (isset($_POST['submit_btn'])) {
                 $_SESSION['location'] = "add-result";
             }
         }
-    }
+    } */
 }
 
 ?>
@@ -534,12 +535,12 @@ if (isset($_POST['submit_btn'])) {
                                 ?>
                                                         <tr>
                                                             <td><?php echo $count; ?></td>
-                                                            <td><input type="checkbox" id="checkB"></td>
+                                                            <td><input type="checkbox" id="checkB" onchange="checkSingleSelect()"></td>
                                                             <td><?php echo $class_name; ?></td>
                                                             <td><?php echo $admNo; ?></td>
                                                             <td><?php echo $row->sname . " " . $row->lname . " " . $row->oname; ?></td>
-                                                            <td> <input type="number" name="ca" id="ca" onkeypress="adds()" onkeyup="add()" class="form-control ca"></td>
-                                                            <td> <input type="number" name="exam" id="exam" onkeypress="adds()" onkeyup="add()" class="form-control exam"> </td>
+                                                            <td> <input type="number" id = "caCheck" name="ca" id="ca" onkeypress="checkSingleSelect()" onkeyup="add()" class="form-control ca"></td>
+                                                            <td> <input type="number" id = "examCheck" name="exam" id="exam" onkeypress="checkSingleSelect()" onkeyup="add()" class="form-control exam"> </td>
                                                             <input type="hidden" name="total" id="total" placeholder=" Total" class="form-control">
                                                             <input type="hidden" name="grade" id="grade" placeholder=" grade" class="form-control">
                                                             <input type="hidden" name="remark" id="remark" placeholder="Remark" class="form-control">
@@ -551,7 +552,7 @@ if (isset($_POST['submit_btn'])) {
                                                     ?>
                                                     <tr>
                                                         <td colspan="7" class="text-center">
-                                                            <button class="btn m-2 btn-outline-primary btn-sm " name="submit_btn" disabled >Submit </button>
+                                                            <button class="btn m-2 btn-outline-primary btn-sm " name="submit_btn" id="submitBtn" disabled >Submit </button>
                                                         </td>
                                                     </tr>
                                                 <?php

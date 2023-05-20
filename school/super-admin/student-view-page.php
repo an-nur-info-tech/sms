@@ -60,25 +60,25 @@ include('includes/header.php');
     <div class="form-row ">
       <div class="col-md-4">
         <div class="form-group">
-          <?php
-          $db = new Database();
-          $db->query("SELECT * FROM class_tbl;");
-          $data = $db->resultset();
-          ?>
           <select name="select_class" class="form-control" required>
             <option value=""> Select class...</option>
             <?php
-            if ($db->rowCount() > 0) {
-              foreach ($data as $record) {
-            ?>
-                <option value="<?php echo $record->class_name; ?>"> <?php echo $record->class_name; ?> </option>
+            $db = new Database();
+            $db->query("SELECT * FROM class_tbl;");
+            if($db->execute())
+            {
+              if ($db->rowCount() > 0) {
+                $data = $db->resultset();
+                foreach ($data as $record) {
+              ?>
+                  <option value="<?php echo $record->class_name; ?>"> <?php echo $record->class_name; ?> </option>
+                <?php
+                }
+              } else {
+                ?>
+                <option value=""> No record </option>
               <?php
               }
-            } else {
-              $db->Disconect();
-              ?>
-              <option value=""> No record </option>
-            <?php
             }
             ?>
           </select> 

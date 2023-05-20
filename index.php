@@ -89,12 +89,12 @@ require_once('code.php');
                   </div>
                   <form class="user" method="POST" action="index">
                     <div class="form-group">
-                      <input type="text" name="user_name" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter User name/Email Address...">
+                      <input type="text" onkeypress="checkInput()"  id="user_name" name="user_name" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter User name/Email Address...">
                     </div>
                     <div class="form-group">
-                      <input type="password" name="pwd" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
+                      <input type="password" id="pwd" name="pwd" onkeypress="checkInput()"  class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
                     </div>
-                    <button name="login-btn" type="submit" class="btn btn-primary btn-user btn-block">
+                    <button name="login-btn" id="login_btn" disabled type="submit" class="btn btn-primary btn-user btn-block">
                       Login
                     </button>
                   </form>
@@ -117,8 +117,14 @@ require_once('code.php');
 
   </div>
 
-</body>
+  <script>
+    const checkInput = () => {
+      let user_name = document.querySelector("#user_name").value;
+      let pwd = document.querySelector("#pwd").value;
+      let login_btn = document.querySelector("#login_btn");
 
+      if ((user_name.length > 4) && (pwd.length > 4))login_btn.removeAttribute("disabled");
+    }
+  </script>
 </body>
-
 </html>
