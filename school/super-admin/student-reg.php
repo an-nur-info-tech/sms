@@ -664,7 +664,7 @@ if (isset($_POST['submit_btn'])) {
     <div class="form-row">
       <div class="form-group col-md-4">
         <label for="section">* Select section: </label>
-        <select name="section" id="section" class="form-control">
+        <select name="section" id="select_section" class="form-control" onchange="select_Section()" >
           <option value=""> Select section... </option>
           <option value="NS/"> Nursery </option>
           <option value="PS/"> Primary </option>
@@ -678,14 +678,12 @@ if (isset($_POST['submit_btn'])) {
         <div class="form-group">
           <label for="class_name" class="control-label">* Class </label>
           <!-- Fetching data from class table -->
-          <?php
-          $db = new Database();
-          $db->query("SELECT * FROM class_tbl;");
-          $data = $db->resultset();
-          ?>
           <select name="class_name" id="class_name" class="form-control">
             <option value=""> Select class...</option>
             <?php
+            $db = new Database();
+            $db->query("SELECT * FROM class_tbl;");
+            $data = $db->resultset();
             if ($db->rowCount() > 0) {
               foreach ($data as $record) {
             ?>

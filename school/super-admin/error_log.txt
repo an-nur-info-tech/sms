@@ -13044,3 +13044,21 @@ Stack trace:
 [20-May-2023 23:02:52 Europe/Berlin] PHP Notice:  Undefined variable: rowadmNo in C:\xampp\htdocs\sms\school\super-admin\result-view.php on line 321
 [20-May-2023 23:02:52 Europe/Berlin] PHP Notice:  Undefined variable: rowadmNo in C:\xampp\htdocs\sms\school\super-admin\result-view.php on line 321
 [20-May-2023 23:02:52 Europe/Berlin] PHP Notice:  Undefined variable: rowadmNo in C:\xampp\htdocs\sms\school\super-admin\result-view.php on line 321
+[21-May-2023 11:19:14 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1109 Unknown table 'instructor_id' in MULTI DELETE in C:\xampp\htdocs\sms\school\database\Database.php:64
+Stack trace:
+#0 C:\xampp\htdocs\sms\school\database\Database.php(64): PDOStatement->execute()
+#1 C:\xampp\htdocs\sms\school\super-admin\class-page.php(98): Database->execute()
+#2 {main}
+  thrown in C:\xampp\htdocs\sms\school\database\Database.php on line 64
+[21-May-2023 11:23:09 Europe/Berlin] PHP Notice:  Trying to get property 'fname' of non-object in C:\xampp\htdocs\sms\school\super-admin\class-page.php on line 284
+[21-May-2023 11:23:09 Europe/Berlin] PHP Notice:  Trying to get property 'sname' of non-object in C:\xampp\htdocs\sms\school\super-admin\class-page.php on line 284
+[21-May-2023 11:23:09 Europe/Berlin] PHP Notice:  Trying to get property 'oname' of non-object in C:\xampp\htdocs\sms\school\super-admin\class-page.php on line 284
+[21-May-2023 11:23:11 Europe/Berlin] PHP Notice:  Trying to get property 'fname' of non-object in C:\xampp\htdocs\sms\school\super-admin\class-page.php on line 284
+[21-May-2023 11:23:11 Europe/Berlin] PHP Notice:  Trying to get property 'sname' of non-object in C:\xampp\htdocs\sms\school\super-admin\class-page.php on line 284
+[21-May-2023 11:23:11 Europe/Berlin] PHP Notice:  Trying to get property 'oname' of non-object in C:\xampp\htdocs\sms\school\super-admin\class-page.php on line 284
+[21-May-2023 11:24:09 Europe/Berlin] PHP Notice:  Trying to get property 'fname' of non-object in C:\xampp\htdocs\sms\school\super-admin\class-page.php on line 284
+[21-May-2023 11:24:09 Europe/Berlin] PHP Notice:  Trying to get property 'sname' of non-object in C:\xampp\htdocs\sms\school\super-admin\class-page.php on line 284
+[21-May-2023 11:24:09 Europe/Berlin] PHP Notice:  Trying to get property 'oname' of non-object in C:\xampp\htdocs\sms\school\super-admin\class-page.php on line 284
+[21-May-2023 12:34:42 Europe/Berlin] PHP Notice:  Undefined index: staff_id in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 20
+[21-May-2023 12:34:43 Europe/Berlin] PHP Notice:  Undefined index: name in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 35
+[21-May-2023 12:34:43 Europe/Berlin] PHP Notice:  Trying to get property 'passport' of non-object in C:\xampp\htdocs\sms\school\super-admin\includes\navbar.php on line 36

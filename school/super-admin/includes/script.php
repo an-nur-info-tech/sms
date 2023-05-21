@@ -52,6 +52,13 @@
 
   <!-- Custom script -->
   <script type="text/javascript">
+  const getById = ele => {
+    return document.getElementById(ele);
+  }
+  const getBySelectAll = ele => {
+    return document.querySelectorAll(ele);
+  }
+
   var loadFile = function(event)
   {
     var image = document.getElementById('image');
@@ -61,11 +68,32 @@
     }
   };
 
-  const getById = ele => {
-    return document.getElementById(ele);
-  }
-  const getBySelectAll = ele => {
-    return document.querySelectorAll(ele);
+  const select_Section = () => {
+    let select_section = getById("select_section").value;
+    // console.log(select_section.value);
+    let datas = new FormData();
+    datas.append("select_section", select_section);
+    
+    $.ajax({
+      url: "ajax/editClass.ajax.php",
+      method: "POST",
+      data: datas,
+      cache: false,
+      contentType: false,
+      processData: false,
+      dataType: "html",
+      success: function(res){
+        console.log("Response", res);
+        $("#class_name").html(res);
+        // let result = JSON.parse(response);
+      },
+      error: function(XMLHttpRequest, textStatus, errorThrown) {
+      console.log(XMLHttpRequest);
+      console.log(textStatus);
+      console.log(errorThrown);
+      }
+    });
+    
   }
     
   const add = () => {
@@ -259,7 +287,7 @@
   //check_all();
 
 /*  ASSIGN CLASS TEACHER MODAL TODO*/
-/* $(".assign_btn").click(function(e) {
+$(".assign_btn").click(function(e) {
   e.preventDefault();
   let assignClassID = $(this).attr("assignClassID");
   // console.log(assignClassID);
@@ -274,9 +302,9 @@
     cache: false,
     contentType: false,
     processData: false,
-    dataType: "json",
+    dataType: "html",
     success: function(response){
-      console.log("Response", response[0]["staff_id"]);
+      // console.log("Response", response[0]["staff_id"]);
       // let result = JSON.parse(response);
       // $("#teacher_id").val(response["staff_id"]);
       // for(let i = 0; i < response.length; i++)
@@ -285,6 +313,7 @@
       //   let name = response[i]["fname"] +" "+ response[i]["sname"] + " "+ response[i]["oname"];
       //   // $("#teacher_id").append("<option>"+`${response[i]['staff_id']}`+"</option>");
       //   $("#teacher_id").append('<option value = "'+ `${staff_id}` +'">'+ `${name}` + '</option>');
+        $("#teacher_id").html(response);
       //   // console.log(response[i]);
       // }
       // $("#assignClassID").val(response["staff_id"]);
@@ -295,7 +324,7 @@
      console.log(errorThrown);
   }
   })
-}); */
+});
 /*-------x---- ASSIGN CLASS TEACHER MODAL -------x----*/
 
 /*   CLASS EDIT MODAL */
@@ -328,6 +357,14 @@ $(".editClass").click(function() {
   })
 });
 /*-------x---- CLASS EDIT MODAL -------x----*/
+
+/*   REMOVE CLASS TEACHER MODAL */
+$(".rmAssign_btn").click(function() {
+  let rmAssignClassID = $(this).attr("rmAssignClassID");
+  // console.log(rmAssignClassID);
+  $("#rmAssignClassID").val(rmAssignClassID);
+});
+/*-------x---- REMOVE CLASS TEACHER MODAL -------x----*/
 
 /*   CLASS DELETE MODAL */
 $(".deleteClassID").click(function() {

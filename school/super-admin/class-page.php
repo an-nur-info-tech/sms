@@ -45,12 +45,10 @@ if (isset($_POST['class_btn'])) {
   }
 }
 //TODO
-/* if (isset($_POST['assignClassBtn'])) {
+if (isset($_POST['assignClassBtn'])) {
   
   $class_id = $_POST['assignClassID'];
   $teacher_id = $_POST['teacher_id'];
-
-  // echo "ehllooooooooo".$class_id." And ".$teacher_id;
 
   $db->query("SELECT * FROM class_tbl WHERE instructor_id =:teacher_id;");
   $db->bind(':teacher_id', $teacher_id);
@@ -89,7 +87,28 @@ if (isset($_POST['class_btn'])) {
   {
     die($db->getError());
   }
-} */
+}
+
+
+if (isset($_POST['rmAssignClassBtn'])) {
+  $classID = $_POST['rmAssignClassID'];
+  
+  $db->query("UPDATE class_tbl SET instructor_id = null WHERE class_id = :classID;");
+  $db->bind(':classID', $classID);
+  if (!$db->execute()) {
+    $_SESSION['errorMsg'] = true;
+    $_SESSION['errorTitle'] = "Error";
+    $_SESSION['sessionMsg'] = "Something went wrong";
+    $_SESSION['sessionIcon'] = "error";
+    $_SESSION['location'] = "class-page";
+  } else {
+    $_SESSION['errorMsg'] = true;
+    $_SESSION['errorTitle'] = "Success";
+    $_SESSION['sessionMsg'] = "Teacher removed";
+    $_SESSION['sessionIcon'] = "success";
+    $_SESSION['location'] = "class-page";
+  }
+}
 
 if (isset($_POST['updateClassBtn'])) {
 
@@ -240,11 +259,11 @@ if (isset($_POST['deleteClassBtn'])) {
             <?php
 
             $db->query("SELECT * FROM class_tbl ORDER BY class_id DESC;");
-            $data = $db->resultset();
-            if (!$db->isConnected()) {
+            if (!$db->execute()) {
               die("Error " . $db->getError());
             } else {
               if ($db->rowCount() > 0) {
+                $data = $db->resultset();
                 $count = 1;
                 foreach ($data as $row) {
             ?>
@@ -252,39 +271,37 @@ if (isset($_POST['deleteClassBtn'])) {
                     <td> <?php echo $count;  ?> </td>
                     <td> <?php echo $row->class_name; ?> </td>
                     <td>
-
                       <!-- Converting staff id to its name-->
                       <?php
-                      if ($row->instructor_id == null) {
-                        echo "Class teacher not assign";
+                      if (($row->instructor_id == null) || ($row->instructor_id == "")) {
+                        echo "Class teacher not assign, click on Assign button to assign.";
                       } else {
                         $staff_id = $row->instructor_id;
                         $db->query("SELECT * FROM staff_tbl WHERE staff_id = :staff_id;");
                         $db->bind(':staff_id', $staff_id);
-                        $dats = $db->resultset();
-                        foreach ($dats as $dat) {
-                          echo $dat->fname . " " . $dat->sname . " " . $dat->oname;
-                        }
+                        $db->execute();
+                        $dats = $db->single();
+                        echo "$dats->fname $dats->sname $dats->oname &nbsp;&nbsp;&nbsp;<span class='text-danger rmAssign_btn' rmAssignClassID='$row->class_id' data-toggle='modal' data-target='#rmAssignClass'  title='Click to remove teacher' name='assign_btn'><i class='fas fa-fw fa-trash fa-sm'></i> </span>";
                       }
-                      $count++;
                       ?>
                     </td>
                     <td>
                       <div class="form-row">
-                        <form method="POST" action="assign-class-teacher">
-                          <input type="hidden" name="class_id" value="<?php echo $row->class_id; ?>">
+                        <!-- <form method="POST" action="assign-class-teacher"> -->
+                          <!-- <input type="hidden" name="class_id" value="<?php //echo $row->class_id; ?>"> -->
                         <!--Triger Button to Assign class teacher TODO  -->
                         <button class="btn btn-outline-primary btn-sm assign_btn" assignClassID="<?php echo $row->class_id; ?>" data-toggle="modal" data-target="#assignClass"  title="Click to assign teacher" name="assign_btn"> Assign </button>
-                        </form> &nbsp;
+                        <!-- </form> &nbsp; -->
                         <!--Triger Button to edit  -->
-                        <button name="edit_btn" title="Edit record" editClassID="<?php echo $row->class_id; ?>" data-toggle="modal" data-target="#editClass" class="btn btn-outline-primary btn-sm editClass"><i class="fas fa-fw fa-edit"></i> Edit</button>
+                        &nbsp;<button name="edit_btn" title="Edit class" editClassID="<?php echo $row->class_id; ?>" data-toggle="modal" data-target="#editClass" class="btn btn-outline-primary btn-sm editClass"><i class="fas fa-fw fa-edit"></i> </button>
                         &nbsp;
                         <!--Triger Button to Delete  -->
-                        <button name="delete_btn" title="Delete record" deleteClassID="<?php echo $row->class_id; ?>" data-toggle="modal" data-target="#deleteClass" class="btn btn-outline-danger btn-sm deleteClassID"><i class="fas fa-fw fa-trash"></i> Delete </button>
+                        <button name="delete_btn" title="Delete class" deleteClassID="<?php echo $row->class_id; ?>" data-toggle="modal" data-target="#deleteClass" class="btn btn-outline-danger btn-sm deleteClassID"><i class="fas fa-fw fa-trash"></i> </button>
                       </div>
                     </td>
                   </tr>
                 <?php
+                  $count++;
                 }
               } else {
                 ?>
@@ -372,13 +389,37 @@ if (isset($_POST['deleteClassBtn'])) {
         </div>
         <form method="post" action="class-page">
           <div class="modal-body">
-            <p>Are you sure to delete this record? if yes, type in your staff ID followed by deLEtED e.g stf/21/0001 deLEtED</p>
+            <p>Are you sure to delete this class? if yes, type in your staff ID followed by deLEtED e.g stf/21/0001 deLEtED</p>
             <input type="text" name="userID" autocomplete="off" placeholder="stf/21/0001 deLEtED"  class="form-control" required>
             <input type="hidden" id="deleteClassID" name="deleteClassID" value="" class="form-control">
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
             <button type="submit" name="deleteClassBtn" class="btn btn-sm btn-primary"> Yes </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Remove Assign Class teacher Modal-->
+  <div class="modal fade" id="rmAssignClass" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Remove Class Teacher Page</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <form method="post" action="class-page">
+          <div class="modal-body">
+            <p>Are you sure you want to remove the class teacher?</p>
+            <input type="hidden" id="rmAssignClassID" name="rmAssignClassID" value="" class="form-control">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
+            <button type="submit" name="rmAssignClassBtn" class="btn btn-sm btn-primary"> Yes </button>
           </div>
         </form>
       </div>
