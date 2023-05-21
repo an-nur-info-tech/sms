@@ -304,7 +304,7 @@ $(".assign_btn").click(function(e) {
     processData: false,
     dataType: "html",
     success: function(response){
-      // console.log("Response", response[0]["staff_id"]);
+      console.log("Response", response);
       // let result = JSON.parse(response);
       // $("#teacher_id").val(response["staff_id"]);
       // for(let i = 0; i < response.length; i++)

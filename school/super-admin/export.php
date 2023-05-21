@@ -8,8 +8,11 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Writer\Xls;
 use PhpOffice\PhpSpreadsheet\Writer\Csv;
 
+
+$db = new Database();
+
+// STUDENT RECORD EXPORT
 if (isset($_POST['export_btn'])) {
-  $db = new Database();
 
   $select_class = $_POST['select_class'];
   $f_format = $_POST['f_format'];
@@ -165,5 +168,104 @@ if (isset($_POST['export_btn'])) {
       die($db->getError());
     }
   }
-  $db->Disconect();
 }
+
+// SUBJECT EXPORT
+if (isset($_POST['subjectXportBtn']))
+{
+  // $select_class = $_POST['select_class']; 
+  $class_id = $_POST['select_class'];
+  $subject_id = $_POST['subject_id'];
+  $session_id = $_POST['session_id'];
+  $term_id = $_POST['term_id'];
+
+  // Get class name and subject name
+  $db->query(
+    "SELECT * FROM class_subject_tbl AS csn
+    JOIN class_tbl ON class_tbl.class_id = csn.class_id
+    JOIN subject_tbl ON subject_tbl.subject_id = csn.subject_id
+    WHERE csn.subject_id = :subject_id;"
+  );
+  $db->bind(':subject_id', $subject_id);
+  if ($db->execute())
+  {
+    if ($db->rowCount() > 0)
+    {
+      $data = $db->single();
+      $cls_name = $data->class_name;
+      $subject_name = $data->subject_name;
+    }else{
+      $cls_name = "Class";
+      $subject_name = "Subject";
+    }
+  }
+  
+  
+
+  $db->query("SELECT class_name FROM class_tbl WHERE class_id = :class_id;");
+  $db->bind(':class_id', $class_id);
+  if($db->execute())
+  {
+    if ($db->rowCount() > 0)
+    {
+      $result = $db->single();
+      $class_name = $result->class_name;
+
+      $db->query("SELECT admNo FROM students_tbl WHERE class_name = :class_name;");
+      $db->bind(':class_name', $class_name);
+      if($db->execute())
+      {
+        if ($db->rowCount() > 0)
+        {
+          $count = 2;
+          $filename = "$cls_name $subject_name";
+
+          $spreadsheet = new Spreadsheet();
+          $sheet = $spreadsheet->getActiveSheet();
+
+          $sheet->setCellValue('A1', 'CLASS ID');
+          $sheet->setCellValue('B1', 'SESSION ID');
+          $sheet->setCellValue('C1', 'TERM ID');
+          $sheet->setCellValue('D1', 'SUBJECT ID');
+          $sheet->setCellValue('E1', 'ADM. NO');
+          $sheet->setCellValue('F1', 'C.A');
+          $sheet->setCellValue('G1', 'EXAM');
+    
+          
+          $data = $db->resultset();
+          foreach($data as $row)
+          {
+            $sheet->setCellValue('A'.$count, $class_id);
+            $sheet->setCellValue('B'.$count, $session_id);
+            $sheet->setCellValue('C'.$count, $term_id);
+            $sheet->setCellValue('D'.$count, $subject_id);
+            $sheet->setCellValue('E'.$count, $row->admNo);
+            $sheet->setCellValue('F'.$count, '');
+            $sheet->setCellValue('G'.$count, '');
+
+            $count++;
+          }
+
+          $writer = new Xlsx($spreadsheet);
+          $file_to_save = $filename.'.xlsx';
+          
+          header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+          //header('Content-Disposition: attachment; filename="'.urlencode($file_to_save).'"');
+          header('Content-Disposition: attachment; filename="'.$file_to_save.'"');
+          if($writer->save('php://output')){
+            header('Location: excel-upload');
+          }
+        }
+        else 
+        {
+          echo "No record found";
+        }
+      }
+    }
+    else 
+    {
+      echo "No class found";
+    }
+  }
+}
+$db->Disconect();

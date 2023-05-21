@@ -245,7 +245,7 @@ if (isset($_POST['result_btn'])) {
         <p class="text-danger">Please upload only Excel file format </p>
     </div><br>
 
-    <form method="POST" action="excel-upload" enctype="multipart/form-data">
+    <form action="export" method="post" target="_blank">
         <div class="card">
             <div class="card-header">
                 Subject Result Template Download
@@ -266,7 +266,7 @@ if (isset($_POST['result_btn'])) {
                                         $data = $db->resultset();
                                         foreach ($data as $record) {
                                     ?>
-                                        <option value="<?php echo $record->class_name; ?>"> <?php echo $record->class_name; ?> </option>
+                                        <option value="<?php echo $record->class_id; ?>"> <?php echo $record->class_name; ?> </option>
                                         <?php
                                         }
                                     } else {
@@ -362,7 +362,7 @@ if (isset($_POST['result_btn'])) {
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
-                            <button class="btn btn-primary" type="submit" name="" disabled>Download</button>
+                            <button class="btn btn-primary" type="submit" name="subjectXportBtn" >Download</button>
                         </div>
                     </div>
                 </div>

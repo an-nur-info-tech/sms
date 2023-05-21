@@ -70,24 +70,67 @@ if (isset($_POST['submit_btn'])) {
       if ($section == "NS/") { //Nursery school
         $section_nur = $section . date('y') . "/";
         $db->query("SELECT student_id FROM students_tbl  ORDER BY student_id DESC LIMIT 1;"); //Get the last record for creation of custom adm number
-        $result = $db->resultset();
-        if ($db->rowCount() > 0) { //Creating admission number from last record if available
-          foreach ($result as $record) {
-            $lastID = $record->student_id;
-            $getNumber = str_replace($section_nur, "", $lastID);
-            $id_increase = $getNumber + 1;
-            $get_string = str_pad($id_increase, 4, 0, STR_PAD_LEFT);
-            $id = $section_nur . $get_string;
+        
+        if ($db->execute())
+        {
+          if ($db->rowCount() > 0) { //Creating admission number from last record if available
+            $result = $db->resultset();
+            foreach ($result as $record) {
+              $lastID = $record->student_id;
+              $getNumber = str_replace($section_nur, "", $lastID);
+              $id_increase = $getNumber + 1;
+              $get_string = str_pad($id_increase, 4, 0, STR_PAD_LEFT);
+              $id = $section_nur . $get_string;
+              $hash_pwd = password_hash('123654', PASSWORD_BCRYPT);
+  
+              $db->query(
+                "INSERT INTO 
+                students_tbl(admNo, pwd, sname, lname, oname, class_name, passport, dob, religion, gender, nationality, 
+                student_state,lga) 
+                VALUES(:id, :hash_pwd, :student_sname, :student_lname, :student_oname, :class_name, :target_file, 
+                :dob, :religion, :gender, :nationality, :student_state, :lga);"
+              );
+              $db->bind(':id', $id);
+              $db->bind(':hash_pwd', $hash_pwd);
+              $db->bind(':student_sname', $data['student_sname']);
+              $db->bind(':student_lname', $data['student_lname']);
+              $db->bind(':student_oname', $data['student_oname']);
+              $db->bind(':class_name', $data['class_name']);
+              $db->bind(':target_file', $target_file);
+              $db->bind(':dob', $data['dob']);
+              $db->bind(':religion', $data['religion']);
+              $db->bind(':gender', $data['gender']);
+              $db->bind(':nationality', $data['nationality']);
+              $db->bind(':student_state', $data['student_state']);
+              $db->bind(':lga', $data['lga']);
+  
+              if(move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file) && ($db->execute())) {
+                $_SESSION['errorMsg'] = true;
+                $_SESSION['errorTitle'] = "Success";
+                $_SESSION['sessionMsg'] = "Record added!";
+                $_SESSION['sessionIcon'] = "success";
+                $_SESSION['location'] = "student-reg";
+              }else {
+                $_SESSION['errorMsg'] = true;
+                $_SESSION['errorTitle'] = "Error";
+                $_SESSION['sessionMsg'] = "Error occured!";
+                $_SESSION['sessionIcon'] = "error";
+                $_SESSION['location'] = "student-reg";
+                die($db->getError());
+              }
+            }
+          } else { //Initial admission number if no record in the database
+            $section_nur = $section . date('y') . "/0001";
             $hash_pwd = password_hash('123654', PASSWORD_BCRYPT);
-
+  
             $db->query(
               "INSERT INTO 
               students_tbl(admNo, pwd, sname, lname, oname, class_name, passport, dob, religion, gender, nationality, 
               student_state,lga) 
-              VALUES(:id, :hash_pwd, :student_sname, :student_lname, :student_oname, :class_name, :target_file, 
+              VALUES(:section_nur, :hash_pwd, :student_sname, :student_lname, :student_oname, :class_name, :target_file, 
               :dob, :religion, :gender, :nationality, :student_state, :lga);"
             );
-            $db->bind(':id', $id);
+            $db->bind(':section_nur', $section_nur);
             $db->bind(':hash_pwd', $hash_pwd);
             $db->bind(':student_sname', $data['student_sname']);
             $db->bind(':student_lname', $data['student_lname']);
@@ -100,8 +143,8 @@ if (isset($_POST['submit_btn'])) {
             $db->bind(':nationality', $data['nationality']);
             $db->bind(':student_state', $data['student_state']);
             $db->bind(':lga', $data['lga']);
-
-            if(move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file) && $db->execute()) {
+  
+            if(move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file) && ($db->execute())) {
               $_SESSION['errorMsg'] = true;
               $_SESSION['errorTitle'] = "Success";
               $_SESSION['sessionMsg'] = "Record added!";
@@ -115,68 +158,72 @@ if (isset($_POST['submit_btn'])) {
               $_SESSION['location'] = "student-reg";
               die($db->getError());
             }
-          }
-        } else { //Initial admission number if no record in the database
-          $section_nur = $section . date('y') . "/0001";
-          $hash_pwd = password_hash('123654', PASSWORD_BCRYPT);
-
-          $db->query(
-            "INSERT INTO 
-            students_tbl(admNo, pwd, sname, lname, oname, class_name, passport, dob, religion, gender, nationality, 
-            student_state,lga) 
-            VALUES(:section_nur, :hash_pwd, :student_sname, :student_lname, :student_oname, :class_name, :target_file, 
-            :dob, :religion, :gender, :nationality, :student_state, :lga);"
-          );
-          $db->bind(':section_nur', $section_nur);
-          $db->bind(':hash_pwd', $hash_pwd);
-          $db->bind(':student_sname', $data['student_sname']);
-          $db->bind(':student_lname', $data['student_lname']);
-          $db->bind(':student_oname', $data['student_oname']);
-          $db->bind(':class_name', $data['class_name']);
-          $db->bind(':target_file', $target_file);
-          $db->bind(':dob', $data['dob']);
-          $db->bind(':religion', $data['religion']);
-          $db->bind(':gender', $data['gender']);
-          $db->bind(':nationality', $data['nationality']);
-          $db->bind(':student_state', $data['student_state']);
-          $db->bind(':lga', $data['lga']);
-
-          if(move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file) && $db->execute()) {
-            $_SESSION['errorMsg'] = true;
-            $_SESSION['errorTitle'] = "Success";
-            $_SESSION['sessionMsg'] = "Record added!";
-            $_SESSION['sessionIcon'] = "success";
-            $_SESSION['location'] = "student-reg";
-          }else {
-            $_SESSION['errorMsg'] = true;
-            $_SESSION['errorTitle'] = "Error";
-            $_SESSION['sessionMsg'] = "Error occured!";
-            $_SESSION['sessionIcon'] = "error";
-            $_SESSION['location'] = "student-reg";
-            die($db->getError());
           }
         }
       } elseif ($section == "PS/") { //Primary school
         $section_nur = $section . date('y') . "/";
         $db->query("SELECT student_id FROM students_tbl  ORDER BY student_id DESC LIMIT 1;"); //Get the last record for creation of custom adm number
-        $result = $db->resultset();
-        if ($db->rowCount() > 0) { //Creating admission number from last record if available
-          foreach ($result as $record) {
-            $lastID = $record->student_id;
-            $getNumber = str_replace($section_nur, "", $lastID);
-            $id_increase = $getNumber + 1;
-            $get_string = str_pad($id_increase, 4, 0, STR_PAD_LEFT);
-            $id = $section_nur . $get_string;
+        
+        if ($db->execute())
+        {
+          if ($db->rowCount() > 0) { //Creating admission number from last record if available
+            $result = $db->resultset();
+            foreach ($result as $record) {
+              $lastID = $record->student_id;
+              $getNumber = str_replace($section_nur, "", $lastID);
+              $id_increase = $getNumber + 1;
+              $get_string = str_pad($id_increase, 4, 0, STR_PAD_LEFT);
+              $id = $section_nur . $get_string;
+              $hash_pwd = password_hash('123654', PASSWORD_BCRYPT);
+  
+              $db->query(
+                "INSERT INTO 
+                students_tbl(admNo, pwd, sname, lname, oname, class_name, passport, dob, religion, gender, nationality, 
+                student_state,lga) 
+                VALUES(:id, :hash_pwd, :student_sname, :student_lname, :student_oname, :class_name, :target_file, 
+                :dob, :religion, :gender, :nationality, :student_state, :lga);"
+              );
+              $db->bind(':id', $id);
+              $db->bind(':hash_pwd', $hash_pwd);
+              $db->bind(':student_sname', $data['student_sname']);
+              $db->bind(':student_lname', $data['student_lname']);
+              $db->bind(':student_oname', $data['student_oname']);
+              $db->bind(':class_name', $data['class_name']);
+              $db->bind(':target_file', $target_file);
+              $db->bind(':dob', $data['dob']);
+              $db->bind(':religion', $data['religion']);
+              $db->bind(':gender', $data['gender']);
+              $db->bind(':nationality', $data['nationality']);
+              $db->bind(':student_state', $data['student_state']);
+              $db->bind(':lga', $data['lga']);
+  
+              if(move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file) && ($db->execute())) {
+                $_SESSION['errorMsg'] = true;
+                $_SESSION['errorTitle'] = "Success";
+                $_SESSION['sessionMsg'] = "Record added!";
+                $_SESSION['sessionIcon'] = "success";
+                $_SESSION['location'] = "student-reg";
+              }else {
+                $_SESSION['errorMsg'] = true;
+                $_SESSION['errorTitle'] = "Error";
+                $_SESSION['sessionMsg'] = "Error occured!";
+                $_SESSION['sessionIcon'] = "error";
+                $_SESSION['location'] = "student-reg";
+                die($db->getError());
+              }
+            }
+          } else { //Initial admission number if no record in the database
+            $section_nur = $section . date('y') . "/0001";
             $hash_pwd = password_hash('123654', PASSWORD_BCRYPT);
-
+  
             $db->query(
               "INSERT INTO 
               students_tbl(admNo, pwd, sname, lname, oname, class_name, passport, dob, religion, gender, nationality, 
               student_state,lga) 
-              VALUES(:id, :hash_pwd, :student_sname, :student_lname, :student_oname, :class_name, :target_file, 
+              VALUES(:section_nur, :hash_pwd, :student_sname, :student_lname, :student_oname, :class_name, :target_file, 
               :dob, :religion, :gender, :nationality, :student_state, :lga);"
             );
-            $db->bind(':id', $id);
+            $db->bind(':section_nur', $section_nur);
             $db->bind(':hash_pwd', $hash_pwd);
             $db->bind(':student_sname', $data['student_sname']);
             $db->bind(':student_lname', $data['student_lname']);
@@ -189,8 +236,8 @@ if (isset($_POST['submit_btn'])) {
             $db->bind(':nationality', $data['nationality']);
             $db->bind(':student_state', $data['student_state']);
             $db->bind(':lga', $data['lga']);
-
-            if(move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file) && $db->execute()) {
+  
+            if(move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file) && ($db->execute())) {
               $_SESSION['errorMsg'] = true;
               $_SESSION['errorTitle'] = "Success";
               $_SESSION['sessionMsg'] = "Record added!";
@@ -204,68 +251,72 @@ if (isset($_POST['submit_btn'])) {
               $_SESSION['location'] = "student-reg";
               die($db->getError());
             }
-          }
-        } else { //Initial admission number if no record in the database
-          $section_nur = $section . date('y') . "/0001";
-          $hash_pwd = password_hash('123654', PASSWORD_BCRYPT);
-
-          $db->query(
-            "INSERT INTO 
-            students_tbl(admNo, pwd, sname, lname, oname, class_name, passport, dob, religion, gender, nationality, 
-            student_state,lga) 
-            VALUES(:section_nur, :hash_pwd, :student_sname, :student_lname, :student_oname, :class_name, :target_file, 
-            :dob, :religion, :gender, :nationality, :student_state, :lga);"
-          );
-          $db->bind(':section_nur', $section_nur);
-          $db->bind(':hash_pwd', $hash_pwd);
-          $db->bind(':student_sname', $data['student_sname']);
-          $db->bind(':student_lname', $data['student_lname']);
-          $db->bind(':student_oname', $data['student_oname']);
-          $db->bind(':class_name', $data['class_name']);
-          $db->bind(':target_file', $target_file);
-          $db->bind(':dob', $data['dob']);
-          $db->bind(':religion', $data['religion']);
-          $db->bind(':gender', $data['gender']);
-          $db->bind(':nationality', $data['nationality']);
-          $db->bind(':student_state', $data['student_state']);
-          $db->bind(':lga', $data['lga']);
-
-          if(move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file) && $db->execute()) {
-            $_SESSION['errorMsg'] = true;
-            $_SESSION['errorTitle'] = "Success";
-            $_SESSION['sessionMsg'] = "Record added!";
-            $_SESSION['sessionIcon'] = "success";
-            $_SESSION['location'] = "student-reg";
-          }else {
-            $_SESSION['errorMsg'] = true;
-            $_SESSION['errorTitle'] = "Error";
-            $_SESSION['sessionMsg'] = "Error occured!";
-            $_SESSION['sessionIcon'] = "error";
-            $_SESSION['location'] = "student-reg";
-            die($db->getError());
           }
         }
       } elseif ($section == "SS/") { //Secondary School
         $section_nur = $section . date('y') . "/";
         $db->query("SELECT student_id FROM students_tbl  ORDER BY student_id DESC LIMIT 1;"); //Get the last record for creation of custom adm number
-        $result = $db->resultset();
-        if ($db->rowCount() > 0) { //Creating admission number from last record if available
-          foreach ($result as $record) {
-            $lastID = $record->student_id;
-            $getNumber = str_replace($section_nur, "", $lastID);
-            $id_increase = $getNumber + 1;
-            $get_string = str_pad($id_increase, 4, 0, STR_PAD_LEFT);
-            $id = $section_nur . $get_string;
+        
+        if ($db->execute())
+        {
+          if ($db->rowCount() > 0) { //Creating admission number from last record if available
+            $result = $db->resultset();
+            foreach ($result as $record) {
+              $lastID = $record->student_id;
+              $getNumber = str_replace($section_nur, "", $lastID);
+              $id_increase = $getNumber + 1;
+              $get_string = str_pad($id_increase, 4, 0, STR_PAD_LEFT);
+              $id = $section_nur . $get_string;
+              $hash_pwd = password_hash('123654', PASSWORD_BCRYPT);
+  
+              $db->query(
+                "INSERT INTO 
+                students_tbl(admNo, pwd, sname, lname, oname, class_name, passport, dob, religion, gender, nationality, 
+                student_state,lga) 
+                VALUES(:id, :hash_pwd, :student_sname, :student_lname, :student_oname, :class_name, :target_file, 
+                :dob, :religion, :gender, :nationality, :student_state, :lga);"
+              );
+              $db->bind(':id', $id);
+              $db->bind(':hash_pwd', $hash_pwd);
+              $db->bind(':student_sname', $data['student_sname']);
+              $db->bind(':student_lname', $data['student_lname']);
+              $db->bind(':student_oname', $data['student_oname']);
+              $db->bind(':class_name', $data['class_name']);
+              $db->bind(':target_file', $target_file);
+              $db->bind(':dob', $data['dob']);
+              $db->bind(':religion', $data['religion']);
+              $db->bind(':gender', $data['gender']);
+              $db->bind(':nationality', $data['nationality']);
+              $db->bind(':student_state', $data['student_state']);
+              $db->bind(':lga', $data['lga']);
+  
+              if(move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file) && ($db->execute())) {
+                $_SESSION['errorMsg'] = true;
+                $_SESSION['errorTitle'] = "Success";
+                $_SESSION['sessionMsg'] = "Record added!";
+                $_SESSION['sessionIcon'] = "success";
+                $_SESSION['location'] = "student-reg";
+              }else {
+                $_SESSION['errorMsg'] = true;
+                $_SESSION['errorTitle'] = "Error";
+                $_SESSION['sessionMsg'] = "Error occured!";
+                $_SESSION['sessionIcon'] = "error";
+                $_SESSION['location'] = "student-reg";
+                die($db->getError());
+              }
+            }
+          } else { //Initial admission number if no record in the database
+            $section_nur = $section . date('y') . "/0001";
             $hash_pwd = password_hash('123654', PASSWORD_BCRYPT);
-
+  
             $db->query(
               "INSERT INTO 
               students_tbl(admNo, pwd, sname, lname, oname, class_name, passport, dob, religion, gender, nationality, 
               student_state,lga) 
-              VALUES(:id, :hash_pwd, :student_sname, :student_lname, :student_oname, :class_name, :target_file, 
+              VALUES(:section_nur, :hash_pwd, :student_sname, :student_lname, :student_oname, :class_name, :target_file, 
               :dob, :religion, :gender, :nationality, :student_state, :lga);"
             );
-            $db->bind(':id', $id);
+            $db->bind(':section_nur', $section_nur);
             $db->bind(':hash_pwd', $hash_pwd);
             $db->bind(':student_sname', $data['student_sname']);
             $db->bind(':student_lname', $data['student_lname']);
@@ -278,8 +329,8 @@ if (isset($_POST['submit_btn'])) {
             $db->bind(':nationality', $data['nationality']);
             $db->bind(':student_state', $data['student_state']);
             $db->bind(':lga', $data['lga']);
-
-            if(move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file) && $db->execute()) {
+  
+            if(move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file) && ($db->execute())) {
               $_SESSION['errorMsg'] = true;
               $_SESSION['errorTitle'] = "Success";
               $_SESSION['sessionMsg'] = "Record added!";
@@ -293,45 +344,6 @@ if (isset($_POST['submit_btn'])) {
               $_SESSION['location'] = "student-reg";
               die($db->getError());
             }
-          }
-        } else { //Initial admission number if no record in the database
-          $section_nur = $section . date('y') . "/0001";
-          $hash_pwd = password_hash('123654', PASSWORD_BCRYPT);
-
-          $db->query(
-            "INSERT INTO 
-            students_tbl(admNo, pwd, sname, lname, oname, class_name, passport, dob, religion, gender, nationality, 
-            student_state,lga) 
-            VALUES(:section_nur, :hash_pwd, :student_sname, :student_lname, :student_oname, :class_name, :target_file, 
-            :dob, :religion, :gender, :nationality, :student_state, :lga);"
-          );
-          $db->bind(':section_nur', $section_nur);
-          $db->bind(':hash_pwd', $hash_pwd);
-          $db->bind(':student_sname', $data['student_sname']);
-          $db->bind(':student_lname', $data['student_lname']);
-          $db->bind(':student_oname', $data['student_oname']);
-          $db->bind(':class_name', $data['class_name']);
-          $db->bind(':target_file', $target_file);
-          $db->bind(':dob', $data['dob']);
-          $db->bind(':religion', $data['religion']);
-          $db->bind(':gender', $data['gender']);
-          $db->bind(':nationality', $data['nationality']);
-          $db->bind(':student_state', $data['student_state']);
-          $db->bind(':lga', $data['lga']);
-
-          if(move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file) && $db->execute()) {
-            $_SESSION['errorMsg'] = true;
-            $_SESSION['errorTitle'] = "Success";
-            $_SESSION['sessionMsg'] = "Record added!";
-            $_SESSION['sessionIcon'] = "success";
-            $_SESSION['location'] = "student-reg";
-          }else {
-            $_SESSION['errorMsg'] = true;
-            $_SESSION['errorTitle'] = "Error";
-            $_SESSION['sessionMsg'] = "Error occured!";
-            $_SESSION['sessionIcon'] = "error";
-            $_SESSION['location'] = "student-reg";
-            die($db->getError());
           }
         }
       }
@@ -341,29 +353,166 @@ if (isset($_POST['submit_btn'])) {
       if ($section == "NS/") { //Nursery school
         $section_nur = $section . date('y') . "/";
         $db->query("SELECT student_id FROM students_tbl  ORDER BY student_id DESC LIMIT 1;"); //Get the last record for creation of custom adm number
-        $result = $db->resultset();
-        if ($db->rowCount() > 0) { //Creating admission number from last record if available
-          foreach ($result as $record) {
-            $lastID = $record->student_id;
-            $getNumber = str_replace($section_nur, "", $lastID);
-            $id_increase = $getNumber + 1;
-            $get_string = str_pad($id_increase, 4, 0, STR_PAD_LEFT);
-            $id = $section_nur . $get_string;
+        
+        if ($db->execute())
+        {
+          if ($db->rowCount() > 0) { //Creating admission number from last record if available
+            $result = $db->resultset();
+            foreach ($result as $record) {
+              $lastID = $record->student_id;
+              $getNumber = str_replace($section_nur, "", $lastID);
+              $id_increase = $getNumber + 1;
+              $get_string = str_pad($id_increase, 4, 0, STR_PAD_LEFT);
+              $id = $section_nur . $get_string;
+              $hash_pwd = password_hash('123654', PASSWORD_BCRYPT);
+  
+              $db->query(
+                "INSERT INTO 
+                students_tbl(admNo, pwd, sname, lname, oname, class_name, dob, religion, gender, nationality, 
+                student_state, lga) 
+                VALUES(:id, :hash_pwd, :student_sname, :student_lname, :student_oname, :class_name,  
+                :dob, :religion, :gender, :nationality, :student_state, :lga);"
+              );
+              $db->bind(':id', $id);
+              $db->bind(':hash_pwd', $hash_pwd);
+              $db->bind(':student_sname', $data['student_sname']);
+              $db->bind(':student_lname', $data['student_lname']);
+              $db->bind(':student_oname', $data['student_oname']);
+              $db->bind(':class_name', $data['class_name']);
+              $db->bind(':dob', $data['dob']);
+              $db->bind(':religion', $data['religion']);
+              $db->bind(':gender', $data['gender']);
+              $db->bind(':nationality', $data['nationality']);
+              $db->bind(':student_state', $data['student_state']);
+              $db->bind(':lga', $data['lga']);
+              
+              if(!$db->execute()) {
+                $_SESSION['errorMsg'] = true;
+                $_SESSION['errorTitle'] = "Error";
+                $_SESSION['sessionMsg'] = "Error occured!";
+                $_SESSION['sessionIcon'] = "error";
+                $_SESSION['location'] = "student-reg";
+                die($db->getError());
+              } 
+              else 
+              {
+                $_SESSION['errorMsg'] = true;
+                $_SESSION['errorTitle'] = "Success";
+                $_SESSION['sessionMsg'] = "Record added!";
+                $_SESSION['sessionIcon'] = "success";
+                $_SESSION['location'] = "student-reg";
+              }
+            }
+          } else { //Initial admission number if no record in the database
+            $section_nur = $section . date('y') . "/0001";
             $hash_pwd = password_hash('123654', PASSWORD_BCRYPT);
-
             $db->query(
               "INSERT INTO 
               students_tbl(admNo, pwd, sname, lname, oname, class_name, dob, religion, gender, nationality, 
               student_state,lga) 
-              VALUES(:id, :hash_pwd, :student_sname, :student_lname, :student_oname, :class_name, :target_file, 
+              VALUES(:section_nur, :hash_pwd, :student_sname, :student_lname, :student_oname, :class_name, 
               :dob, :religion, :gender, :nationality, :student_state, :lga);"
             );
-            $db->bind(':id', $id);
+            $db->bind(':section_nur', $section_nur);
             $db->bind(':hash_pwd', $hash_pwd);
             $db->bind(':student_sname', $data['student_sname']);
             $db->bind(':student_lname', $data['student_lname']);
             $db->bind(':student_oname', $data['student_oname']);
             $db->bind(':class_name', $data['class_name']);
+            $db->bind(':dob', $data['dob']);
+            $db->bind(':religion', $data['religion']);
+            $db->bind(':gender', $data['gender']);
+            $db->bind(':nationality', $data['nationality']);
+            $db->bind(':student_state', $data['student_state']);
+            $db->bind(':lga', $data['lga']);
+  
+            if(!$db->execute()) {
+              $_SESSION['errorMsg'] = true;
+              $_SESSION['errorTitle'] = "Error";
+              $_SESSION['sessionMsg'] = "Error occured!";
+              $_SESSION['sessionIcon'] = "error";
+              $_SESSION['location'] = "student-reg";
+              die($db->getError());
+            } 
+            else 
+            {
+              $_SESSION['errorMsg'] = true;
+              $_SESSION['errorTitle'] = "Success";
+              $_SESSION['sessionMsg'] = "Record added!";
+              $_SESSION['sessionIcon'] = "success";
+              $_SESSION['location'] = "student-reg";
+            }
+          }
+        }
+      } elseif ($section == "PS/") { //Primary school
+        $section_nur = $section . date('y') . "/";
+        $db->query("SELECT student_id FROM students_tbl  ORDER BY student_id DESC LIMIT 1;"); //Get the last record for creation of custom adm number
+        
+        if ($db->execute())
+        {
+          if ($db->rowCount() > 0) { //Creating admission number from last record if available
+            $result = $db->resultset();
+            foreach ($result as $record) {
+              $lastID = $record->student_id;
+              $getNumber = str_replace($section_nur, "", $lastID);
+              $id_increase = $getNumber + 1;
+              $get_string = str_pad($id_increase, 4, 0, STR_PAD_LEFT);
+              $id = $section_nur . $get_string;
+              $hash_pwd = password_hash('123654', PASSWORD_BCRYPT);
+              $db->query(
+                "INSERT INTO 
+                students_tbl(admNo, pwd, sname, lname, oname, class_name, dob, religion, gender, nationality, 
+                student_state,lga) 
+                VALUES(:id, :hash_pwd, :student_sname, :student_lname, :student_oname, :class_name, 
+                :dob, :religion, :gender, :nationality, :student_state, :lga);"
+              );
+              $db->bind(':id', $id);
+              $db->bind(':hash_pwd', $hash_pwd);
+              $db->bind(':student_sname', $data['student_sname']);
+              $db->bind(':student_lname', $data['student_lname']);
+              $db->bind(':student_oname', $data['student_oname']);
+              $db->bind(':class_name', $data['class_name']);
+              $db->bind(':dob', $data['dob']);
+              $db->bind(':religion', $data['religion']);
+              $db->bind(':gender', $data['gender']);
+              $db->bind(':nationality', $data['nationality']);
+              $db->bind(':student_state', $data['student_state']);
+              $db->bind(':lga', $data['lga']);
+  
+              if(!$db->execute()) {
+                $_SESSION['errorMsg'] = true;
+                $_SESSION['errorTitle'] = "Error";
+                $_SESSION['sessionMsg'] = "Error occured!";
+                $_SESSION['sessionIcon'] = "error";
+                $_SESSION['location'] = "student-reg";
+                die($db->getError());
+              } 
+              else 
+              {
+                $_SESSION['errorMsg'] = true;
+                $_SESSION['errorTitle'] = "Success";
+                $_SESSION['sessionMsg'] = "Record added!";
+                $_SESSION['sessionIcon'] = "success";
+                $_SESSION['location'] = "student-reg";
+              }
+            }
+          } else { //Initial admission number if no record in the database
+            $section_nur = $section . date('y') . "/0001";
+            $hash_pwd = password_hash('123654', PASSWORD_BCRYPT);
+            $db->query(
+              "INSERT INTO 
+              students_tbl(admNo, pwd, sname, lname, oname, class_name, dob, religion, gender, nationality, 
+              student_state,lga) 
+              VALUES(:section_nur, :hash_pwd, :student_sname, :student_lname, :student_oname, :class_name, 
+              :dob, :religion, :gender, :nationality, :student_state, :lga);"
+            );
+            $db->bind(':section_nur', $section_nur);
+            $db->bind(':hash_pwd', $hash_pwd);
+            $db->bind(':student_sname', $data['student_sname']);
+            $db->bind(':student_lname', $data['student_lname']);
+            $db->bind(':student_oname', $data['student_oname']);
+            $db->bind(':class_name', $data['class_name']);
+            $db->bind(':target_file', $target_file);
             $db->bind(':dob', $data['dob']);
             $db->bind(':religion', $data['religion']);
             $db->bind(':gender', $data['gender']);
@@ -388,156 +537,70 @@ if (isset($_POST['submit_btn'])) {
               $_SESSION['location'] = "student-reg";
             }
           }
-        } else { //Initial admission number if no record in the database
-          $section_nur = $section . date('y') . "/0001";
-          $hash_pwd = password_hash('123654', PASSWORD_BCRYPT);
-          $db->query(
-            "INSERT INTO 
-            students_tbl(admNo, pwd, sname, lname, oname, class_name, dob, religion, gender, nationality, 
-            student_state,lga) 
-            VALUES(:section_nur, :hash_pwd, :student_sname, :student_lname, :student_oname, :class_name, 
-            :dob, :religion, :gender, :nationality, :student_state, :lga);"
-          );
-          $db->bind(':section_nur', $section_nur);
-          $db->bind(':hash_pwd', $hash_pwd);
-          $db->bind(':student_sname', $data['student_sname']);
-          $db->bind(':student_lname', $data['student_lname']);
-          $db->bind(':student_oname', $data['student_oname']);
-          $db->bind(':class_name', $data['class_name']);
-          $db->bind(':dob', $data['dob']);
-          $db->bind(':religion', $data['religion']);
-          $db->bind(':gender', $data['gender']);
-          $db->bind(':nationality', $data['nationality']);
-          $db->bind(':student_state', $data['student_state']);
-          $db->bind(':lga', $data['lga']);
-
-          if(!$db->execute()) {
-            $_SESSION['errorMsg'] = true;
-            $_SESSION['errorTitle'] = "Error";
-            $_SESSION['sessionMsg'] = "Error occured!";
-            $_SESSION['sessionIcon'] = "error";
-            $_SESSION['location'] = "student-reg";
-            die($db->getError());
-          } 
-          else 
-          {
-            $_SESSION['errorMsg'] = true;
-            $_SESSION['errorTitle'] = "Success";
-            $_SESSION['sessionMsg'] = "Record added!";
-            $_SESSION['sessionIcon'] = "success";
-            $_SESSION['location'] = "student-reg";
-          }
-        }
-      } elseif ($section == "PS/") { //Primary school
-        $section_nur = $section . date('y') . "/";
-        $db->query("SELECT student_id FROM students_tbl  ORDER BY student_id DESC LIMIT 1;"); //Get the last record for creation of custom adm number
-        $result = $db->resultset();
-        if ($db->rowCount() > 0) { //Creating admission number from last record if available
-          foreach ($result as $record) {
-            $lastID = $record->student_id;
-            $getNumber = str_replace($section_nur, "", $lastID);
-            $id_increase = $getNumber + 1;
-            $get_string = str_pad($id_increase, 4, 0, STR_PAD_LEFT);
-            $id = $section_nur . $get_string;
-            $hash_pwd = password_hash('123654', PASSWORD_BCRYPT);
-            $db->query(
-              "INSERT INTO 
-              students_tbl(admNo, pwd, sname, lname, oname, class_name, dob, religion, gender, nationality, 
-              student_state,lga) 
-              VALUES(:id, :hash_pwd, :student_sname, :student_lname, :student_oname, :class_name, 
-              :dob, :religion, :gender, :nationality, :student_state, :lga);"
-            );
-            $db->bind(':id', $id);
-            $db->bind(':hash_pwd', $hash_pwd);
-            $db->bind(':student_sname', $data['student_sname']);
-            $db->bind(':student_lname', $data['student_lname']);
-            $db->bind(':student_oname', $data['student_oname']);
-            $db->bind(':class_name', $data['class_name']);
-            $db->bind(':dob', $data['dob']);
-            $db->bind(':religion', $data['religion']);
-            $db->bind(':gender', $data['gender']);
-            $db->bind(':nationality', $data['nationality']);
-            $db->bind(':student_state', $data['student_state']);
-            $db->bind(':lga', $data['lga']);
-
-            if(!$db->execute()) {
-              $_SESSION['errorMsg'] = true;
-              $_SESSION['errorTitle'] = "Error";
-              $_SESSION['sessionMsg'] = "Error occured!";
-              $_SESSION['sessionIcon'] = "error";
-              $_SESSION['location'] = "student-reg";
-              die($db->getError());
-            } 
-            else 
-            {
-              $_SESSION['errorMsg'] = true;
-              $_SESSION['errorTitle'] = "Success";
-              $_SESSION['sessionMsg'] = "Record added!";
-              $_SESSION['sessionIcon'] = "success";
-              $_SESSION['location'] = "student-reg";
-            }
-          }
-        } else { //Initial admission number if no record in the database
-          $section_nur = $section . date('y') . "/0001";
-          $hash_pwd = password_hash('123654', PASSWORD_BCRYPT);
-          $db->query(
-            "INSERT INTO 
-            students_tbl(admNo, pwd, sname, lname, oname, class_name, dob, religion, gender, nationality, 
-            student_state,lga) 
-            VALUES(:section_nur, :hash_pwd, :student_sname, :student_lname, :student_oname, :class_name, 
-            :dob, :religion, :gender, :nationality, :student_state, :lga);"
-          );
-          $db->bind(':section_nur', $section_nur);
-          $db->bind(':hash_pwd', $hash_pwd);
-          $db->bind(':student_sname', $data['student_sname']);
-          $db->bind(':student_lname', $data['student_lname']);
-          $db->bind(':student_oname', $data['student_oname']);
-          $db->bind(':class_name', $data['class_name']);
-          $db->bind(':target_file', $target_file);
-          $db->bind(':dob', $data['dob']);
-          $db->bind(':religion', $data['religion']);
-          $db->bind(':gender', $data['gender']);
-          $db->bind(':nationality', $data['nationality']);
-          $db->bind(':student_state', $data['student_state']);
-          $db->bind(':lga', $data['lga']);
-          
-          if(!$db->execute()) {
-            $_SESSION['errorMsg'] = true;
-            $_SESSION['errorTitle'] = "Error";
-            $_SESSION['sessionMsg'] = "Error occured!";
-            $_SESSION['sessionIcon'] = "error";
-            $_SESSION['location'] = "student-reg";
-            die($db->getError());
-          } 
-          else 
-          {
-            $_SESSION['errorMsg'] = true;
-            $_SESSION['errorTitle'] = "Success";
-            $_SESSION['sessionMsg'] = "Record added!";
-            $_SESSION['sessionIcon'] = "success";
-            $_SESSION['location'] = "student-reg";
-          }
         }
       } elseif ($section == "SS/") { //Secondary School
         $section_nur = $section . date('y') . "/";
         $db->query("SELECT student_id FROM students_tbl  ORDER BY student_id DESC LIMIT 1;"); //Get the last record for creation of custom adm number
-        $result = $db->resultset();
-        if ($db->rowCount() > 0) { //Creating admission number from last record if available
-          foreach ($result as $record) {
-            $lastID = $record->student_id;
-            $getNumber = str_replace($section_nur, "", $lastID);
-            $id_increase = $getNumber + 1;
-            $get_string = str_pad($id_increase, 4, 0, STR_PAD_LEFT);
-            $id = $section_nur . $get_string;
+        
+        if ($db->execute())
+        {
+          if ($db->rowCount() > 0) { //Creating admission number from last record if available
+            $result = $db->resultset();
+            foreach ($result as $record) {
+              $lastID = $record->student_id;
+              $getNumber = str_replace($section_nur, "", $lastID);
+              $id_increase = $getNumber + 1;
+              $get_string = str_pad($id_increase, 4, 0, STR_PAD_LEFT);
+              $id = $section_nur . $get_string;
+              $hash_pwd = password_hash('123654', PASSWORD_BCRYPT);
+              $db->query(
+                "INSERT INTO 
+                students_tbl(admNo, pwd, sname, lname, oname, class_name, dob, religion, gender, nationality, 
+                student_state,lga) 
+                VALUES(:id, :hash_pwd, :student_sname, :student_lname, :student_oname, :class_name, 
+                :dob, :religion, :gender, :nationality, :student_state, :lga);"
+              );
+              $db->bind(':id', $id);
+              $db->bind(':hash_pwd', $hash_pwd);
+              $db->bind(':student_sname', $data['student_sname']);
+              $db->bind(':student_lname', $data['student_lname']);
+              $db->bind(':student_oname', $data['student_oname']);
+              $db->bind(':class_name', $data['class_name']);
+              $db->bind(':dob', $data['dob']);
+              $db->bind(':religion', $data['religion']);
+              $db->bind(':gender', $data['gender']);
+              $db->bind(':nationality', $data['nationality']);
+              $db->bind(':student_state', $data['student_state']);
+              $db->bind(':lga', $data['lga']);
+  
+              if(!$db->execute()) {
+                $_SESSION['errorMsg'] = true;
+                $_SESSION['errorTitle'] = "Error";
+                $_SESSION['sessionMsg'] = "Error occured!";
+                $_SESSION['sessionIcon'] = "error";
+                $_SESSION['location'] = "student-reg";
+                die($db->getError());
+              } 
+              else 
+              {
+                $_SESSION['errorMsg'] = true;
+                $_SESSION['errorTitle'] = "Success";
+                $_SESSION['sessionMsg'] = "Record added!";
+                $_SESSION['sessionIcon'] = "success";
+                $_SESSION['location'] = "student-reg";
+              }
+            }
+          } else { //Initial admission number if no record in the database
+            $section_nur = $section . date('y') . "/0001";
             $hash_pwd = password_hash('123654', PASSWORD_BCRYPT);
             $db->query(
               "INSERT INTO 
               students_tbl(admNo, pwd, sname, lname, oname, class_name, dob, religion, gender, nationality, 
               student_state,lga) 
-              VALUES(:id, :hash_pwd, :student_sname, :student_lname, :student_oname, :class_name, 
+              VALUES(:section_nur, :hash_pwd, :student_sname, :student_lname, :student_oname, :class_name, 
               :dob, :religion, :gender, :nationality, :student_state, :lga);"
             );
-            $db->bind(':id', $id);
+            $db->bind(':section_nur', $section_nur);
             $db->bind(':hash_pwd', $hash_pwd);
             $db->bind(':student_sname', $data['student_sname']);
             $db->bind(':student_lname', $data['student_lname']);
@@ -549,7 +612,7 @@ if (isset($_POST['submit_btn'])) {
             $db->bind(':nationality', $data['nationality']);
             $db->bind(':student_state', $data['student_state']);
             $db->bind(':lga', $data['lga']);
-
+  
             if(!$db->execute()) {
               $_SESSION['errorMsg'] = true;
               $_SESSION['errorTitle'] = "Error";
@@ -566,52 +629,13 @@ if (isset($_POST['submit_btn'])) {
               $_SESSION['sessionIcon'] = "success";
               $_SESSION['location'] = "student-reg";
             }
-          }
-        } else { //Initial admission number if no record in the database
-          $section_nur = $section . date('y') . "/0001";
-          $hash_pwd = password_hash('123654', PASSWORD_BCRYPT);
-          $db->query(
-            "INSERT INTO 
-            students_tbl(admNo, pwd, sname, lname, oname, class_name, dob, religion, gender, nationality, 
-            student_state,lga) 
-            VALUES(:section_nur, :hash_pwd, :student_sname, :student_lname, :student_oname, :class_name, 
-            :dob, :religion, :gender, :nationality, :student_state, :lga);"
-          );
-          $db->bind(':section_nur', $section_nur);
-          $db->bind(':hash_pwd', $hash_pwd);
-          $db->bind(':student_sname', $data['student_sname']);
-          $db->bind(':student_lname', $data['student_lname']);
-          $db->bind(':student_oname', $data['student_oname']);
-          $db->bind(':class_name', $data['class_name']);
-          $db->bind(':dob', $data['dob']);
-          $db->bind(':religion', $data['religion']);
-          $db->bind(':gender', $data['gender']);
-          $db->bind(':nationality', $data['nationality']);
-          $db->bind(':student_state', $data['student_state']);
-          $db->bind(':lga', $data['lga']);
-
-          if(!$db->execute()) {
-            $_SESSION['errorMsg'] = true;
-            $_SESSION['errorTitle'] = "Error";
-            $_SESSION['sessionMsg'] = "Error occured!";
-            $_SESSION['sessionIcon'] = "error";
-            $_SESSION['location'] = "student-reg";
-            die($db->getError());
-          } 
-          else 
-          {
-            $_SESSION['errorMsg'] = true;
-            $_SESSION['errorTitle'] = "Success";
-            $_SESSION['sessionMsg'] = "Record added!";
-            $_SESSION['sessionIcon'] = "success";
-            $_SESSION['location'] = "student-reg";
           }
         }
       }
     }
   }
-  $db->Disconect();
 }
+$db->Disconect();
 
 
 ?>
@@ -677,26 +701,8 @@ if (isset($_POST['submit_btn'])) {
       <div class="col-md-4">
         <div class="form-group">
           <label for="class_name" class="control-label">* Class </label>
-          <!-- Fetching data from class table -->
           <select name="class_name" id="class_name" class="form-control">
             <option value=""> Select class...</option>
-            <?php
-            $db = new Database();
-            $db->query("SELECT * FROM class_tbl;");
-            $data = $db->resultset();
-            if ($db->rowCount() > 0) {
-              foreach ($data as $record) {
-            ?>
-                <option value="<?php echo $record->class_name; ?>"> <?php echo $record->class_name; ?> </option>
-              <?php
-              }
-            } else {
-              $db->Disconect();
-              ?>
-              <option value=""> No record</option>
-            <?php
-            }
-            ?>
           </select>
         </div>
       </div>

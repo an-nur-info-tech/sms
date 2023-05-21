@@ -3,8 +3,9 @@ include_once '../../database/Database.php';
 $db = new Database();
 
 if(isset($_POST["select_section"])){    
-    $sec = $_POST["select_section"];
+    $sec = $_POST["select_section"]; //Section value
 
+    //Display class according to their section
     if ($sec == "NS/")
     {
         // $db->query("SELECT * FROM class_tbl WHERE class_name LIKE '%JSS%' OR class_name LIKE '%SS%';");
@@ -12,46 +13,54 @@ if(isset($_POST["select_section"])){
         if($db->execute())
         {
             if ($db->rowCount() > 0) {
+                echo "<option value = ''> Select class... </option>";
                 $data = $db->resultset();
                 foreach ($data as $record) {
-                    echo "<option value = '$record->name'> $record->name </option>";
+                    $class_name = $record->class_name;
+                    echo "<option value = '$class_name'> $class_name </option>";
                 }
             } else {
                 echo "<option value = ''> No class found </option>";
             }
         }
     }
-    if ($sec == "PS/")
+    else if ($sec == "PS/")
     {
-        // $db->query("SELECT * FROM class_tbl WHERE class_name LIKE '%JSS%' OR class_name LIKE '%SS%';");
         $db->query("SELECT * FROM class_tbl WHERE class_name LIKE '%PRIMARY%';");
         if($db->execute())
         {
             if ($db->rowCount() > 0) {
+                echo "<option value = ''> Select class... </option>";
                 $data = $db->resultset();
                 foreach ($data as $record) {
-                    echo "<option value = '$record->name'> $record->name </option>";
+                    $class_name = $record->class_name;
+                    echo "<option value = '$class_name'> $class_name </option>";
                 }
             } else {
                 echo "<option value = ''> No class found </option>";
             }
         }
     }
-    if ($sec == "SS/")
+    else if ($sec == "SS/")
     {
-        // $db->query("SELECT * FROM class_tbl WHERE class_name LIKE '%JSS%' OR class_name LIKE '%SS%';");
-        $db->query("SELECT * FROM class_tbl WHERE class_name LIKE '%JSS%' LIMIT 1;");
+        $db->query("SELECT * FROM class_tbl WHERE class_name LIKE '%JSS%' OR class_name LIKE '%SS%';");
         if($db->execute())
         {
             if ($db->rowCount() > 0) {
+                echo "<option value = ''> Select class... </option>";
                 $data = $db->resultset();
                 foreach ($data as $record) {
-                    echo "<option value = '$record->name'> $record->name </option>";
+                    $class_name = $record->class_name;
+                    echo "<option value = '$class_name'> $class_name </option>";
                 }
             } else {
                 echo "<option value = ''> No class found </option>";
             }
         }
+    }
+    else
+    {
+        echo "<option value = ''> Select class... </option>";
     }      
 }
 
