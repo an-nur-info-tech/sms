@@ -212,6 +212,121 @@ if (isset($_POST['subjectImportBtn']))
       $subject_name = "No subject";
     }
   }
+  // Get session name 
+  $db->query("SELECT * FROM session_tbl WHERE session_id = :session_id;");
+  $db->bind(':session_id', $session_id);
+  if ($db->execute())
+  {
+    if ($db->rowCount() > 0)
+    {
+      $data = $db->single();
+      $session_name = $data->session_name;
+    }else{
+      $session_name = "No session";
+    }
+  }
+  // Get term name
+  $db->query("SELECT * FROM term_tbl WHERE term_id = :term_id;");
+  $db->bind(':term_id', $term_id);
+  if ($db->execute())
+  {
+    if ($db->rowCount() > 0)
+    {
+      $data = $db->single();
+      $term_name = $data->term_name;
+    }else{
+      $term_name = "No term";
+    }
+  }
+
+  // Get students records
+  $db->query("SELECT * FROM students_tbl AS st JOIN class_tbl ON class_tbl.class_id = st.class_id WHERE st.class_id = :class_id;");
+  $db->bind(':class_id', $class_id);
+  if ($db->execute()) {
+    if ($db->rowCount() > 0) 
+    {
+      $count = 2;
+      $filename = "$subject_name $class_name $term_name $session_name";
+      // $filename = "$class_id $subject_id";
+      // $filename = $class_name;
+
+      $spreadsheet = new Spreadsheet();
+      $sheet = $spreadsheet->getActiveSheet();
+
+      $sheet->setCellValue('A1', 'CLASS ID');
+      $sheet->setCellValue('B1', 'SESSION ID');
+      $sheet->setCellValue('C1', 'TERM ID');
+      $sheet->setCellValue('D1', 'SUBJECT ID');
+      $sheet->setCellValue('E1', 'ADM. NO');
+      $sheet->setCellValue('F1', 'C.A');
+      $sheet->setCellValue('G1', 'EXAM');
+
+      
+      $data = $db->resultset();
+      foreach($data as $row)
+      {
+        $sheet->setCellValue('A'.$count, $class_id);
+        $sheet->setCellValue('B'.$count, $session_id);
+        $sheet->setCellValue('C'.$count, $term_id);
+        $sheet->setCellValue('D'.$count, $subject_id);
+        $sheet->setCellValue('E'.$count, $row->admNo);
+        $sheet->setCellValue('F'.$count, '');
+        $sheet->setCellValue('G'.$count, '');
+
+        $count++;
+      }
+
+      $writer = new Xlsx($spreadsheet);
+      $file_to_save = $filename.'.xlsx';
+      
+      header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+      //header('Content-Disposition: attachment; filename="'.urlencode($file_to_save).'"');
+      header('Content-Disposition: attachment; filename="'.$file_to_save.'"');
+      if($writer->save('php://output')){
+        header('Location: excel-upload');
+      }
+    }
+    else
+    {
+      echo "Class has no students";
+      exit();
+    }
+  }
+}
+/* if (isset($_POST['subjectImportBtn']))
+{
+  // $select_class = $_POST['select_class']; 
+  $class_id = $_POST['select_class'];
+  $subject_id = $_POST['subject_id'];
+  $session_id = $_POST['session_id'];
+  $term_id = $_POST['term_id'];
+
+  // Get class name 
+  $db->query("SELECT * FROM class_tbl WHERE class_id = :class_id;");
+  $db->bind(':class_id', $class_id);
+  if ($db->execute())
+  {
+    if ($db->rowCount() > 0)
+    {
+      $data = $db->single();
+      $class_name = $data->class_name;
+    }else{
+      $class_name = "No class";
+    }
+  }
+  // Get subject name
+  $db->query("SELECT * FROM subject_tbl WHERE subject_id = :subject_id;");
+  $db->bind(':subject_id', $subject_id);
+  if ($db->execute())
+  {
+    if ($db->rowCount() > 0)
+    {
+      $data = $db->single();
+      $subject_name = $data->subject_name;
+    }else{
+      $subject_name = "No subject";
+    }
+  }
 
   // Get class records
   $db->query(
@@ -271,5 +386,5 @@ if (isset($_POST['subjectImportBtn']))
       echo "No record found";
     }
   }
-}
+} */
 $db->Disconect();

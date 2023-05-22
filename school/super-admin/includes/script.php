@@ -362,7 +362,7 @@ $(".deleteClassID").click(function() {
 });
 /*-------x---- CLASS DELETE MODAL -------x----*/
 
-/*   CHECK SUBJECT ON ADD RESULT PAGE */
+/*   CHECK SUBJECT ON ADD RESULT PAGE and EXCEL UPLOAD PAGE*/
 const checkSubject = () => {
   let class_id = $("#class_id").val(); // Get class id
   // console.log(class_id)

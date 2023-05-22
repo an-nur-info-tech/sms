@@ -511,7 +511,7 @@ if (isset($_POST['submit_btn'])) {
                                     } else {
                                     ?>
                                         <tr>
-                                            <td colspan="4" class="text-center">No record found</td>
+                                            <td colspan="4" class="text-center">Students not found</td>
                                         </tr>
                                 <?php
                                     }

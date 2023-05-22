@@ -6,7 +6,7 @@ require '../assets/phpspreadsheet/vendor/autoload.php';
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-if (isset($_POST['xport_btn'])) {
+/* if (isset($_POST['xport_btn'])) {
     $db = new Database();
 
     $fileName = $_FILES['import_file']['name'];
@@ -80,7 +80,7 @@ if (isset($_POST['xport_btn'])) {
     //$writer->save('hello world.xlsx');
     //return $con = null;
     $db->Disconect();
-}
+} */
 
 if (isset($_POST['result_btn'])) {
     $db = new Database();
@@ -125,9 +125,17 @@ if (isset($_POST['result_btn'])) {
                     $_SESSION['sessionIcon'] = "error";
                     $_SESSION['location'] = "excel-upload";
                 }
+                if (($ca == null) || empty($ca))
+                {
+                    $ca = 0;
+                }
+                if (($exam == null) || empty($exam))
+                {
+                    $exam = 0;
+                }
                 if(!$error)
                 {
-                    $total = $ca + $exam;
+                    $total = (int)$ca + (int)$exam;
                     //Getting Grade and Remark
                     if ($total <= 39) {
                         $grade = "F9";
@@ -231,8 +239,8 @@ if (isset($_POST['result_btn'])) {
     }
 
     //return $con = null;
-    $db->Disconect();
 }
+$db->Disconect();
 
 
 ?>
@@ -241,147 +249,22 @@ if (isset($_POST['result_btn'])) {
 
     <!-- Page Heading -->
     <div class="align-items-center justify-content-center ">
-        <h3 class="alert-primary" style="font-weight: bold; font-family: Georgia, 'Times New Roman', Times, serif; border-radius: 5px; padding: 2px;                           margin-bottom: 10px;"> Uploading Excel file </h3>
-        <p class="text-danger">Please upload only Excel file format </p>
-    </div><br>
-
-    <form action="export" method="post" target="_blank">
-        <div class="card">
-            <div class="card-header">
-                Subjects Template Download
-            </div>
-            <div class="card-body">
-                <p>Please select necessary field to download subject required to your local machine. <span class="text-danger"> Once downloaded do not tempered with the value except the CA and Exam.</span></p>
-                <div class="form-row">
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <select name="select_class" class="form-control" required>
-                                <option value=""> Select class...</option>
-                                <?php
-                                $db = new Database();
-                                $db->query("SELECT * FROM class_tbl;");
-                                if($db->execute())
-                                {
-                                    if ($db->rowCount() > 0) {
-                                        $data = $db->resultset();
-                                        foreach ($data as $record) {
-                                    ?>
-                                        <option value="<?php echo $record->class_id; ?>"> <?php echo $record->class_name; ?> </option>
-                                        <?php
-                                        }
-                                    } else {
-                                        ?>
-                                        <option value=""> No record </option>
-                                    <?php
-                                    }
-                                }
-                                ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <select name="subject_id" class="form-control" required>
-                                <option value=""> Subject...</option>
-                                <!-- Fetching data from subject table -->
-                                <?php
-                                    $db->query("SELECT * FROM subject_tbl");
-                                    if (!$db->execute()) {
-                                    die($db->getError());
-                                    } else {
-                                    if ($db->rowCount() > 0) {
-                                        $result = $db->resultset();
-                                        foreach ($result as $row2) {
-                                    ?>
-                                        <option value="<?php echo $row2->subject_id; ?>"> <?php echo $row2->subject_name; ?></option>
-                                        <?php
-                                        }
-                                    } else {
-                                        ?>
-                                        <option value=""> No record found</option>
-                                    <?php
-                                    }
-                                }
-                                ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <select name="session_id" class="form-control" required>
-                                <option value=""> Select session...</option>
-                                <?php
-                                $db->query("SELECT * FROM session_tbl;");
-                                if (!$db->execute()) {
-                                    die($db->getError());
-                                } else {
-                                    if ($db->rowCount() > 0) {
-                                        $result = $db->resultset();
-                                        foreach ($result as $row) {
-                                ?>
-                                            <option value="<?php echo $row->session_id; ?>"> <?php echo $row->session_name; ?> </option>
-                                <?php
-
-                                        }
-                                    } else {
-                                        ?>
-                                        <option> No record found </option>
-                                        <?php
-                                    }
-                                }
-                                ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <select class="form-control" name="term_id" required>
-                                <option value=""> Select term...</option>
-                                <?php
-                                $db->query("SELECT * FROM term_tbl;");
-                                if (!$db->execute()) {
-                                    die($db->getError());
-                                } else {
-                                    if ($db->rowCount() > 0) {
-                                        $result = $db->resultset();
-                                        foreach ($result as $row) {
-                                ?>
-                                            <option value="<?php echo $row->term_id; ?>"> <?php echo $row->term_name; ?> </option>
-                                <?php
-
-                                        }
-                                    } else {
-                                        ?>
-                                        <option> No record found </option>
-                                        <?php
-                                    }
-                                }
-                                ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <button class="btn btn-primary" type="submit" name="subjectImportBtn" > Download </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
+        <h3 class="alert-primary" style="font-weight: bold; font-family: Georgia, 'Times New Roman', Times, serif; border-radius: 5px; padding: 16px; margin-bottom: 5px;"> Spreadsheet File Upload page </h3>
+        <p class="text-danger">Please upload only spreadsheet file </p>
+    </div>
 
     <form method="POST" action="excel-upload" enctype="multipart/form-data">
-        <div class="card mt-3">
+        <div class="card mt-5">
             <div class="card-header">
                 Subjects Template Upload
             </div>
             <div class="card-body">
-                <p>Please select necessary field to download subject required to your local machine</p>
+                <p class="text-danger" >Before uploading make sure everything is acurate, all the CA and Exams have no alphabets or characters</p>
                 <div class="form-row form-inline">
                     <div class="col-md-8">
                         <div class="form-group">
                             Result upload: &nbsp;<input type="file" class="form-control" name="result_import_file" required>
-                            &nbsp;&nbsp;<button class="btn btn-primary" disabled type="submit" name="result_btn">Upload</button>
+                            &nbsp;&nbsp;<button class="btn btn-primary"  type="submit" name="result_btn">Upload</button>
                         </div>
                     </div>
                     <div class="col-md-4"></div>
