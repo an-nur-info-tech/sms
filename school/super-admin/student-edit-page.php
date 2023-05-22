@@ -9,7 +9,7 @@ if (isset($_POST['update_btn'])) {
     'student_sname' => trim(strtoupper($_POST['student_sname'])),
     'student_lname' => trim(strtoupper($_POST['student_lname'])),
     'student_oname' => trim(strtoupper($_POST['student_oname'])),
-    'class_name' => trim(strtoupper($_POST['class_name'])),
+    'class_name' => trim(strtoupper($_POST['class_id'])),
     'dob' => $_POST['dob'],
     'religion' => trim(strtoupper($_POST['religion'])),
     'gender' => trim(strtoupper($_POST['gender'])),
@@ -48,7 +48,7 @@ if (isset($_POST['update_btn'])) {
     } else {
       if (!empty($data['oldImage'])) {
         //Removing the old image if exist
-        $db1->query("UPDATE students_tbl SET class_name=:class_name, 
+        $db1->query("UPDATE students_tbl SET id = :class_id, 
         passport = :target_file,
         sname=:student_sname, 
         lname=:student_lname, 
@@ -60,7 +60,8 @@ if (isset($_POST['update_btn'])) {
         student_state=:student_state, 
         lga=:lga 
         WHERE admNo =:admNo;");
-        $db1->bind(':class_name', $data['class_name']);
+        
+        $db1->bind(':class_id', $data['class_name']);
         $db1->bind(':target_file', $target_file);
         $db1->bind(':student_sname', $data['student_sname']);
         $db1->bind(':student_lname', $data['student_lname']);
@@ -88,7 +89,7 @@ if (isset($_POST['update_btn'])) {
           $_SESSION['location'] = "student-view-page";
         }
       } else {
-        $db1->query("UPDATE students_tbl SET class_name=:class_name, 
+        $db1->query("UPDATE students_tbl SET class_id = :class_id, 
         passport = :target_file,
         sname=:student_sname, 
         lname=:student_lname, 
@@ -100,7 +101,8 @@ if (isset($_POST['update_btn'])) {
         student_state=:student_state, 
         lga=:lga 
         WHERE admNo =:admNo;");
-        $db1->bind(':class_name', $data['class_name']);
+
+        $db1->bind(':class_id', $data['class_name']);
         $db1->bind(':target_file', $target_file);
         $db1->bind(':student_sname', $data['student_sname']);
         $db1->bind(':student_lname', $data['student_lname']);
@@ -132,7 +134,7 @@ if (isset($_POST['update_btn'])) {
     }
     $db1->Disconect();
   } else { //Update without image file
-    $db1->query("UPDATE students_tbl SET class_name=:class_name, 
+    $db1->query("UPDATE students_tbl SET class_id = :class_id, 
     sname=:student_sname, 
     lname=:student_lname, 
     oname=:student_oname, 
@@ -144,7 +146,7 @@ if (isset($_POST['update_btn'])) {
     lga=:lga 
     WHERE admNo =:admNo;");
 
-    $db1->bind(':class_name', $data['class_name']);
+    $db1->bind(':class_id', $data['class_name']);
     $db1->bind(':student_sname', $data['student_sname']);
     $db1->bind(':student_lname', $data['student_lname']);
     $db1->bind(':student_oname', $data['student_oname']);
@@ -166,7 +168,7 @@ if (isset($_POST['update_btn'])) {
     } else {
       $_SESSION['errorMsg'] = true;
       $_SESSION['errorTitle'] = "Success";
-      $_SESSION['sessionMsg'] = "Update successfully123";
+      $_SESSION['sessionMsg'] = "Update successfully";
       $_SESSION['sessionIcon'] = "success";
       $_SESSION['location'] = "student-view-page";
     }
@@ -211,7 +213,7 @@ if (isset($_POST['update_btn'])) {
       if (isset($_POST['editBtn'])) {
         $db = new Database();
         $admNo = $_POST['admNo'];
-        $db->query("SELECT * FROM students_tbl WHERE admNo=:admNo;");
+        $db->query("SELECT * FROM students_tbl AS st JOIN class_tbl ON class_tbl.class_id = st.class_id WHERE admNo = :admNo;");
         $db->bind('admNo', $admNo);
         
         if($db->execute())
@@ -236,8 +238,8 @@ if (isset($_POST['update_btn'])) {
         <div class="col-md-4">
           <div class="form-group">
             <label for="class_name" class="control-label">* Class </label>
-            <select name="class_name" id="class_name" class="form-control">
-              <option value="<?php echo $result->class_name; ?>"> <?php echo $result->class_name; ?></option>
+            <select name="class_id" id="class_name" class="form-control">
+              <option value="<?php echo $result->class_id; ?>"> <?php echo $result->class_name; ?></option>
               <!-- Fetching data from class table -->
               <?php
               $db2 = new Database();
@@ -248,7 +250,7 @@ if (isset($_POST['update_btn'])) {
                   $datas = $db2->resultset();
                   foreach ($datas as $data) {
                 ?>
-                    <option value="<?php echo $data->class_name; ?>"> <?php echo $data->class_name; ?> </option>
+                    <option value="<?php echo $data->class_id; ?>"> <?php echo $data->class_name; ?> </option>
                   <?php
                   }
                   $db2->Disconect();

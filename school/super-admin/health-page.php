@@ -49,7 +49,7 @@ include('includes/header.php');
     if (isset($_POST['view_btn'])) {
       $admNo = $_POST['admNo'];
       $db = new Database();
-      $db->query("SELECT * FROM students_tbl WHERE admNo =:admNo;");
+      $db->query("SELECT * FROM students_tbl AS st JOIN class_tbl ON class_tbl.class_id = st.class_id WHERE admNo =:admNo;");
       $db->bind(':admNo', $admNo);
       $data = $db->resultset();
 

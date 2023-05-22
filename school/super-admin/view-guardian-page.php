@@ -15,21 +15,19 @@ include('includes/header.php');
   <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
     <div class="form-row form-inline">
       <div class="col-md-12">
-        <?php
-        $db = new Database();
-        $db->query("SELECT * FROM guardian_tbl;");
-        $data = $db->resultset();
-        ?>
         <input class="form-control" name="admNo" list="datalistioptions" placeholder="Admission Number" auto_complete="off" required>
-        <datalist id="datalistioptions" auto_complete="off">
+        <datalist id="datalistioptions">
           <?php
-          if (!$db->isConnected()) {
+          $db = new Database();
+          $db->query("SELECT * FROM students_tbl;");
+          if (!$db->execute()) {
             $warningMsg = die("No connection");
           } else {
             if ($db->rowCount() > 0) {
+              $data = $db->resultset();
               foreach ($data as $dat) {
           ?>
-                <option value="<?php echo $dat->student_admNo; ?>"> <?php echo $dat->student_admNo; ?> </option>
+                <option value="<?php echo $dat->admNo; ?>"> <?php echo $dat->admNo; ?> </option>
               <?php
               }
             } else {
@@ -51,14 +49,14 @@ include('includes/header.php');
       $db = new Database();
       $db->query("SELECT * FROM guardian_tbl WHERE student_admNo =:admNo;");
       $db->bind(':admNo', $admNo);
-      $data = $db->resultset();
     ?>
       <table class="table table-bordered table-hover">
         <?php
-        if (!$db->isConnected()) {
+        if (!$db->execute()) {
           $warningMsg = die("No connection");
         } else {
           if ($db->rowCount() > 0) {
+            $data = $db->resultset();
             foreach ($data as $row) {
         ?>
               <thead>

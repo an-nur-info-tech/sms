@@ -2,7 +2,7 @@
 include('includes/header.php');
 $db = new Database();
 
-if (isset($_POST['comment_btn'])) {
+/* if (isset($_POST['comment_btn'])) {
     $admNo = $_POST['student_id'];
     $session_id = $_POST['session_id'];
     $term_id = $_POST['term_id'];
@@ -23,7 +23,7 @@ if (isset($_POST['comment_btn'])) {
         $error = true;
         $warningMsg = "Class teacher have to enter comment first";
     }
-}
+} */
 ?>
 
 

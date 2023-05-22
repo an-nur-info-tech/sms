@@ -14,7 +14,7 @@ if (isset($_POST['submit_btn'])) {
     'student_sname' => trim(strtoupper($_POST['student_sname'])),
     'student_lname' => trim(strtoupper($_POST['student_lname'])),
     'student_oname' => trim(strtoupper($_POST['student_oname'])),
-    'class_name' => trim(strtoupper($_POST['class_name'])),
+    'class_id' => trim(strtoupper($_POST['class_id'])),
     'dob' => $_POST['dob'],
     'religion' => trim(strtoupper($_POST['religion'])),
     'gender' => trim(strtoupper($_POST['gender'])),
@@ -85,9 +85,9 @@ if (isset($_POST['submit_btn'])) {
   
               $db->query(
                 "INSERT INTO 
-                students_tbl(admNo, pwd, sname, lname, oname, class_name, passport, dob, religion, gender, nationality, 
+                students_tbl(admNo, pwd, sname, lname, oname, class_id, passport, dob, religion, gender, nationality, 
                 student_state,lga) 
-                VALUES(:id, :hash_pwd, :student_sname, :student_lname, :student_oname, :class_name, :target_file, 
+                VALUES(:id, :hash_pwd, :student_sname, :student_lname, :student_oname, :class_id, :target_file, 
                 :dob, :religion, :gender, :nationality, :student_state, :lga);"
               );
               $db->bind(':id', $id);
@@ -95,7 +95,7 @@ if (isset($_POST['submit_btn'])) {
               $db->bind(':student_sname', $data['student_sname']);
               $db->bind(':student_lname', $data['student_lname']);
               $db->bind(':student_oname', $data['student_oname']);
-              $db->bind(':class_name', $data['class_name']);
+              $db->bind(':class_id', $data['class_id']);
               $db->bind(':target_file', $target_file);
               $db->bind(':dob', $data['dob']);
               $db->bind(':religion', $data['religion']);
@@ -125,9 +125,9 @@ if (isset($_POST['submit_btn'])) {
   
             $db->query(
               "INSERT INTO 
-              students_tbl(admNo, pwd, sname, lname, oname, class_name, passport, dob, religion, gender, nationality, 
+              students_tbl(admNo, pwd, sname, lname, oname, class_id, passport, dob, religion, gender, nationality, 
               student_state,lga) 
-              VALUES(:section_nur, :hash_pwd, :student_sname, :student_lname, :student_oname, :class_name, :target_file, 
+              VALUES(:section_nur, :hash_pwd, :student_sname, :student_lname, :student_oname, :class_id, :target_file, 
               :dob, :religion, :gender, :nationality, :student_state, :lga);"
             );
             $db->bind(':section_nur', $section_nur);
@@ -135,7 +135,7 @@ if (isset($_POST['submit_btn'])) {
             $db->bind(':student_sname', $data['student_sname']);
             $db->bind(':student_lname', $data['student_lname']);
             $db->bind(':student_oname', $data['student_oname']);
-            $db->bind(':class_name', $data['class_name']);
+            $db->bind(':class_id', $data['class_id']);
             $db->bind(':target_file', $target_file);
             $db->bind(':dob', $data['dob']);
             $db->bind(':religion', $data['religion']);
@@ -178,9 +178,9 @@ if (isset($_POST['submit_btn'])) {
   
               $db->query(
                 "INSERT INTO 
-                students_tbl(admNo, pwd, sname, lname, oname, class_name, passport, dob, religion, gender, nationality, 
+                students_tbl(admNo, pwd, sname, lname, oname, class_id, passport, dob, religion, gender, nationality, 
                 student_state,lga) 
-                VALUES(:id, :hash_pwd, :student_sname, :student_lname, :student_oname, :class_name, :target_file, 
+                VALUES(:id, :hash_pwd, :student_sname, :student_lname, :student_oname, :class_id, :target_file, 
                 :dob, :religion, :gender, :nationality, :student_state, :lga);"
               );
               $db->bind(':id', $id);
@@ -188,7 +188,7 @@ if (isset($_POST['submit_btn'])) {
               $db->bind(':student_sname', $data['student_sname']);
               $db->bind(':student_lname', $data['student_lname']);
               $db->bind(':student_oname', $data['student_oname']);
-              $db->bind(':class_name', $data['class_name']);
+              $db->bind(':class_id', $data['class_id']);
               $db->bind(':target_file', $target_file);
               $db->bind(':dob', $data['dob']);
               $db->bind(':religion', $data['religion']);
@@ -218,9 +218,9 @@ if (isset($_POST['submit_btn'])) {
   
             $db->query(
               "INSERT INTO 
-              students_tbl(admNo, pwd, sname, lname, oname, class_name, passport, dob, religion, gender, nationality, 
+              students_tbl(admNo, pwd, sname, lname, oname, class_id, passport, dob, religion, gender, nationality, 
               student_state,lga) 
-              VALUES(:section_nur, :hash_pwd, :student_sname, :student_lname, :student_oname, :class_name, :target_file, 
+              VALUES(:section_nur, :hash_pwd, :student_sname, :student_lname, :student_oname, :class_id, :target_file, 
               :dob, :religion, :gender, :nationality, :student_state, :lga);"
             );
             $db->bind(':section_nur', $section_nur);
@@ -228,7 +228,7 @@ if (isset($_POST['submit_btn'])) {
             $db->bind(':student_sname', $data['student_sname']);
             $db->bind(':student_lname', $data['student_lname']);
             $db->bind(':student_oname', $data['student_oname']);
-            $db->bind(':class_name', $data['class_name']);
+            $db->bind(':class_id', $data['class_id']);
             $db->bind(':target_file', $target_file);
             $db->bind(':dob', $data['dob']);
             $db->bind(':religion', $data['religion']);
@@ -271,9 +271,9 @@ if (isset($_POST['submit_btn'])) {
   
               $db->query(
                 "INSERT INTO 
-                students_tbl(admNo, pwd, sname, lname, oname, class_name, passport, dob, religion, gender, nationality, 
+                students_tbl(admNo, pwd, sname, lname, oname, class_id, passport, dob, religion, gender, nationality, 
                 student_state,lga) 
-                VALUES(:id, :hash_pwd, :student_sname, :student_lname, :student_oname, :class_name, :target_file, 
+                VALUES(:id, :hash_pwd, :student_sname, :student_lname, :student_oname, :class_id, :target_file, 
                 :dob, :religion, :gender, :nationality, :student_state, :lga);"
               );
               $db->bind(':id', $id);
@@ -281,7 +281,7 @@ if (isset($_POST['submit_btn'])) {
               $db->bind(':student_sname', $data['student_sname']);
               $db->bind(':student_lname', $data['student_lname']);
               $db->bind(':student_oname', $data['student_oname']);
-              $db->bind(':class_name', $data['class_name']);
+              $db->bind(':class_id', $data['class_id']);
               $db->bind(':target_file', $target_file);
               $db->bind(':dob', $data['dob']);
               $db->bind(':religion', $data['religion']);
@@ -311,9 +311,9 @@ if (isset($_POST['submit_btn'])) {
   
             $db->query(
               "INSERT INTO 
-              students_tbl(admNo, pwd, sname, lname, oname, class_name, passport, dob, religion, gender, nationality, 
+              students_tbl(admNo, pwd, sname, lname, oname, class_id, passport, dob, religion, gender, nationality, 
               student_state,lga) 
-              VALUES(:section_nur, :hash_pwd, :student_sname, :student_lname, :student_oname, :class_name, :target_file, 
+              VALUES(:section_nur, :hash_pwd, :student_sname, :student_lname, :student_oname, :class_id, :target_file, 
               :dob, :religion, :gender, :nationality, :student_state, :lga);"
             );
             $db->bind(':section_nur', $section_nur);
@@ -321,7 +321,7 @@ if (isset($_POST['submit_btn'])) {
             $db->bind(':student_sname', $data['student_sname']);
             $db->bind(':student_lname', $data['student_lname']);
             $db->bind(':student_oname', $data['student_oname']);
-            $db->bind(':class_name', $data['class_name']);
+            $db->bind(':class_id', $data['class_id']);
             $db->bind(':target_file', $target_file);
             $db->bind(':dob', $data['dob']);
             $db->bind(':religion', $data['religion']);
@@ -368,9 +368,9 @@ if (isset($_POST['submit_btn'])) {
   
               $db->query(
                 "INSERT INTO 
-                students_tbl(admNo, pwd, sname, lname, oname, class_name, dob, religion, gender, nationality, 
+                students_tbl(admNo, pwd, sname, lname, oname, class_id, dob, religion, gender, nationality, 
                 student_state, lga) 
-                VALUES(:id, :hash_pwd, :student_sname, :student_lname, :student_oname, :class_name,  
+                VALUES(:id, :hash_pwd, :student_sname, :student_lname, :student_oname, :class_id,  
                 :dob, :religion, :gender, :nationality, :student_state, :lga);"
               );
               $db->bind(':id', $id);
@@ -378,7 +378,7 @@ if (isset($_POST['submit_btn'])) {
               $db->bind(':student_sname', $data['student_sname']);
               $db->bind(':student_lname', $data['student_lname']);
               $db->bind(':student_oname', $data['student_oname']);
-              $db->bind(':class_name', $data['class_name']);
+              $db->bind(':class_id', $data['class_id']);
               $db->bind(':dob', $data['dob']);
               $db->bind(':religion', $data['religion']);
               $db->bind(':gender', $data['gender']);
@@ -408,9 +408,9 @@ if (isset($_POST['submit_btn'])) {
             $hash_pwd = password_hash('123654', PASSWORD_BCRYPT);
             $db->query(
               "INSERT INTO 
-              students_tbl(admNo, pwd, sname, lname, oname, class_name, dob, religion, gender, nationality, 
+              students_tbl(admNo, pwd, sname, lname, oname, class_id, dob, religion, gender, nationality, 
               student_state,lga) 
-              VALUES(:section_nur, :hash_pwd, :student_sname, :student_lname, :student_oname, :class_name, 
+              VALUES(:section_nur, :hash_pwd, :student_sname, :student_lname, :student_oname, :class_id, 
               :dob, :religion, :gender, :nationality, :student_state, :lga);"
             );
             $db->bind(':section_nur', $section_nur);
@@ -418,7 +418,7 @@ if (isset($_POST['submit_btn'])) {
             $db->bind(':student_sname', $data['student_sname']);
             $db->bind(':student_lname', $data['student_lname']);
             $db->bind(':student_oname', $data['student_oname']);
-            $db->bind(':class_name', $data['class_name']);
+            $db->bind(':class_id', $data['class_id']);
             $db->bind(':dob', $data['dob']);
             $db->bind(':religion', $data['religion']);
             $db->bind(':gender', $data['gender']);
@@ -461,9 +461,9 @@ if (isset($_POST['submit_btn'])) {
               $hash_pwd = password_hash('123654', PASSWORD_BCRYPT);
               $db->query(
                 "INSERT INTO 
-                students_tbl(admNo, pwd, sname, lname, oname, class_name, dob, religion, gender, nationality, 
+                students_tbl(admNo, pwd, sname, lname, oname, class_id, dob, religion, gender, nationality, 
                 student_state,lga) 
-                VALUES(:id, :hash_pwd, :student_sname, :student_lname, :student_oname, :class_name, 
+                VALUES(:id, :hash_pwd, :student_sname, :student_lname, :student_oname, :class_id, 
                 :dob, :religion, :gender, :nationality, :student_state, :lga);"
               );
               $db->bind(':id', $id);
@@ -471,7 +471,7 @@ if (isset($_POST['submit_btn'])) {
               $db->bind(':student_sname', $data['student_sname']);
               $db->bind(':student_lname', $data['student_lname']);
               $db->bind(':student_oname', $data['student_oname']);
-              $db->bind(':class_name', $data['class_name']);
+              $db->bind(':class_id', $data['class_id']);
               $db->bind(':dob', $data['dob']);
               $db->bind(':religion', $data['religion']);
               $db->bind(':gender', $data['gender']);
@@ -501,9 +501,9 @@ if (isset($_POST['submit_btn'])) {
             $hash_pwd = password_hash('123654', PASSWORD_BCRYPT);
             $db->query(
               "INSERT INTO 
-              students_tbl(admNo, pwd, sname, lname, oname, class_name, dob, religion, gender, nationality, 
+              students_tbl(admNo, pwd, sname, lname, oname, class_id, dob, religion, gender, nationality, 
               student_state,lga) 
-              VALUES(:section_nur, :hash_pwd, :student_sname, :student_lname, :student_oname, :class_name, 
+              VALUES(:section_nur, :hash_pwd, :student_sname, :student_lname, :student_oname, :class_id, 
               :dob, :religion, :gender, :nationality, :student_state, :lga);"
             );
             $db->bind(':section_nur', $section_nur);
@@ -511,7 +511,7 @@ if (isset($_POST['submit_btn'])) {
             $db->bind(':student_sname', $data['student_sname']);
             $db->bind(':student_lname', $data['student_lname']);
             $db->bind(':student_oname', $data['student_oname']);
-            $db->bind(':class_name', $data['class_name']);
+            $db->bind(':class_id', $data['class_id']);
             $db->bind(':target_file', $target_file);
             $db->bind(':dob', $data['dob']);
             $db->bind(':religion', $data['religion']);
@@ -555,9 +555,9 @@ if (isset($_POST['submit_btn'])) {
               $hash_pwd = password_hash('123654', PASSWORD_BCRYPT);
               $db->query(
                 "INSERT INTO 
-                students_tbl(admNo, pwd, sname, lname, oname, class_name, dob, religion, gender, nationality, 
+                students_tbl(admNo, pwd, sname, lname, oname, class_id, dob, religion, gender, nationality, 
                 student_state,lga) 
-                VALUES(:id, :hash_pwd, :student_sname, :student_lname, :student_oname, :class_name, 
+                VALUES(:id, :hash_pwd, :student_sname, :student_lname, :student_oname, :class_id, 
                 :dob, :religion, :gender, :nationality, :student_state, :lga);"
               );
               $db->bind(':id', $id);
@@ -565,7 +565,7 @@ if (isset($_POST['submit_btn'])) {
               $db->bind(':student_sname', $data['student_sname']);
               $db->bind(':student_lname', $data['student_lname']);
               $db->bind(':student_oname', $data['student_oname']);
-              $db->bind(':class_name', $data['class_name']);
+              $db->bind(':class_id', $data['class_id']);
               $db->bind(':dob', $data['dob']);
               $db->bind(':religion', $data['religion']);
               $db->bind(':gender', $data['gender']);
@@ -595,9 +595,9 @@ if (isset($_POST['submit_btn'])) {
             $hash_pwd = password_hash('123654', PASSWORD_BCRYPT);
             $db->query(
               "INSERT INTO 
-              students_tbl(admNo, pwd, sname, lname, oname, class_name, dob, religion, gender, nationality, 
+              students_tbl(admNo, pwd, sname, lname, oname, class_id, dob, religion, gender, nationality, 
               student_state,lga) 
-              VALUES(:section_nur, :hash_pwd, :student_sname, :student_lname, :student_oname, :class_name, 
+              VALUES(:section_nur, :hash_pwd, :student_sname, :student_lname, :student_oname, :class_id, 
               :dob, :religion, :gender, :nationality, :student_state, :lga);"
             );
             $db->bind(':section_nur', $section_nur);
@@ -605,7 +605,7 @@ if (isset($_POST['submit_btn'])) {
             $db->bind(':student_sname', $data['student_sname']);
             $db->bind(':student_lname', $data['student_lname']);
             $db->bind(':student_oname', $data['student_oname']);
-            $db->bind(':class_name', $data['class_name']);
+            $db->bind(':class_id', $data['class_id']);
             $db->bind(':dob', $data['dob']);
             $db->bind(':religion', $data['religion']);
             $db->bind(':gender', $data['gender']);
@@ -700,8 +700,8 @@ $db->Disconect();
     <div class="form-row">
       <div class="col-md-4">
         <div class="form-group">
-          <label for="class_name" class="control-label">* Class </label>
-          <select name="class_name" id="class_name" class="form-control">
+          <label for="class_id" class="control-label">* Class </label>
+          <select name="class_id" id="class_id" class="form-control">
             <option value=""> Select class...</option>
           </select>
         </div>

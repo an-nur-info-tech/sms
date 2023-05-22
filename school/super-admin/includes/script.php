@@ -68,6 +68,7 @@
     }
   };
 
+  // Select section on student reg page
   const select_Section = () => {
     let select_section = getById("select_section").value;
     // console.log(select_section.value);
@@ -83,9 +84,8 @@
       processData: false,
       dataType: "html",
       success: function(res){
-        console.log("Response", res);
-        $("#class_name").html(res);
-        // let result = JSON.parse(response);
+        // console.log("Response", res);
+        $("#class_id").html(res);
       },
       error: function(XMLHttpRequest, textStatus, errorThrown) {
       console.log(XMLHttpRequest);
@@ -304,19 +304,7 @@ $(".assign_btn").click(function(e) {
     processData: false,
     dataType: "html",
     success: function(response){
-      console.log("Response", response);
-      // let result = JSON.parse(response);
-      // $("#teacher_id").val(response["staff_id"]);
-      // for(let i = 0; i < response.length; i++)
-      // {
-      //   let staff_id = response[i]["staff_id"];
-      //   let name = response[i]["fname"] +" "+ response[i]["sname"] + " "+ response[i]["oname"];
-      //   // $("#teacher_id").append("<option>"+`${response[i]['staff_id']}`+"</option>");
-      //   $("#teacher_id").append('<option value = "'+ `${staff_id}` +'">'+ `${name}` + '</option>');
-        $("#teacher_id").html(response);
-      //   // console.log(response[i]);
-      // }
-      // $("#assignClassID").val(response["staff_id"]);
+      $("#teacher_id").html(response);
     },
     error: function(XMLHttpRequest, textStatus, errorThrown) {
      console.log(XMLHttpRequest);
@@ -374,7 +362,35 @@ $(".deleteClassID").click(function() {
 });
 /*-------x---- CLASS DELETE MODAL -------x----*/
 
-  
+/*   CHECK SUBJECT ON ADD RESULT PAGE */
+const checkSubject = () => {
+  let class_id = $("#class_id").val(); // Get class id
+  // console.log(class_id)
+  let datas = new FormData();
+  datas.append("class_id", class_id);
+
+  $.ajax({
+    url: "ajax/editClass.ajax.php",
+    method: "POST",
+    data: datas,
+    cache: false,
+    contentType: false,
+    processData: false,
+    dataType: "html",
+    success: function(response){
+      //console.log("Response", response.class_name);
+      // let result = JSON.parse(response);
+      $("#subject_id").html(response);
+      // $("#editClassID").val(response["class_id"]);
+    },
+    error: function(XMLHttpRequest, textStatus, errorThrown) {
+     console.log(XMLHttpRequest);
+     console.log(textStatus);
+     console.log(errorThrown);
+  }
+  });
+}
+/*-------x---- CLASS DELETE MODAL -------x----*/
 </script>
 </body>
 

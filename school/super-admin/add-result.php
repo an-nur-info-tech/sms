@@ -3,7 +3,7 @@ include('includes/header.php');
 $db = new Database();
 
 if (isset($_POST['submit_btn'])) {
-/* 
+    /* 
     $admNo = trim($_POST['admNo']);
     $class_id = $_POST['class_id'];
     $session_id = $_POST['session_id'];
@@ -259,7 +259,7 @@ if (isset($_POST['submit_btn'])) {
                 $term_id = $_POST['term_id'];
                 $session_id = $_POST['session_id'];
 
-                $db->query("SELECT * FROM students_tbl AS cl WHERE cl.admNo = :admNo;");
+                $db->query("SELECT * FROM students_tbl AS cl JOIN class_tbl ON class_tbl.class_id = cl.class_id WHERE cl.admNo = :admNo;");
                 $db->bind(':admNo', $admNo);
                 if (!$db->execute()) {
                     die($db->getError());
@@ -269,6 +269,7 @@ if (isset($_POST['submit_btn'])) {
                     if ($nums_result > 0) {
                         $result = $db->single();
                         $class_name = $result->class_name;
+                        $class_id = $result->class_id;
             ?>
                         <tbody>
                             <td>
@@ -280,41 +281,30 @@ if (isset($_POST['submit_btn'])) {
                                     <option value=""> Select subject...</option>
                                     <!-- Fetching data from class subject table -->
                                     <?php
-                                    $db->query("SELECT class_id FROM class_tbl WHERE class_name = :class_name;");
-                                    $db->bind(':class_name', $class_name);
-                                    $db->execute();
-                                    $result = $db->single();
-                                    $class_id = $result->class_id;
-                                    if (!empty($class_id) || $class_id != null) {
-                                        // GETTING RECORD FROM THE CLASS SUBJECT TABLE
-                                        $db->query(
-                                            "SELECT * FROM class_subject_tbl AS cs
+                                    // GETTING RECORD FROM THE CLASS SUBJECT TABLE
+                                    $db->query(
+                                        "SELECT * FROM class_subject_tbl AS cs
                                         JOIN class_tbl ON class_tbl.class_id = cs.class_id
                                         JOIN subject_tbl ON subject_tbl.subject_id = cs.subject_id
                                         WHERE cs.class_id = :class_id;
                                         "
-                                        );
-                                        $db->bind(':class_id', $class_id);
-                                        if (!$db->execute()) {
-                                            die("Error " . $db->getError());
-                                        } else {
-                                            if ($db->rowCount() > 0) {
-                                                $data = $db->resultset();
-                                                foreach ($data as $row) {
-                                    ?>
-                                                    <option value="<?php echo $row->subject_id; ?>"> <?php echo $row->subject_name; ?> </option>
-                                                <?php
-                                                }
-                                            } else {
-                                                ?>
-                                                <option value=""> No record found </option>
-                                        <?php
-                                            }
-                                        }
+                                    );
+                                    $db->bind(':class_id', $class_id);
+                                    if (!$db->execute()) {
+                                        die("Error " . $db->getError());
                                     } else {
-                                        ?>
-                                        <option value=""> No subject assigned </option>
+                                        if ($db->rowCount() > 0) {
+                                            $data = $db->resultset();
+                                            foreach ($data as $row) {
+                                    ?>
+                                                <option value="<?php echo $row->subject_id; ?>"> <?php echo $row->subject_name; ?> </option>
+                                            <?php
+                                            }
+                                        } else {
+                                            ?>
+                                            <option value=""> No subject found </option>
                                     <?php
+                                        }
                                     }
 
                                     ?>
@@ -354,7 +344,7 @@ if (isset($_POST['submit_btn'])) {
         <div class="form-row">
             <div class="col-md-3">
                 <div class="form-group">
-                    <select name="class_id" class="form-control" required>
+                    <select name="class_id" id="class_id" onchange="checkSubject()" class="form-control" required>
                         <option value=""> Select class...</option>
                         <!-- Fetching data from class table -->
                         <?php
@@ -381,28 +371,8 @@ if (isset($_POST['submit_btn'])) {
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <select name="subject_id" class="form-control" required>
+                    <select name="subject_id" id="subject_id" class="form-control" required>
                         <option value=""> Select subject...</option>
-                        <!-- Fetching data from class table -->
-                        <?php
-                        $db->query("SELECT * FROM subject_tbl;");
-                        if (!$db->execute()) {
-                            die("Error " . $db->getError());
-                        } else {
-                            if ($db->rowCount() > 0) {
-                                $data = $db->resultset();
-                                foreach ($data as $row) {
-                        ?>
-                                    <option value="<?php echo $row->subject_id; ?>"> <?php echo $row->subject_name; ?> </option>
-                                <?php
-                                }
-                            } else {
-                                ?>
-                                <option value=""> No record </option>
-                        <?php
-                            }
-                        }
-                        ?>
                     </select>
                 </div>
             </div>
@@ -506,83 +476,48 @@ if (isset($_POST['submit_btn'])) {
                             </thead>
                             <tbody>
                                 <?php
-                                /* if (isset($_POST['preview_btn'])) {
-                                    $class_id = $_POST['class_id'];
-                                    $subject_id = $_POST['subject_id'];
-                                    $session_id = $_POST['session_id'];
-                                    $term_id = $_POST['term_id']; */
-                                $db->query("SELECT * FROM class_subject_tbl WHERE subject_id = :subject_id;");
-                                $db->bind(':subject_id', $subject_id);
+
+                                $db->query("SELECT * FROM students_tbl AS st JOIN class_tbl ON class_tbl.class_id = st.class_id WHERE st.class_id = :class_id;");
+                                $db->bind(':class_id', $class_id);
                                 if ($db->execute()) {
                                     if ($db->rowCount() > 0) {
-                                        $result = $db->single();
-                                        $class_id = $result->class_id;
-                                        //echo $result->staff_id." ".$result->subject_id." ".$result->class_id;
-                                        $db->query("SELECT class_name FROM class_tbl WHERE class_id = :class_id;");
-                                        $db->bind(':class_id', $class_id);
-                                        if ($db->execute()) {
-                                            $row = $db->single();
-                                            $class_name = $row->class_name;
-                                            //echo $class_name;
-                                            $db->query("SELECT admNo, sname, lname, oname FROM students_tbl WHERE class_name = :class_name;");
-                                            $db->bind(':class_name', $class_name);
-                                            if ($db->execute()) {
-                                                if ($db->rowCount() > 0) {
-                                                    $count = 1;
-                                                    $result = $db->resultset();
-                                                    foreach ($result as $row) {
-                                                        $admNo = $row->admNo;
+                                        $count = 1;
+                                        $result = $db->resultset();
+                                        foreach ($result as $row) {
+                                            $admNo = $row->admNo;
                                 ?>
-                                                        <tr>
-                                                            <td><?php echo $count; ?></td>
-                                                            <td><input type="checkbox" id="checkB" onchange="checkSingleSelect()"></td>
-                                                            <td><?php echo $class_name; ?></td>
-                                                            <td><?php echo $admNo; ?></td>
-                                                            <td><?php echo $row->sname . " " . $row->lname . " " . $row->oname; ?></td>
-                                                            <td> <input type="number" id = "caCheck" name="ca" id="ca" onkeypress="checkSingleSelect()" onkeyup="add()" class="form-control ca"></td>
-                                                            <td> <input type="number" id = "examCheck" name="exam" id="exam" onkeypress="checkSingleSelect()" onkeyup="add()" class="form-control exam"> </td>
-                                                            <input type="hidden" name="total" id="total" placeholder=" Total" class="form-control">
-                                                            <input type="hidden" name="grade" id="grade" placeholder=" grade" class="form-control">
-                                                            <input type="hidden" name="remark" id="remark" placeholder="Remark" class="form-control">
-                                                        </tr>
-                                                    <?php
-                                                        $count++;
-                                                        //echo "$admNo class-> $class_id Term-> $term_id Session-> $session_id Subject-> $subject_id".PHP_EOL;                           
-                                                    }
-                                                    ?>
-                                                    <tr>
-                                                        <td colspan="7" class="text-center">
-                                                            <button class="btn m-2 btn-outline-primary btn-sm " name="submit_btn" id="submitBtn" disabled >Submit </button>
-                                                        </td>
-                                                    </tr>
-                                                <?php
-                                                } else {
-                                                ?>
-                                                    <tr>
-                                                        <td colspan="4" class="text-center">No student found</td>
-                                                    </tr>
+                                            <tr>
+                                                <td><?php echo $count; ?></td>
+                                                <td><input type="checkbox" id="checkB" onchange="checkSingleSelect()"></td>
+                                                <td><?php echo $row->class_name; ?></td>
+                                                <td><?php echo $admNo; ?></td>
+                                                <td><?php echo $row->sname . " " . $row->lname . " " . $row->oname; ?></td>
+                                                <td> <input type="number" id="caCheck" name="ca" id="ca" onkeypress="checkSingleSelect()" onkeyup="add()" class="form-control ca"></td>
+                                                <td> <input type="number" id="examCheck" name="exam" id="exam" onkeypress="checkSingleSelect()" onkeyup="add()" class="form-control exam"> </td>
+                                                <input type="hidden" name="total" id="total" placeholder=" Total" class="form-control">
+                                                <input type="hidden" name="grade" id="grade" placeholder=" grade" class="form-control">
+                                                <input type="hidden" name="remark" id="remark" placeholder="Remark" class="form-control">
+                                            </tr>
                                         <?php
-                                                }
-                                            } else {
-                                                die($db->getError());
-                                                exit();
-                                            }
-                                        } else {
-                                            die($db->getError());
-                                            exit();
+                                            $count++;
                                         }
-                                    } else {
                                         ?>
                                         <tr>
-                                            <td colspan="7" class="text-center">No subject related to this class</td>
+                                            <td colspan="7" class="text-center">
+                                                <button class="btn m-2 btn-outline-primary btn-sm " name="submit_btn" id="submitBtn" disabled>Submit </button>
+                                            </td>
+                                        </tr>
+                                    <?php
+                                    } else {
+                                    ?>
+                                        <tr>
+                                            <td colspan="4" class="text-center">No record found</td>
                                         </tr>
                                 <?php
                                     }
                                 } else {
                                     die($db->getError());
-                                    exit();
                                 }
-                            //}
                                 ?>
                             </tbody>
                         </table>

@@ -16,8 +16,7 @@ if(isset($_POST["select_section"])){
                 echo "<option value = ''> Select class... </option>";
                 $data = $db->resultset();
                 foreach ($data as $record) {
-                    $class_name = $record->class_name;
-                    echo "<option value = '$class_name'> $class_name </option>";
+                    echo "<option value = '$record->class_id'> $record->class_name </option>";
                 }
             } else {
                 echo "<option value = ''> No class found </option>";
@@ -33,8 +32,7 @@ if(isset($_POST["select_section"])){
                 echo "<option value = ''> Select class... </option>";
                 $data = $db->resultset();
                 foreach ($data as $record) {
-                    $class_name = $record->class_name;
-                    echo "<option value = '$class_name'> $class_name </option>";
+                    echo "<option value = '$record->class_id'> $record->class_name </option>";
                 }
             } else {
                 echo "<option value = ''> No class found </option>";
@@ -50,8 +48,7 @@ if(isset($_POST["select_section"])){
                 echo "<option value = ''> Select class... </option>";
                 $data = $db->resultset();
                 foreach ($data as $record) {
-                    $class_name = $record->class_name;
-                    echo "<option value = '$class_name'> $class_name </option>";
+                    echo "<option value = '$record->class_id'> $record->class_name </option>";
                 }
             } else {
                 echo "<option value = ''> No class found </option>";
@@ -101,6 +98,36 @@ if(isset($_POST["editClassID"])){
         }
     }else{
         echo json_encode("Error");
+    }
+}
+
+ /*   CHECK SUBJECT ON ADD RESULT PAGE */
+if(isset($_POST['class_id']))
+{
+    $class_id = $_POST['class_id'];
+
+    $db->query(
+        "SELECT * FROM class_subject_tbl AS sc 
+        JOIN subject_tbl ON subject_tbl.subject_id = sc.subject_id 
+        WHERE sc.class_id = :class_id;");
+    $db->bind(':class_id', $class_id);
+
+    
+    
+
+    if (!$db->execute()) {
+        die("Error " . $db->getError());
+    } else {
+        if ($db->rowCount() > 0) {
+            echo '<option value=""> Select subject... </option>';
+            $data = $db->resultset();
+            foreach ($data as $row) {
+                echo "<option value='$row->subject_id'> $row->subject_name </option>";  
+            }
+        } else {
+            
+            echo '<option value=""> Class has no subject </option>';
+        }
     }
 }
 $db->Disconect();

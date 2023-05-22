@@ -5,14 +5,6 @@
 //include('includes/security.php');
 //include('../database/Database.php');
 include('includes/header.php');
-
-
-/* include('includes/security.php');
-include('../database/Database.php');
-include('includes/header.php');
-include('includes/sidebar.php');
-include('includes/navbar.php'); */
-
 ?>
 <!-- Begin Page Content -->
 <div class="container-fluid">
@@ -50,7 +42,9 @@ include('includes/navbar.php'); */
               echo $db->getError() . PHP_EOL;
             } else {
 
-              $db->query("SELECT * FROM students_tbl;");
+              $db->query(
+                "SELECT * FROM students_tbl AS st
+                  JOIN class_tbl ON class_tbl.class_id = st.class_id;");
               $record = $db->resultset();
               //var_dump($record->admNo);
               $count = 1;

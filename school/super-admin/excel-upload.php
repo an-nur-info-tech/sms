@@ -248,10 +248,10 @@ if (isset($_POST['result_btn'])) {
     <form action="export" method="post" target="_blank">
         <div class="card">
             <div class="card-header">
-                Subject Result Template Download
+                Subjects Template Download
             </div>
             <div class="card-body">
-                <p>Please read the content carefully</p>
+                <p>Please select necessary field to download subject required to your local machine. <span class="text-danger"> Once downloaded do not tempered with the value except the CA and Exam.</span></p>
                 <div class="form-row">
                     <div class="col-md-3">
                         <div class="form-group">
@@ -362,7 +362,7 @@ if (isset($_POST['result_btn'])) {
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
-                            <button class="btn btn-primary" type="submit" name="subjectXportBtn" >Download</button>
+                            <button class="btn btn-primary" type="submit" name="subjectImportBtn" > Download </button>
                         </div>
                     </div>
                 </div>
@@ -373,9 +373,10 @@ if (isset($_POST['result_btn'])) {
     <form method="POST" action="excel-upload" enctype="multipart/form-data">
         <div class="card mt-3">
             <div class="card-header">
-                Subject Result Template Upload
+                Subjects Template Upload
             </div>
             <div class="card-body">
+                <p>Please select necessary field to download subject required to your local machine</p>
                 <div class="form-row form-inline">
                     <div class="col-md-8">
                         <div class="form-group">
@@ -389,7 +390,8 @@ if (isset($_POST['result_btn'])) {
         </div> 
     </form>
 
-    <form method="POST" action="excel-upload" enctype="multipart/form-data">
+    <!-- UPLOADING STUDENT RECORD -->
+    <!-- <form method="POST" action="excel-upload" enctype="multipart/form-data">
         <div class="card">
             <div class="card-header">
                 Students data
@@ -406,7 +408,7 @@ if (isset($_POST['result_btn'])) {
                 </div>
             </div>
         </div>
-    </form>
+    </form> -->
 
     <!-- Alerts messages -->
     <?php

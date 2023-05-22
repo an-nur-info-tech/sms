@@ -78,11 +78,11 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSix" aria-expanded="true" aria-controls="collapseFive">
           <i class="fas fa-fw fa-file-excel " aria-hidden="true"></i>
-          <span>Excel Template </span>
+          <span>Spreadsheet </span>
         </a>
         <div id="collapseSix" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Excel Panel:</h6>
+            <h6 class="collapse-header">Spreadsheet Panel:</h6>
             <a class="collapse-item" href="#"> Download excel file </a>
             <a class="collapse-item" href="excel-upload"> Upload excel file </a>
           </div>
@@ -93,7 +93,7 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFive" aria-expanded="true" aria-controls="collapseFive">
           <i class="fas fa-fw fa-cog"></i>
-          <span>General </span>
+          <span>Year Session </span>
         </a>
         <div id="collapseFive" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">

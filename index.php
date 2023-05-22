@@ -29,8 +29,6 @@ require_once('code.php');
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 
-  <!-- START -->
-
   <!-- Custom fonts for this template-->
   <link href="school/assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -41,80 +39,69 @@ require_once('code.php');
   <!-- Custom styles for this page -->
   <link href="school/assets/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
-  <!-- END -->
-
   <!-- Sweet alert scripts -->
   <script src="school/assets/sweetalert2/sweetalert.all.min.js"></script>
-
-
 </head>
 
 <body class="bg-gradient-primary">
 
   <div class="container">
-    <!-- Outer Row -->
-    <div class="row justify-content-center">
-      <div class="col-xl-10 col-lg-12 col-md-12">
-        <div class="card o-hidden border-0 shadow-lg my-5">
-          <div class="card-body p-0">
-            <!-- Nested Row within Card Body src="successschool/construct2.jpg" -->
-            <div class="row">
-              <div class="col-lg-6 col-md-12">
-                <div class="p-5">
-                  <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">Login Page</h1>
-                    <!-- Alerts messages -->
-                    <?php
-                    if (isset($_SESSION['errorMsg'])) {
-                      echo '<script>
-                                Swal.fire({
-                                  title: "' . $_SESSION['errorTitle'] . '",
-                                  text: "' . $_SESSION['sessionMsg'] . '",
-                                  icon: "' . $_SESSION['sessionIcon'] . '",
-                                  showConfirmButton: true,
-                                  confirmButtonText: "ok"
-                                }).then((result) => {
-                                    if(result.value){
-                                        window.location = "' . $_SESSION['location'] . '";
-                                    }
-                                })
-                            </script>';
-                      unset($_SESSION['errorTitle']);
-                      unset($_SESSION['errorMsg']);
-                      unset($_SESSION['sessionMsg']);
-                      unset($_SESSION['location']);
-                      unset($_SESSION['sessionIcon']);
-                    }
-                    ?>
-                  </div>
-                  <form class="user" method="POST" action="index">
-                    <div class="form-group">
-                      <input type="text" onkeypress="checkInput()"  id="user_name" name="user_name" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter User name/Email Address...">
-                    </div>
-                    <div class="form-group">
-                      <input type="password" id="pwd" name="pwd" onkeypress="checkInput()"  class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
-                    </div>
-                    <button name="login-btn" id="login_btn" disabled type="submit" class="btn btn-primary btn-user btn-block">
-                      Login
-                    </button>
-                  </form>
-                  <hr>
-                  <div class="text-center">
-                    <a class="small" href="forgot-password.php"> Forgot Password? </a>
-                  </div>
-                  <div class="text-center">
-                    <a class="small" href="#">Create an Account!</a>
-                  </div>
-                </div>
-              </div>
+    <div class="row mt-3 text-center text-white">
+      <div class="col-md-12">
+        <h1>School Management System</h1>
+        <p class="text-gray-300">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Rem et, at, explicabo eaque laudantium adipisci facere ullam officia quis sapiente Lorem, ipsum dolor sit amet consectetur adipisicing elit. Rem et, at, explicabo eaque laudantium adipisci facere ullam officia quis sapiente illo aliquam? Nam quos recusandae, laborum a ullam et culpa reiciendis voluptas harum nemo beatae quia facilis nostrum, libero eligendi.</p>
+      </div>
+    </div>
+    <div class="row justify-content-center mt-5">
+      <div class="col-md-3"></div>
+      <div class="col-md-6">
+        <div class="card o-hidden border-0 shadow-lg">
+          <?php
+            if (isset($_SESSION['errorMsg'])) {
+              echo '<script>
+                        Swal.fire({
+                          title: "' . $_SESSION['errorTitle'] . '",
+                          text: "' . $_SESSION['sessionMsg'] . '",
+                          icon: "' . $_SESSION['sessionIcon'] . '",
+                          showConfirmButton: true,
+                          confirmButtonText: "ok"
+                        }).then((result) => {
+                            if(result.value){
+                                window.location = "' . $_SESSION['location'] . '";
+                            }
+                        })
+                    </script>';
+              unset($_SESSION['errorTitle']);
+              unset($_SESSION['errorMsg']);
+              unset($_SESSION['sessionMsg']);
+              unset($_SESSION['location']);
+              unset($_SESSION['sessionIcon']);
+            }
+          ?>
+            <div class="card-header p-2 text-center">
+              <h1 class="text-gray-900">Login Page</h1>
             </div>
+            <div class="card-body">
+              <p>Please input your email and password for login access</p>
+              <form class="user" method="POST" action="index">
+                <div class="form-group">
+                  <input type="text" onkeypress="checkInput()"  id="user_name" name="user_name" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Input email address">
+                </div>
+                <div class="form-group">
+                  <input type="password" id="pwd" name="pwd" onkeypress="checkInput()"  class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
+                </div>
+                <button name="login-btn" id="login_btn" disabled type="submit" class="btn btn-primary btn-user btn-block">
+                  Login
+                </button>
+              </form>
+          </div>
+          <div class="card-footer text-center mt-3">
+            <a class="small" href="forgot-password"> Forgot Password? </a>
           </div>
         </div>
-
       </div>
-
+      <div class="col-md-3"></div>
     </div>
-
   </div>
 
   <script>

@@ -71,7 +71,7 @@ include('includes/header.php');
                 $data = $db->resultset();
                 foreach ($data as $record) {
               ?>
-                  <option value="<?php echo $record->class_name; ?>"> <?php echo $record->class_name; ?> </option>
+                  <option value="<?php echo $record->class_id; ?>"> <?php echo $record->class_name; ?> </option>
                 <?php
                 }
               } else {
@@ -93,13 +93,14 @@ include('includes/header.php');
       </div>
     </div>
   </form>
+
   <form action="export" method="post" target="_blank">
     <div class="form-row">
       <div class="col-md-4">
         <div class="form-group">
-          <select name="select_class" class="form-control" required>
+          <select name="class_id" class="form-control" required>
             <option value=""> Select class...</option>
-            <option value="1"> All record</option>
+            <option value="all"> All record</option>
             <?php
             $db = new Database();
             $db->query("SELECT * FROM class_tbl;");
@@ -107,7 +108,7 @@ include('includes/header.php');
             if ($db->rowCount() > 0) {
               foreach ($data as $record) {
             ?>
-                <option value="<?php echo $record->class_name; ?>"> <?php echo $record->class_name; ?> </option>
+                <option value="<?php echo $record->class_id; ?>"> <?php echo $record->class_name; ?> </option>
               <?php
               }
             } else {
@@ -137,6 +138,7 @@ include('includes/header.php');
       </div>
     </div>
   </form>
+
   <!-- DataTales Example -->
   <div class="card shadow mb-4">
     <div class="card-header py-2">
@@ -159,9 +161,11 @@ include('includes/header.php');
           <tbody>
             <?php
             if (isset($_POST['view_btn'])) {
-              $select_class = trim($_POST['select_class']);
-              $db->query("SELECT * FROM students_tbl WHERE class_name =:class_name;");
-              $db->bind(':class_name', $select_class);
+              $class_id = trim($_POST['select_class']);
+              $db->query(
+                "SELECT * FROM students_tbl AS st
+                JOIN class_tbl ON class_tbl.class_id = st.class_id WHERE st.class_id = :class_id;");
+              $db->bind(':class_id', $class_id);
               
               if($db->execute())
               {
