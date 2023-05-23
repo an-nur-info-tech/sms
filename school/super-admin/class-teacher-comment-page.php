@@ -38,12 +38,13 @@ if (isset($_POST['submit_btn'])) {
         {
             $db->query(
                 "INSERT INTO 
-                comments_tbl(admNo, session_id, term_id, attendance, honesty, neatness, punctuality, tolerance, creativity, dexterity, fluency, handwriting, obedience, teacher_comment) 
-                VALUES(:admNo, :session_id, :term_id, :attendance, :honesty, :neatness, :punctuality, :tolerance, :creativity, :dexterity, :fluency, :handwriting, :obedience, :teacher_comment);
+                comments_tbl(session_id, term_id, admNo, attendance, honesty, neatness, punctuality, tolerance, creativity, dexterity, fluency, handwriting, obedience, teacher_comment) 
+                VALUES(:session_id, :term_id, :admNo, :attendance, :honesty, :neatness, :punctuality, :tolerance, :creativity, :dexterity, :fluency, :handwriting, :obedience, :teacher_comment);
                 ");
-            $db->bind(':admNo', $admNo);
+
             $db->bind(':session_id', $session_id);
             $db->bind(':term_id', $term_id);
+            $db->bind(':admNo', $admNo);
             $db->bind(':attendance', $attendance);
             $db->bind(':honesty', $honesty);
             $db->bind(':neatness', $neatness);

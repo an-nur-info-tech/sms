@@ -105,8 +105,8 @@ if (isset($_POST['result_btn'])) {
                 $term_id = trim($row[2]);
                 $subject_id = trim($row[3]);
                 $admNo = trim(strtoupper($row[4]));
-                $ca = trim($row[5]);
-                $exam = trim($row[6]);
+                $ca = trim($row[6]);
+                $exam = trim($row[7]);
                 if(($ca < 0) || ($ca > 40))
                 {
                     $error = true;
@@ -122,6 +122,29 @@ if (isset($_POST['result_btn'])) {
                     $_SESSION['errorMsg'] = true;
                     $_SESSION['errorTitle'] = "Error";
                     $_SESSION['sessionMsg'] = "Exam should <= 60";
+                    $_SESSION['sessionIcon'] = "error";
+                    $_SESSION['location'] = "excel-upload";
+                }
+                // Check if value not temper
+                if (
+                    empty($class_id) || empty($subject_id) || 
+                    empty($term_id) || empty($session_id) || empty($admNo) || 
+                    !is_numeric($class_id) || !is_numeric($subject_id) || 
+                    !is_numeric($term_id) || !is_numeric($session_id))
+                {
+                    $error = true;
+                    $_SESSION['errorMsg'] = true;
+                    $_SESSION['errorTitle'] = "Error";
+                    $_SESSION['sessionMsg'] = "Value's tempered";
+                    $_SESSION['sessionIcon'] = "error";
+                    $_SESSION['location'] = "excel-upload";
+                }
+                if (!is_numeric($ca) || !is_numeric($exam))
+                {
+                    $error = true;
+                    $_SESSION['errorMsg'] = true;
+                    $_SESSION['errorTitle'] = "Error";
+                    $_SESSION['sessionMsg'] = "CA or Exam should be a numeric";
                     $_SESSION['sessionIcon'] = "error";
                     $_SESSION['location'] = "excel-upload";
                 }
@@ -196,16 +219,16 @@ if (isset($_POST['result_btn'])) {
                             result_tbl(class_id, session_id, term_id, subject_id, admNo, ca, exam, total, grade, remark) 
                             VALUES(:class_id, :session_id, :term_id, :subject_id, :admNo, :ca, :exam, :total, :grade, :remark);
                                 ");
-                            $db->bind('class_id', $class_id);
-                            $db->bind('session_id', $session_id);
-                            $db->bind('term_id', $term_id);
-                            $db->bind('subject_id', $subject_id);
-                            $db->bind('admNo', $admNo);
-                            $db->bind('ca', $ca);
-                            $db->bind('exam', $exam);
-                            $db->bind('total', $total);
-                            $db->bind('grade', $grade);
-                            $db->bind('remark', $remark);
+                            $db->bind(':class_id', $class_id);
+                            $db->bind(':session_id', $session_id);
+                            $db->bind(':term_id', $term_id);
+                            $db->bind(':subject_id', $subject_id);
+                            $db->bind(':admNo', $admNo);
+                            $db->bind(':ca', $ca);
+                            $db->bind(':exam', $exam);
+                            $db->bind(':total', $total);
+                            $db->bind(':grade', $grade);
+                            $db->bind(':remark', $remark);
 
                             if (!$db->execute()) {
                                 $_SESSION['errorMsg'] = true;

@@ -258,8 +258,9 @@ if (isset($_POST['subjectImportBtn']))
       $sheet->setCellValue('C1', 'TERM ID');
       $sheet->setCellValue('D1', 'SUBJECT ID');
       $sheet->setCellValue('E1', 'ADM. NO');
-      $sheet->setCellValue('F1', 'C.A');
-      $sheet->setCellValue('G1', 'EXAM');
+      $sheet->setCellValue('F1', 'NAMES');
+      $sheet->setCellValue('G1', 'C.A');
+      $sheet->setCellValue('H1', 'EXAM');
 
       
       $data = $db->resultset();
@@ -270,8 +271,9 @@ if (isset($_POST['subjectImportBtn']))
         $sheet->setCellValue('C'.$count, $term_id);
         $sheet->setCellValue('D'.$count, $subject_id);
         $sheet->setCellValue('E'.$count, $row->admNo);
-        $sheet->setCellValue('F'.$count, '');
+        $sheet->setCellValue('F'.$count, "$row->sname $row->lname $row->oname");
         $sheet->setCellValue('G'.$count, '');
+        $sheet->setCellValue('H'.$count, '');
 
         $count++;
       }
@@ -293,11 +295,11 @@ if (isset($_POST['subjectImportBtn']))
     }
   }
 }
-/* if (isset($_POST['subjectImportBtn']))
+// CLASS TEACHERS COMMENTS EXPORT
+if (isset($_POST['commentImportBtn']))
 {
   // $select_class = $_POST['select_class']; 
-  $class_id = $_POST['select_class'];
-  $subject_id = $_POST['subject_id'];
+  $class_id = $_POST['class_id'];
   $session_id = $_POST['session_id'];
   $term_id = $_POST['term_id'];
 
@@ -314,59 +316,83 @@ if (isset($_POST['subjectImportBtn']))
       $class_name = "No class";
     }
   }
-  // Get subject name
-  $db->query("SELECT * FROM subject_tbl WHERE subject_id = :subject_id;");
-  $db->bind(':subject_id', $subject_id);
+  
+  // Get session name 
+  $db->query("SELECT * FROM session_tbl WHERE session_id = :session_id;");
+  $db->bind(':session_id', $session_id);
   if ($db->execute())
   {
     if ($db->rowCount() > 0)
     {
       $data = $db->single();
-      $subject_name = $data->subject_name;
+      $session_name = $data->session_name;
     }else{
-      $subject_name = "No subject";
+      $session_name = "No session";
     }
   }
-
-  // Get class records
-  $db->query(
-    "SELECT * FROM students_tbl AS st
-    JOIN class_tbl ON class_tbl.class_id = st.class_id
-    WHERE st.class_id = :class_id;"
-  );
-  $db->bind(':class_id', $class_id);
-
+  // Get term name
+  $db->query("SELECT * FROM term_tbl WHERE term_id = :term_id;");
+  $db->bind(':term_id', $term_id);
   if ($db->execute())
   {
     if ($db->rowCount() > 0)
     {
+      $data = $db->single();
+      $term_name = $data->term_name;
+    }else{
+      $term_name = "No term";
+    }
+  }
+
+  // Get students records
+  $db->query("SELECT * FROM students_tbl AS st JOIN class_tbl ON class_tbl.class_id = st.class_id WHERE st.class_id = :class_id;");
+  $db->bind(':class_id', $class_id);
+  if ($db->execute()) {
+    if ($db->rowCount() > 0) 
+    {
       $count = 2;
-      $filename = "$class_name $subject_name";
+      $filename = "$class_name $term_name $session_name comments";
       // $filename = "$class_id $subject_id";
       // $filename = $class_name;
 
       $spreadsheet = new Spreadsheet();
       $sheet = $spreadsheet->getActiveSheet();
 
-      $sheet->setCellValue('A1', 'CLASS ID');
-      $sheet->setCellValue('B1', 'SESSION ID');
-      $sheet->setCellValue('C1', 'TERM ID');
-      $sheet->setCellValue('D1', 'SUBJECT ID');
-      $sheet->setCellValue('E1', 'ADM. NO');
-      $sheet->setCellValue('F1', 'C.A');
-      $sheet->setCellValue('G1', 'EXAM');
+      $sheet->setCellValue('A1', 'SESSION ID');
+      $sheet->setCellValue('B1', 'TERM ID');
+      $sheet->setCellValue('C1', 'STUDENTS ID');
+      $sheet->setCellValue('D1', 'NAMES');
+      $sheet->setCellValue('E1', 'ATTENDANCE');
+      $sheet->setCellValue('F1', 'HONESTY');
+      $sheet->setCellValue('G1', 'NEATNESS');
+      $sheet->setCellValue('H1', 'PUNCTUALITY');
+      $sheet->setCellValue('I1', 'TOLERANCE');
+      $sheet->setCellValue('J1', 'CREATIVITY');
+      $sheet->setCellValue('K1', 'DEXTERITY');
+      $sheet->setCellValue('L1', 'FLUENCY');
+      $sheet->setCellValue('M1', 'HANDWRITING');
+      $sheet->setCellValue('N1', 'OBEDIENCE');
+      $sheet->setCellValue('O1', 'COMMENTS');
 
       
       $data = $db->resultset();
       foreach($data as $row)
       {
-        $sheet->setCellValue('A'.$count, $class_id);
-        $sheet->setCellValue('B'.$count, $session_id);
-        $sheet->setCellValue('C'.$count, $term_id);
-        $sheet->setCellValue('D'.$count, $subject_id);
-        $sheet->setCellValue('E'.$count, $row->admNo);
+        $sheet->setCellValue('A'.$count, $session_id);
+        $sheet->setCellValue('B'.$count, $term_id);
+        $sheet->setCellValue('C'.$count, $row->admNo);
+        $sheet->setCellValue('D'.$count, "$row->sname $row->lname $row->oname");
+        $sheet->setCellValue('E'.$count, '');
         $sheet->setCellValue('F'.$count, '');
         $sheet->setCellValue('G'.$count, '');
+        $sheet->setCellValue('H'.$count, '');
+        $sheet->setCellValue('I'.$count, '');
+        $sheet->setCellValue('J'.$count, '');
+        $sheet->setCellValue('K'.$count, '');
+        $sheet->setCellValue('L'.$count, '');
+        $sheet->setCellValue('M'.$count, '');
+        $sheet->setCellValue('N'.$count, '');
+        $sheet->setCellValue('O'.$count, '');
 
         $count++;
       }
@@ -381,10 +407,11 @@ if (isset($_POST['subjectImportBtn']))
         header('Location: excel-upload');
       }
     }
-    else 
+    else
     {
-      echo "No record found";
+      echo "no records found";
     }
   }
-} */
+}
+
 $db->Disconect();

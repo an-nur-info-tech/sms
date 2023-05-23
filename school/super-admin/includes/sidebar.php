@@ -68,8 +68,8 @@
         <div id="collapseFour" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Manage result:</h6>
-            <a class="collapse-item" href="add-result"> Add result</a>
-            <a class="collapse-item" href="result-view"> View Result</a>
+            <a class="collapse-item" href="add-result"> Upload result</a>
+            <a class="collapse-item" href="result-view"> Download Result</a>
           </div>
         </div>
       </li>
@@ -82,9 +82,11 @@
         </a>
         <div id="collapseSix" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Spreadsheet Panel:</h6>
-            <a class="collapse-item" href="excel-download"> Download spreadsheet </a>
-            <a class="collapse-item" href="excel-upload"> Upload spreadsheet </a>
+            <h6 class="collapse-header">Spreadsheet Templates:</h6>
+            <a class="collapse-item" href="excel-download"> Download result </a>
+            <a class="collapse-item" href="excel-upload"> Upload result </a>
+            <a class="collapse-item" href="comment-download"> Download Comment </a>
+            <a class="collapse-item" href="comment-upload"> Upload Comment </a>
           </div>
         </div>
       </li>      
