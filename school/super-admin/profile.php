@@ -26,37 +26,37 @@ include('includes/header.php');
                 <!-- <div class="col-md-4"></div> -->
                 <div class="col-md-12">
                     <img src="<?php if(($row->passport == null) || (empty($row->passport))){echo "../uploads/default.png"; }else{ echo $row->passport;} ?>" class="rounded-circle">
-                    <span><i class="fas fa-camera fa-lg"></i></span>
-                    <p class="mt-3" ><?php echo "$row->fname $row->sname $row->oname"; ?>&nbsp; <i class="fas fa-edit fa-sm" onclick="alert('Hello')"></i></p>
+                    <span onclick="alert('TODO')" ><i class="fas fa-camera fa-lg"></i></span>
+                    <p class="mt-3" ><?php echo "$row->fname $row->sname $row->oname"; ?>&nbsp; <i class="fas fa-edit fa-sm" onclick="alert('TODO')"></i></p>
                 </div>
                 <!-- <div class="col-md-4"></div> -->
             </div>
             <div class="row">
-                <table class="table table-bordered mt-5">
+                <table class="table table-bordered table-hover mt-5">
                     <tr>
-                        <td><span class=""> STAFF ID: </span>  <?php echo "$row->staff_id"; ?></td>
-                        <td>USER TYPE: <?php echo "$row->user_type"; ?></td>
-                        <td>ROLE: <?php echo "$row->user_role"; ?></td>
+                        <td><span class=""> Staff ID:  </span>  <?php echo "$row->staff_id"; ?></td>
+                        <td>User Type:  <?php echo "$row->user_type"; ?></td>
+                        <td>Role: <?php echo "$row->user_role"; ?></td>
                     </tr>
                     <tr>
-                        <td>EMAIL:  <?php echo "$row->email"; ?></td>
-                        <td>GENDER: <?php echo "$row->gender"; ?></td>
-                        <td>DOB: <?php echo "$row->dob"; ?></td>
+                        <td>Email:  <?php echo "$row->email"; ?></td>
+                        <td>Gender: <?php echo "$row->gender"; ?></td>
+                        <td>Dob: <?php echo "$row->dob"; ?></td>
                     </tr>
                     <tr>
-                        <td>RELIGION:  <?php echo "$row->religion"; ?></td>
-                        <td>STATE: <?php echo "$row->staff_state"; ?></td>
-                        <td>LGA: <?php echo "$row->lga"; ?></td>
+                        <td>Religion:  <?php echo "$row->religion"; ?></td>
+                        <td>State: <?php echo "$row->staff_state"; ?></td>
+                        <td>lga: <?php echo "$row->lga"; ?></td>
                     </tr>
                     <tr>
-                        <td>QUALIFICATION:  <?php echo "$row->qualification"; ?></td>
-                        <td>LEVEL OF QUALIFICATION: <?php echo "$row->qualification_level"; ?></td>
-                        <td>EMPLOYMENT DATE: <?php echo "$row->year_joined"; ?></td>
+                        <td>Qualification:  <?php echo "$row->qualification"; ?></td>
+                        <td>Level of Qualification: <?php echo "$row->qualification_level"; ?></td>
+                        <td>Employment Date: <?php echo "$row->year_joined"; ?></td>
                     </tr>
                     <tr>
-                        <td>ADDRESS:  <?php echo "$row->home_address"; ?></td>
-                        <td>MOBILE NO.: <?php echo "$row->gsm1"; ?></td>
-                        <td>MOBILE NO.: <?php echo "$row->gsm2"; ?></td>
+                        <td>Address:  <?php echo "$row->home_address"; ?></td>
+                        <td>Mobile no.: <?php echo "$row->gsm1"; ?></td>
+                        <td>Phone no.: <?php echo "$row->gsm2"; ?></td>
                     </tr>
                 </table>
             </div>

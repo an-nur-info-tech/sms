@@ -3,8 +3,174 @@ include('includes/header.php');
 $db = new Database();
 
 if (isset($_POST['submit_btn'])) {
-    /* 
-    $admNo = trim($_POST['admNo']);
+    
+    if (isset($_POST['checkB'])) // Checks if checkbox is checked
+    {
+        $checkB = $_POST['checkB']; // Arrays of checkbox
+
+        $ca = $_POST['ca']; // Arrays of CA
+        $exam = $_POST['exam']; // Arrays of Exams
+        $class_id = $_POST['class_id'];
+        $session_id = $_POST['session_id'];
+        $term_id = $_POST['term_id'];
+        $subject_id = $_POST['subject_id'];
+        // $admNo = $_POST['admNo']; // Arrays of total
+        // $grade = $_POST['grade']; // Arrays of grade
+        // $remark = $_POST['remark']; // Arrays of remark
+
+        // $subject_id = $_POST['subject_id'];
+        foreach ($checkB as $key => $value)
+        {
+            $admNo = $value;
+            // echo "$admNo $ca[$key] $exam[$key] $subject_id $term_id $class_id $session_id".PHP_EOL;
+            if (($ca[$key] < 0) || ($ca[$key] > 40)) {
+                $_SESSION['errorMsg'] = true;
+                $_SESSION['errorTitle'] = "Ooops...";
+                $_SESSION['sessionMsg'] = "CA should <= 40";
+                $_SESSION['sessionIcon'] = "error";
+                $_SESSION['location'] = "add-result";
+            }
+            else if (($exam[$key] < 0) || ($exam[$key] > 60)) {
+                $_SESSION['errorMsg'] = true;
+                $_SESSION['errorTitle'] = "Ooops...";
+                $_SESSION['sessionMsg'] = "Exam should <= 60";
+                $_SESSION['sessionIcon'] = "error";
+                $_SESSION['location'] = "add-result";
+            }
+            else
+            {
+                // echo "$admNo $exam[$key]  $ca[$key]";
+                $total = (int)$exam[$key] + (int)$ca[$key]; //Adding C.A with Exam as total
+                //let average = total/100;
+                // var av_reduce = average.toFixed(2);
+            
+                if($total <= 39 )
+                {
+                  $grade = "F9";
+                  $remark = "Fail";
+                }
+                if(($total >= 40) || ($total >= 44))
+                {
+                  $grade = "E8";
+                  $remark = "Pass";
+                }
+                if(($total >= 45) || ($total >= 49))
+                {
+                  $grade = "D7";
+                  $remark = "Pass";
+                }
+                if(($total >= 50) || ($total >= 59))
+                {
+                  $grade = "C6";
+                  $remark = "Credit";
+                }
+                if(($total >= 60) || ($total >= 64))
+                {
+                  $grade = "C5";
+                  $remark = "Credit";
+                }
+                if(($total >= 65) || ($total >= 69))
+                {
+                  $grade = "C4";
+                  $remark = "Credit";
+                }
+                if(($total >= 70) || ($total >= 74))
+                {
+                  $grade = "B3";
+                  $remark = "Good";
+                }
+                if(($total >= 75) || ($total >= 79))
+                {
+                  $grade = "B2";
+                  $remark = "Good";
+                }
+                if(($total >= 80) || ($total >= 100))
+                {
+                  $grade = "A1";
+                  $remark = "Excellent";
+                }
+                //Checking if result uploaded already or not
+                 $db->query(
+                    "SELECT * FROM result_tbl 
+                    WHERE admNo = :admNo
+                    AND subject_id = :subject_id 
+                    AND session_id = :session_id 
+                    AND term_id = :term_id;
+                    AND class_id = :class_id;
+                    "
+                );
+                $db->bind(':admNo', $admNo);
+                $db->bind(':subject_id', $subject_id);
+                $db->bind(':session_id', $session_id);
+                $db->bind(':term_id', $term_id);
+                $db->bind(':class_id', $class_id);
+
+                if (!$db->execute()) {
+                    $_SESSION['errorMsg'] = true;
+                    $_SESSION['errorTitle'] = "Error";
+                    $_SESSION['sessionMsg'] = "Error occured!";
+                    $_SESSION['sessionIcon'] = "error";
+                    $_SESSION['location'] = "add-result";
+                    die($db->getError());
+                } else {
+                    if ($db->rowCount() > 0) {
+                        $_SESSION['errorMsg'] = true;
+                        $_SESSION['errorTitle'] = "Ooops...";
+                        $_SESSION['sessionMsg'] = "Result exist...";
+                        $_SESSION['sessionIcon'] = "error";
+                        $_SESSION['location'] = "add-result";
+                    } else {
+                        // $db->query(
+                        //     "INSERT INTO 
+                        //     result_tbl(class_id, session_id, term_id, subject_id, admNo, ca, exam) 
+                        //     VALUES(:class_id, :session_id, :term_id, :subject_id, :admNo, :ca, :exam);
+                        // "
+                        // );
+                        $db->query(
+                            "INSERT INTO 
+                            result_tbl(class_id, session_id, term_id, subject_id, admNo, ca, exam, total, grade, remark) 
+                            VALUES(:class_id, :session_id, :term_id, :subject_id, :admNo, :ca, :exam, :total, :grade, :remark);
+                        "
+                        );
+
+                        $db->bind(':class_id', $class_id);
+                        $db->bind(':session_id', $session_id);
+                        $db->bind(':term_id', $term_id);
+                        $db->bind(':subject_id', $subject_id);
+                        $db->bind(':admNo', $admNo);
+                        $db->bind(':ca', $ca[$key]);
+                        $db->bind(':exam', $exam[$key]);
+                        $db->bind(':total', $total);
+                        $db->bind(':grade', $grade);
+                        $db->bind(':remark', $remark);
+
+                        if (!$db->execute()) {
+                            $_SESSION['errorMsg'] = true;
+                            $_SESSION['errorTitle'] = "Error";
+                            $_SESSION['sessionMsg'] = "Error occured!";
+                            $_SESSION['sessionIcon'] = "error";
+                            $_SESSION['location'] = "add-result";
+                            die($db->getError());
+                        } else {
+                            $_SESSION['errorMsg'] = true;
+                            $_SESSION['errorTitle'] = "Success";
+                            $_SESSION['sessionMsg'] = "Result uploaded";
+                            $_SESSION['sessionIcon'] = "success";
+                            $_SESSION['location'] = "add-result";
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+    else 
+    {
+        echo "Select what to add";
+    }
+    // echo $subject_id;
+    // var_dump($result);
+    /* $admNo = trim($_POST['admNo']);
     $class_id = $_POST['class_id'];
     $session_id = $_POST['session_id'];
     $term_id = $_POST['term_id'];
@@ -13,8 +179,8 @@ if (isset($_POST['submit_btn'])) {
     $exam = trim($_POST['exam']);
     $total = trim($_POST['total']);
     $grade = trim($_POST['grade']);
-    $remark = trim($_POST['remark']);
-     */
+    $remark = trim($_POST['remark']); */
+    
     /* 
     if ($ca > 40) {
         $error = true;
@@ -488,15 +654,23 @@ if (isset($_POST['submit_btn'])) {
                                 ?>
                                             <tr>
                                                 <td><?php echo $count; ?></td>
-                                                <td><input type="checkbox" id="checkB" onchange="checkSingleSelect()"></td>
+                                                <td><input type="checkbox" value="<?php echo $admNo; ?>" id="checkB" name="checkB[]" onchange="checkSingleSelect()"></td>
                                                 <td><?php echo $row->class_name; ?></td>
                                                 <td><?php echo $admNo; ?></td>
                                                 <td><?php echo $row->sname . " " . $row->lname . " " . $row->oname; ?></td>
-                                                <td> <input type="number" id="caCheck" name="ca" id="ca" onkeypress="checkSingleSelect()" onkeyup="add()" class="form-control ca"></td>
-                                                <td> <input type="number" id="examCheck" name="exam" id="exam" onkeypress="checkSingleSelect()" onkeyup="add()" class="form-control exam"> </td>
-                                                <input type="hidden" name="total" id="total" placeholder=" Total" class="form-control">
-                                                <input type="hidden" name="grade" id="grade" placeholder=" grade" class="form-control">
-                                                <input type="hidden" name="remark" id="remark" placeholder="Remark" class="form-control">
+                                                <td> <input type="number" id="caCheck" onkeypress="adds()" name="ca[]" id="ca"  class="form-control ca"></td>
+                                                <td><input type="number" id="examCheck" onkeypress="adds()" name="exam[]" id="exam"  class="form-control exam"> </td>
+                                                <input type="hidden" name="total[]" id="total" placeholder=" Total" class="form-control">
+                                                <input type="hidden" name="grade[]" id="grade" placeholder=" grade" class="form-control">
+                                                <input type="hidden" name="remark[]" id="remark" placeholder="Remark" class="form-control">
+                                                
+                                                <input type="hidden" name="class_id" value="<?php echo $class_id; ?>" class="form-control">
+                                                <!-- <input type="hidden" name="admNo[]" value="<?php //echo $admNo; ?>" class="form-control"> -->
+                                                <input type="hidden" name="session_id" value="<?php echo $session_id; ?>" class="form-control">
+                                                <input type="hidden" name="term_id" value="<?php echo $term_id; ?>" class="form-control">
+                                                <input type="hidden" name="subject_id" value="<?php echo $subject_id; ?>" class="form-control">
+
+
                                             </tr>
                                         <?php
                                             $count++;
@@ -504,7 +678,7 @@ if (isset($_POST['submit_btn'])) {
                                         ?>
                                         <tr>
                                             <td colspan="7" class="text-center">
-                                                <button class="btn m-2 btn-outline-primary btn-sm " name="submit_btn" id="submitBtn" disabled>Submit </button>
+                                                <button class="btn m-2 btn-outline-primary btn-sm " name="submit_btn" id="submitBtn" >Submit </button>
                                             </td>
                                         </tr>
                                     <?php

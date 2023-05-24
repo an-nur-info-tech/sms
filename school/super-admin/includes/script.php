@@ -170,26 +170,28 @@
 
     // let ca = getById("ca").value;
     // let exam = getById("exam").value;
-    let ca = getBySelectAll(".ca").value;
-    let exam = getBySelectAll(".exam").value;
-    
-    for(let i = 0; i < ca.length; i++)
-    {
-      if((ca[i] > 40) || (ca[i] < 0))
-      {
-        return ca[i].value = "";  
-      }
-      if((exam[i] > 60) || (exam[i] < 0))
-      {
-        return exam[i].value = "";
-      }
-    }
+    let ca = getBySelectAll("#caCheck").value;
+    let exam = getBySelectAll("#examCheck").value;
+    let checkB = getBySelectAll("#checkB");
 
-    let total_value = parseInt(ca) + parseInt(exam); //Adding C.A with Exam as total
+    
+    // for(let i = 0; i < ca.length; i++)
+    // {
+      // if((ca > 40) || (ca < 0))
+      // {
+      //   return ca.value = "";  
+      // }
+      // if((exam > 60) || (exam < 0))
+      // {
+      //   return exam.value = "";
+      // }
+    // }
+
+    //let total_value = parseInt(ca) + parseInt(exam); //Adding C.A with Exam as total
     //let average = total_value/100;
     // var av_reduce = average.toFixed(2);
 
-    if(total_value <= 39 )
+    /* if(total_value <= 39 )
     {
       getById("grade").value = "F9";
       getById("remark").value = "Fail";
@@ -239,7 +241,7 @@
     {
       getById("total").value = total_value;
       // getById("average").value = av_reduce;         
-    }
+    } */
   }
 
   
@@ -268,11 +270,40 @@
   }
   const checkSingleSelect = () => {
     let checkB = getBySelectAll("#checkB");
-    let submitBtn = document.querySelector("#submitBtn");
-    let caCheck = getBySelectAll("caCheck");
-    let examCheck = getBySelectAll("examCheck")
+    // let submitBtn = document.querySelector("#submitBtn");
+    // let caCheck = getBySelectAll("#caCheck").value;
+    // let examCheck = getBySelectAll("#examCheck").value;
+    /* checkB.forEach( data =>
+    {
+      
+      if (data.checked === true)
+      {
+        data.value = 1;
+      } 
+      if (data.checked === false)
+      {
+        data.value = "";
+      }
 
-    for(let j = 0; j < checkB.length; j++)
+    }); */
+    /* checkB.forEach(function(){
+      console.log(this.length);
+    }); */
+    /* for (let i = 0; i < checkB.length; i++)
+    {
+      if (checkB[i].checked == true)
+      {
+        console.log(checkB[i].value);
+        console.log(caCheck);
+        console.log(examCheck);
+      }
+      if (checkB[i].checked == false)
+      {
+        console.log(checkB[i].value);
+      }
+    } */
+
+    /* for(let j = 0; j < checkB.length; j++)
     {
       if(checkB[j].checked == true)
       {
@@ -282,7 +313,7 @@
       {
         checkB[j].removeAttribute('required');
       }
-    }
+    } */
   }
   //check_all();
 

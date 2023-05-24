@@ -45,7 +45,7 @@ require_once('code.php');
 
 <body class="bg-gradient-primary">
 
-  <div class="container-fluid">
+  <div class="container">
     <div class="row mt-3 text-center text-white">
       <div class="col-md-12">
         <h1>School Management System</h1>
