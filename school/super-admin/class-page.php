@@ -67,19 +67,26 @@ if (isset($_POST['assignClassBtn'])) {
       $db->bind(':teacher_id', $teacher_id);
       $db->bind(':class_id', $class_id);
       if(!$db->execute()) {
-        $_SESSION['errorMsg'] = true;
-        $_SESSION['errorTitle'] = "Error";
-        $_SESSION['sessionMsg'] = "Error occured!";
-        $_SESSION['sessionIcon'] = "error";
-        $_SESSION['location'] = "class-page";
+        die($db->getError());
       } 
       else 
       {
-        $_SESSION['errorMsg'] = true;
-        $_SESSION['errorTitle'] = "Success";
-        $_SESSION['sessionMsg'] = "Teacher assigned!";
-        $_SESSION['sessionIcon'] = "success";
-        $_SESSION['location'] = "class-page";
+        if ($db->rowCount() > 0)
+        {
+          $_SESSION['errorMsg'] = true;
+          $_SESSION['errorTitle'] = "Success";
+          $_SESSION['sessionMsg'] = "Teacher assigned!";
+          $_SESSION['sessionIcon'] = "success";
+          $_SESSION['location'] = "class-page";
+        }
+        else 
+        {
+          $_SESSION['errorMsg'] = true;
+          $_SESSION['errorTitle'] = "Error";
+          $_SESSION['sessionMsg'] = "Error occured!";
+          $_SESSION['sessionIcon'] = "error";
+          $_SESSION['location'] = "class-page";
+        }
       }
     }
   }
@@ -96,17 +103,24 @@ if (isset($_POST['rmAssignClassBtn'])) {
   $db->query("UPDATE class_tbl SET instructor_id = null WHERE class_id = :classID;");
   $db->bind(':classID', $classID);
   if (!$db->execute()) {
-    $_SESSION['errorMsg'] = true;
-    $_SESSION['errorTitle'] = "Error";
-    $_SESSION['sessionMsg'] = "Something went wrong";
-    $_SESSION['sessionIcon'] = "error";
-    $_SESSION['location'] = "class-page";
+    die($db->getError());
   } else {
-    $_SESSION['errorMsg'] = true;
-    $_SESSION['errorTitle'] = "Success";
-    $_SESSION['sessionMsg'] = "Teacher removed";
-    $_SESSION['sessionIcon'] = "success";
-    $_SESSION['location'] = "class-page";
+    if ($db->rowCount() > 0)
+    {
+      $_SESSION['errorMsg'] = true;
+      $_SESSION['errorTitle'] = "Success";
+      $_SESSION['sessionMsg'] = "Teacher removed";
+      $_SESSION['sessionIcon'] = "success";
+      $_SESSION['location'] = "class-page";
+    }
+    else 
+    {
+      $_SESSION['errorMsg'] = true;
+      $_SESSION['errorTitle'] = "Error";
+      $_SESSION['sessionMsg'] = "Something went wrong";
+      $_SESSION['sessionIcon'] = "error";
+      $_SESSION['location'] = "class-page";
+    }
   }
 }
 
@@ -119,11 +133,7 @@ if (isset($_POST['updateClassBtn'])) {
   $db->query("SELECT * FROM class_tbl WHERE class_name = :editClassName;");
   $db->bind(':editClassName', $editClassName);
   if (!$db->execute()) {
-    $_SESSION['errorMsg'] = true;
-    $_SESSION['errorTitle'] = "Error";
-    $_SESSION['sessionMsg'] = "Something went wrong";
-    $_SESSION['sessionIcon'] = "error";
-    $_SESSION['location'] = "class-page";
+    die($db->getError());
   } else {
     if ($db->rowCount() > 0) {
       $_SESSION['errorMsg'] = true;
@@ -137,17 +147,24 @@ if (isset($_POST['updateClassBtn'])) {
       $db->bind(':editClassID', $editClassID);
       $db->bind(':editClassName', $editClassName);
       if (!$db->execute()) {
-        $_SESSION['errorMsg'] = true;
-        $_SESSION['errorTitle'] = "Error";
-        $_SESSION['sessionMsg'] = "Something went wrong";
-        $_SESSION['sessionIcon'] = "error";
-        $_SESSION['location'] = "class-page";
+        die($db->getError());
       } else {
-        $_SESSION['errorMsg'] = true;
-        $_SESSION['errorTitle'] = "Success";
-        $_SESSION['sessionMsg'] = "Record updated!";
-        $_SESSION['sessionIcon'] = "success";
-        $_SESSION['location'] = "class-page";
+        if ($db->rowCount()  > 0)
+        {
+          $_SESSION['errorMsg'] = true;
+          $_SESSION['errorTitle'] = "Success";
+          $_SESSION['sessionMsg'] = "Record updated!";
+          $_SESSION['sessionIcon'] = "success";
+          $_SESSION['location'] = "class-page";
+        }
+        else 
+        {
+          $_SESSION['errorMsg'] = true;
+          $_SESSION['errorTitle'] = "Error";
+          $_SESSION['sessionMsg'] = "Something went wrong";
+          $_SESSION['sessionIcon'] = "error";
+          $_SESSION['location'] = "class-page";
+        }
       }
     }
   }
@@ -165,17 +182,24 @@ if (isset($_POST['deleteClassBtn'])) {
     $db->query("DELETE FROM class_tbl WHERE class_id = :deleteClassID;");
     $db->bind(':deleteClassID', $deleteClassID);
     if (!$db->execute()) {
-      $_SESSION['errorMsg'] = true;
-      $_SESSION['errorTitle'] = "Error";
-      $_SESSION['sessionMsg'] = "Something went wrong";
-      $_SESSION['sessionIcon'] = "error";
-      $_SESSION['location'] = "class-page";
+      die($db->getError());
     } else {
-      $_SESSION['errorMsg'] = true;
-      $_SESSION['errorTitle'] = "Success";
-      $_SESSION['sessionMsg'] = "Record deleted";
-      $_SESSION['sessionIcon'] = "success";
-      $_SESSION['location'] = "class-page";
+      if ($db->rowCount() > 0)
+      {
+        $_SESSION['errorMsg'] = true;
+        $_SESSION['errorTitle'] = "Success";
+        $_SESSION['sessionMsg'] = "Record deleted";
+        $_SESSION['sessionIcon'] = "success";
+        $_SESSION['location'] = "class-page";
+      }
+      else 
+      {
+        $_SESSION['errorMsg'] = true;
+        $_SESSION['errorTitle'] = "Error";
+        $_SESSION['sessionMsg'] = "Something went wrong";
+        $_SESSION['sessionIcon'] = "error";
+        $_SESSION['location'] = "class-page";
+      }
     }
   }
   else

@@ -147,6 +147,33 @@ $db = new Database();
                     $session_id = $_POST['session_id'];
                     $term_id = $_POST['term_id'];
 
+                    // Get student info
+                    $db->query("SELECT admNo, sname, lname, oname, class_name FROM students_tbl AS st JOIN class_tbl ON class_tbl.class_id = st.class_id WHERE admNo = :admNo;");
+                    $db->bind(':admNo', $student_id);
+                    $db->execute();
+                    $res = $db->single();
+                    $names = "$res->sname $res->lname $res->oname";
+                    $class = $res->class_name;
+                    $admNo = $res->admNo;
+
+                    // Get the total score
+                    $db->query("SELECT SUM(total) AS total_score FROM result_tbl WHERE admNo = :admNo AND session_id = :session_id AND term_id = :term_id;");
+                    $db->bind(':admNo', $student_id);
+                    $db->bind(':session_id', $session_id);
+                    $db->bind(':term_id', $term_id);
+                    $db->execute();
+                    $res = $db->single();
+                    $total = $res->total_score;
+                    // Get the average score
+                    $db->query("SELECT AVG(total) AS average FROM result_tbl WHERE admNo = :admNo AND session_id = :session_id AND term_id = :term_id;");
+                    $db->bind(':admNo', $student_id);
+                    $db->bind(':session_id', $session_id);
+                    $db->bind(':term_id', $term_id);
+                    $db->execute();
+                    $res = $db->single();
+                    $average = round(($res->average), 2, PHP_ROUND_HALF_UP);
+                    
+
                     $db->query(
                         "SELECT * FROM result_tbl AS rst
                         JOIN subject_tbl ON subject_tbl.subject_id = rst.subject_id
@@ -155,7 +182,6 @@ $db = new Database();
                     $db->bind(':student_id', $student_id);
                     $db->bind(':session_id', $session_id);
                     $db->bind(':term_id', $term_id);
-
                     if ($db->execute()) {
                         if ($db->rowCount() > 0) {
                             $count = 1;
@@ -179,8 +205,17 @@ $db = new Database();
                             }
                             ?>
                             <tr>
+                                <td></td>
+                                <td> <p class="text-danger"> <strong><?php echo "$class $names [$admNo]"; ?> </strong></p></td>
+                                <td></td>
+                                <td colspan="2"><p><strong> Total => &nbsp; &nbsp;<?php echo $total; ?> </strong></p></td>
+                                <!-- <td></td> -->
+                                <td colspan="2"><p><strong>Average => &nbsp; &nbsp;<?php echo $average; ?> </strong></p></td>
+                                <td></td>
+                            </tr>
+                            <tr>
                                 <td colspan="7">Comment: (50 chars maximum)
-                                    <textarea name="principal_comment" class="form-control" maxlength="50" required> </textarea>
+                                    <textarea name="principal_comment" class="form-control" maxlength="50" placeholder="Comments" required> </textarea>
                                     <input type="hidden" class="form-control" name="student_id" value="<?php echo $student_id; ?>">
                                     <input type="hidden" class="form-control" name="session_id" value="<?php echo $session_id; ?>">
                                     <input type="hidden" class="form-control" name="term_id" value="<?php echo $term_id; ?>">

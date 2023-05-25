@@ -422,6 +422,101 @@ const checkSubject = () => {
   });
 }
 /*-------x---- CLASS DELETE MODAL -------x----*/
+
+/*   CHECK PASSWORD STRENGTH ON PROFILE SETTINGS*/
+const check_Password_stregth = () => {
+  let password = getById("password").value;
+  let confirm_password = getById("confirm_password").value;
+  let passwordBtn = getById("passwordBtn");
+
+  if ((password.length > 8) && (confirm_password.length > 8) && (password.match(/[a-zA-Z][0-9]/g))) // TODO RegEx
+  {
+    passwordBtn.removeAttribute('disabled');
+  }
+  else 
+  {
+    passwordBtn.setAttribute('disabled', '');
+  }
+  
+}
+/*-------x---- CHECK PASSWORD STRENGTH ON PROFILE SETTINGS -------x----*/
+
+/*   CHANGE CLASS SUBJECT INSTRUCTOR MODAL */
+$(".change_instructor").click(function(){
+  let subject_id = $(this).attr("subject_id");
+  let class_id = $(this).attr("class_id");
+  // console.log(subject_id);
+  let dat = new FormData();
+  dat.append("subject_id", subject_id);
+
+  $.ajax({
+    url: "ajax/change-teacher.ajax.php",
+    method: "POST",
+    data: dat,
+    cache: false,
+    contentType: false,
+    processData: false,
+    dataType: "html",
+    success: function(response){
+      $("#staff_id").html(response);
+      $("#class_id").val(class_id);
+      $("#subject_id").val(subject_id);
+    },
+    error: function(XMLHttpRequest, textStatus, errorThrown) {
+     console.log(XMLHttpRequest);
+     console.log(textStatus);
+     console.log(errorThrown);
+  }
+  })
+});
+/*-------x---- CHANGE CLASS SUBJECT INSTRUCTOR MODA -------x----*/
+
+/*   CLASS SUBJECT DELETE MODAL */
+$(".deleteClassSubjectID").click(function() {
+  let deleteSubjectID = $(this).attr("deleteSubjectID");
+  let class_id = $(this).attr("class_id");
+  //console.log(deleteSubjectID);
+  $("#deleteSubjectID").val(deleteSubjectID);
+  $("#class_ID").val(class_id);
+});
+/*-------x---- CLASS SUBJECT DELETE MODAL -------x----*/
+
+/*   DELETE SUBJECT MODAL */
+$(".subjectDelBtn").click(function() {
+  let subject_id = $(this).attr("subjectDelID");
+  $("#deleteSubjectID").val(subject_id);
+});
+/*-------x---- DELETE SUBJECT MODALL -------x----*/
+
+
+/*   SUBJECT EDIT MODAL */
+$(".subjectEditBtn").click(function() {
+  let subject_id = $(this).attr("subjectEditID");
+  // console.log(editClassID);
+  let datas = new FormData();
+  datas.append("subject_id", subject_id);
+
+  
+  $.ajax({
+    url: "ajax/subject.ajax.php",
+    method: "POST",
+    data: datas,
+    cache: false,
+    contentType: false,
+    processData: false,
+    dataType: "json",
+    success: function(response){
+      $("#editSubjectName").val(response["subject_name"]);
+      $("#editSubjectID").val(response["subject_id"]);
+    },
+    error: function(XMLHttpRequest, textStatus, errorThrown) {
+     console.log(XMLHttpRequest);
+     console.log(textStatus);
+     console.log(errorThrown);
+  }
+  })
+});
+/*-------x---- SUBJECT EDIT MODAL -------x----*/
 </script>
 </body>
 
