@@ -1,6 +1,6 @@
 <?php
 include('../database/Database.php');
-require('./includes/fpdf8/fpdf.php');
+include('./includes/fpdf8/fpdf.php');
 
 if (isset($_POST['single_view_btn'])) {
     $admNo = $_POST['admNo'];
@@ -62,8 +62,8 @@ if (isset($_POST['single_view_btn'])) {
                     $pdf->AddPage();
                     
                     //Getting class population
-                    $db->query("SELECT * FROM students_tbl WHERE class_name = :class_name;");
-                    $db->bind(':class_name', $class_name);
+                    $db->query("SELECT * FROM students_tbl WHERE class_id = :class_id;");
+                    $db->bind(':class_id', $class_id);
                     $db->execute();
                     $rst = $db->single();
                     $class_num = $db->rowCount(); // Getting total number of students in a class
@@ -115,7 +115,7 @@ if (isset($_POST['single_view_btn'])) {
                         $pdf->ln(-3);
                         //Add Student image
                         //Controlling image
-                        if (!empty($passport) || $passport != null) {
+                        if (!empty($passport) || ($passport != null)) {
                             $pdf->Image(
                                 $passport,
                                 170,
@@ -137,6 +137,7 @@ if (isset($_POST['single_view_btn'])) {
                         $pdf->ln(5);
                         $pdf->SetFont('Times', 'B', 10);
                         $pdf->Cell(40, 5, 'ADMISSION NO.', 1, 0, 'L');
+                        $pdf->SetFont('Times', '', 10);
                         $pdf->Cell(
                             40,
                             5,
@@ -145,13 +146,21 @@ if (isset($_POST['single_view_btn'])) {
                             0,
                             'L'
                         );
+                        $pdf->SetFont('Times', 'B', 10);
                         $pdf->Cell(40, 5, 'NAME', 1, 0, 'L');
+                        $pdf->SetFont('Times', '', 10);
                         $pdf->Cell(70, 5, $sname . " " . $lname . " " . $oname, 1, 1, 'L');
+                        $pdf->SetFont('Times', 'B', 10);
                         $pdf->Cell(40, 5, 'CLASS', 1, 0, 'L');
+                        $pdf->SetFont('Times', '', 10);
                         $pdf->Cell(40, 5, $class_name, 1, 0, 'L');
+                        $pdf->SetFont('Times', 'B', 10);
                         $pdf->Cell(40, 5, "CLASS SIZE", 1, 0, 'L');
+                        $pdf->SetFont('Times', '', 10);
                         $pdf->Cell(70, 5, $class_num, 1, 1, 'L');
+                        $pdf->SetFont('Times', 'B', 10);
                         $pdf->Cell(40, 5, 'GENDER', 1, 0, 'L');
+                        $pdf->SetFont('Times', '', 10);
                         $pdf->Cell(
                             40,
                             5,
@@ -160,7 +169,9 @@ if (isset($_POST['single_view_btn'])) {
                             0,
                             'L'
                         );
+                        $pdf->SetFont('Times', 'B', 10);
                         $pdf->Cell(40, 5, 'RELIGION', 1, 0, 'L');
+                        $pdf->SetFont('Times', '', 10);
                         $pdf->Cell(70, 5, $religion, 1, 1, 'L');
                         $pdf->ln(10);
                         //SUBJECTS  header
@@ -265,7 +276,6 @@ if (isset($_POST['single_view_btn'])) {
                         $db->execute();
                         $sql_fetch = $db->single();
                         $average = $sql_fetch->average;
-                        //Row MATHS
                         $pdf->SetFont('Times', 'B', 10);
                         $pdf->Cell(110, 5, 'TOTAL = ', 1, 0, 'R');
                         //$pdf ->Cell(15,5,'',1,0,'C');
@@ -1530,7 +1540,7 @@ if (isset($_POST['single_view_btn'])) {
             
             }
         } */
-    
+$db->Disconect();    
 }
 
 /*****************************Making Downloadable ***********************************/

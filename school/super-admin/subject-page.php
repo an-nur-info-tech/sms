@@ -275,6 +275,7 @@ if (isset($_POST['deleteSubjectBtn'])) {
 </div><!-- End of Main Content -->
 
 <?php
+$db->Disconect();
 include('includes/footer.php');
 include('includes/script.php');
 ?>
