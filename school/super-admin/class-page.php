@@ -227,7 +227,7 @@ if (isset($_POST['deleteClassBtn'])) {
         <label class="control-label" for="class_name"> Class name: </label> &nbsp;
         <input type="text" name="class_name" class="form-control" placeholder="Enter Class name" autocomplete="off" required>
         &nbsp;&nbsp;
-        <button name="class_btn" class="btn btn-primary"> Submit </button>
+        <button name="class_btn" onclick="add_spinner()" class="btn btn-primary spinner_btn"> Submit </button>
       </div>
     </div><br><br>
   </form>

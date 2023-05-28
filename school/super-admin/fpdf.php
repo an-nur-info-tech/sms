@@ -139,7 +139,7 @@ if(isset($_POST['view_class_btn']))
                         if(!empty($passport)){
                             $pdf ->Image($passport, 170,30,30,30);    
                         }
-                        //$pdf ->Image($passport, 170,30,30,30);
+                        $pdf ->Image('../uploads/student_image.jpg', 170,30,30,30);
                         $pdf ->ln(5);
                         $pdf -> SetFont('Times','B', 10);
                         $pdf -> Cell(40,5,'ADMISSION NO.',1,0,'L');

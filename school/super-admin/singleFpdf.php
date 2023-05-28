@@ -6,8 +6,6 @@ if (isset($_POST['single_view_btn'])) {
     $admNo = $_POST['admNo'];
     $session_id = $_POST['session_id'];
     $term_id = $_POST['term_id'];
-
-    
     
         $db = new Database();
         $db->query(
@@ -218,8 +216,21 @@ if (isset($_POST['single_view_btn'])) {
                                     $pdf->SetFont('Times', '', 10);
                                     $pdf->Cell(75, 5, $subjects, 1, 0, 'L');
         
-                                    $ca = $results->ca;
-                                    $exam = $results->exam;
+                                    // $ca = $results->ca;
+                                    // $exam = $results->exam;
+                                    if (($results->ca == 0) || ($results->ca == null) || empty($results->ca))
+                                    {
+                                        $ca = "N/A";
+                                    }else{
+                                        $ca = $results->ca;
+                                    }
+                                    
+                                    if (($results->exam == 0) || ($results->exam == null) || empty($results->exam))
+                                    {
+                                        $exam = "N/A";
+                                    }else{
+                                        $exam = $results->exam;
+                                    }
                                     $total = $results->total;
                                     $grade = $results->grade;
                                     $remark = $results->remark;
@@ -266,16 +277,16 @@ if (isset($_POST['single_view_btn'])) {
                         $db->bind(':session_id', $session_id);
                         $db->bind(':term_id', $term_id);
                         $db->execute();
-                        $sql_fetch = $db->single();
-                        $total = $sql_fetch->total_sum;
+                        $total = $db->single()->total_sum;
+                        // $total = $sql_fetch->total_sum;
                         //Getting Average
                         $db->query("SELECT AVG(total) AS average FROM result_tbl WHERE admNo = :admNo AND session_id = :session_id AND term_id = :term_id;");
                         $db->bind(':admNo', $admNo);
                         $db->bind(':session_id', $session_id);
                         $db->bind(':term_id', $term_id);
                         $db->execute();
-                        $sql_fetch = $db->single();
-                        $average = $sql_fetch->average;
+                        $average = $db->single()->average;
+                        // $average = $sql_fetch->average;
                         $pdf->SetFont('Times', 'B', 10);
                         $pdf->Cell(110, 5, 'TOTAL = ', 1, 0, 'R');
                         //$pdf ->Cell(15,5,'',1,0,'C');
@@ -308,19 +319,23 @@ if (isset($_POST['single_view_btn'])) {
                         $db->bind(':term_id', $term_id);
 
                         //PRINCIPAL AUTO COMMENT TODO
-                        if($average < 50)
+                        if(($average < 10) || ($average <= 45))
                         {
-                            $p_c = "This is a below average result";
-                        } else if($average >= 50 )
+                            $p_c = "This is a poor result";
+                        } else if(($average >= 46) || ($average >= 50))
                         {
-                            $p_c = "This is an average result, you can do more better";
-                        } else if($average >= 60)
+                            $p_c = "An average result, you can try harder";
+                        } else if(($average >= 51) || ($average >= 60))
                         {
-                            $p_c = "Good, you can do more better";
-                        } else if($average > 60)
-                        {
-                            $p_c = "Execellent, Keep it up";
+                            $p_c = "Good, you can do better";
                         }
+                         else if(($average >= 61) || ($average >= 75))
+                        {
+                            $p_c = "Bravo! Do not give up";
+                        } else if(($average >= 76) || ($average >= 100))
+                        {
+                            $p_c = "Excellent! Keep the energy intact";
+                        } 
                         if($db->execute())
                         {
                             if ($db->rowCount() > 0) {

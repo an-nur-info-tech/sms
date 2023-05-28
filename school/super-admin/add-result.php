@@ -2,6 +2,86 @@
 include('includes/header.php');
 $db = new Database();
 
+if (isset($_POST['submit_btn_single'])) {
+
+    // echo $subject_id;
+    // var_dump($result);
+    $admNo = trim($_POST['admNo']);
+    $class_id = $_POST['class_id'];
+    $session_id = $_POST['session_id'];
+    $term_id = $_POST['term_id'];
+    $subject_id = $_POST['subject_id'];
+    $ca = trim($_POST['ca']);
+    $exam = trim($_POST['exam']);
+    $total = trim($_POST['total']);
+    $grade = trim($_POST['grade']);
+    $remark = trim($_POST['remark']);
+    
+    //Checking if result uploaded already or not
+    $db->query(
+        "SELECT * FROM result_tbl 
+        WHERE admNo = :admNo
+        AND subject_id = :subject_id 
+        AND session_id = :session_id 
+        AND term_id = :term_id;
+        AND class_id = :class_id;
+    ");
+    $db->bind(':admNo', $admNo);
+    $db->bind(':subject_id', $subject_id);
+    $db->bind(':session_id', $session_id);
+    $db->bind(':term_id', $term_id);
+    $db->bind(':class_id', $class_id);
+
+    if (!$db->execute()) {
+        $_SESSION['errorMsg'] = true;
+        $_SESSION['errorTitle'] = "Error";
+        $_SESSION['sessionMsg'] = "Error occured!";
+        $_SESSION['sessionIcon'] = "error";
+        $_SESSION['location'] = "add-result";
+        die($db->getError());
+    } else {
+        if ($db->rowCount() > 0) {
+            $_SESSION['errorMsg'] = true;
+            $_SESSION['errorTitle'] = "Ooops...";
+            $_SESSION['sessionMsg'] = "Result exist...";
+            $_SESSION['sessionIcon'] = "error";
+            $_SESSION['location'] = "add-result";
+        } else {
+            $db->query(
+                "INSERT INTO 
+                result_tbl(class_id, session_id, term_id, subject_id, admNo, ca, exam, total, grade, remark) 
+                VALUES(:class_id, :session_id, :term_id, :subject_id, :admNo, :ca, :exam, :total, :grade, :remark);
+            ");
+
+            $db->bind(':class_id', $class_id);
+            $db->bind(':session_id', $session_id);
+            $db->bind(':term_id', $term_id);
+            $db->bind(':subject_id', $subject_id);
+            $db->bind(':admNo', $admNo);
+            $db->bind(':ca', $ca);
+            $db->bind(':exam', $exam);
+            $db->bind(':total', $total);
+            $db->bind(':grade', $grade);
+            $db->bind(':remark', $remark);
+
+            if (!$db->execute()) {
+                $_SESSION['errorMsg'] = true;
+                $_SESSION['errorTitle'] = "Error";
+                $_SESSION['sessionMsg'] = "Error occured!";
+                $_SESSION['sessionIcon'] = "error";
+                $_SESSION['location'] = "add-result";
+                die($db->getError());
+            } else {
+                $_SESSION['errorMsg'] = true;
+                $_SESSION['errorTitle'] = "Success";
+                $_SESSION['sessionMsg'] = "Result uploaded";
+                $_SESSION['sessionIcon'] = "success";
+                $_SESSION['location'] = "add-result";
+            }
+        }
+    }
+}
+
 if (isset($_POST['submit_btn'])) {
     
     if (isset($_POST['checkB'])) // Checks if checkbox is checked
@@ -168,142 +248,7 @@ if (isset($_POST['submit_btn'])) {
     {
         echo "Select what to add";
     }
-    // echo $subject_id;
-    // var_dump($result);
-    /* $admNo = trim($_POST['admNo']);
-    $class_id = $_POST['class_id'];
-    $session_id = $_POST['session_id'];
-    $term_id = $_POST['term_id'];
-    $subject_id = $_POST['subject_id'];
-    $ca = trim($_POST['ca']);
-    $exam = trim($_POST['exam']);
-    $total = trim($_POST['total']);
-    $grade = trim($_POST['grade']);
-    $remark = trim($_POST['remark']); */
-    
-    /* 
-    if ($ca > 40) {
-        $error = true;
-        $warningMsg = "CA can not be > 40";
-    }
-    if ($exam > 60) {
-        $error = true;
-        $warningMsg = "Exam can not be > 60";
-    }
-    if ($total > 100) {
-        $error = true;
-        $warningMsg = "Total can not be > 100";
-    }
-    if (empty($total)) {
-        $error = true;
-        $warningMsg = "total is required";
-    }
-    if (empty($ca)) {
-        $error = true;
-        $warningMsg = "ca is required";
-    }
-    if (empty($exam)) {
-        $error = true;
-        $warningMsg = "Exam is required";
-    }
-    if (empty($grade)) {
-        $error = true;
-        $warningMsg = "Grade is required";
-    }
-    if (empty($remark)) {
-        $error = true;
-        $warningMsg = "Remark is required";
-    }
-    if (empty($admNo)) {
-        $error = true;
-        $warningMsg = "Registration number is required";
-    }
-    if (empty($class_id)) {
-        $error = true;
-        $warningMsg = "class id is required";
-    }
-    if (empty($session_id)) {
-        $error = true;
-        $warningMsg = "Session name is required";
-    }
-    if (empty($term_id)) {
-        $error = true;
-        $warningMsg = "Term name is required";
-    }
-    if (empty($subject_id)) {
-        $error = true;
-        $warningMsg = "Subject ID is required";
-    }
-     */
-    //echo "Subjid [$subject_id] class id [$class_id] session id [$session_id] and term_id [$term_id]";
-
-    //Checking if result uploaded already or not
-    /* $db->query(
-        "SELECT * FROM result_tbl 
-        WHERE admNo = :admNo
-        AND subject_id = :subject_id 
-        AND session_id = :session_id 
-        AND term_id = :term_id;
-        AND class_id = :class_id;
-        "
-    );
-    $db->bind(':admNo', $admNo);
-    $db->bind(':subject_id', $subject_id);
-    $db->bind(':session_id', $session_id);
-    $db->bind(':term_id', $term_id);
-    $db->bind(':class_id', $class_id);
-
-    if (!$db->execute()) {
-        $_SESSION['errorMsg'] = true;
-        $_SESSION['errorTitle'] = "Error";
-        $_SESSION['sessionMsg'] = "Error occured!";
-        $_SESSION['sessionIcon'] = "error";
-        $_SESSION['location'] = "add-result";
-        die($db->getError());
-    } else {
-        if ($db->rowCount() > 0) {
-            $_SESSION['errorMsg'] = true;
-            $_SESSION['errorTitle'] = "Ooops...";
-            $_SESSION['sessionMsg'] = "Result exist...";
-            $_SESSION['sessionIcon'] = "error";
-            $_SESSION['location'] = "add-result";
-        } else {
-            $db->query(
-                "INSERT INTO 
-                result_tbl(class_id, session_id, term_id, subject_id, admNo, ca, exam, total, grade, remark) 
-                VALUES(:class_id, :session_id, :term_id, :subject_id, :admNo, :ca, :exam, :total, :grade, :remark);
-            "
-            );
-
-            $db->bind(':class_id', $class_id);
-            $db->bind(':session_id', $session_id);
-            $db->bind(':term_id', $term_id);
-            $db->bind(':subject_id', $subject_id);
-            $db->bind(':admNo', $admNo);
-            $db->bind(':ca', $ca);
-            $db->bind(':exam', $exam);
-            $db->bind(':total', $total);
-            $db->bind(':grade', $grade);
-            $db->bind(':remark', $remark);
-
-            if (!$db->execute()) {
-                $_SESSION['errorMsg'] = true;
-                $_SESSION['errorTitle'] = "Error";
-                $_SESSION['sessionMsg'] = "Error occured!";
-                $_SESSION['sessionIcon'] = "error";
-                $_SESSION['location'] = "add-result";
-                die($db->getError());
-            } else {
-                $_SESSION['errorMsg'] = true;
-                $_SESSION['errorTitle'] = "Success";
-                $_SESSION['sessionMsg'] = "Result uploaded";
-                $_SESSION['sessionIcon'] = "success";
-                $_SESSION['location'] = "add-result";
-            }
-        }
-    } */
 }
-
 ?>
 <!-- Begin Page Content -->
 <div class="container-fluid">
@@ -402,7 +347,7 @@ if (isset($_POST['submit_btn'])) {
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <button name="single_pre_btn" type="submit" class="btn btn-outline-primary"> Preview </button>
+                    <button name="single_pre_btn" onclick="add_spinner()" type="submit" class="btn btn-outline-primary spinner_btn"> Preview </button>
                 </div>
             </div>
         </div>
@@ -486,7 +431,7 @@ if (isset($_POST['submit_btn'])) {
                             <!-- <input type="hidden" name="average" id="average" placeholder=" Average" class="form-control"> -->
                             <input type="hidden" name="grade" id="grade" placeholder=" grade" class="form-control">
                             <input type="hidden" name="remark" id="remark" placeholder="Remark" class="form-control">
-                            <td> <button class="btn btn-sm btn-outline-primary" type="submit" id="submit_btn" name="submit_btn"> Submit </button> </td>
+                            <td> <button class="btn btn-sm btn-outline-primary spinner_btn"  type="submit" id="submit_btn" name="submit_btn_single"> Submit </button> </td>
 
                         <?php
 
@@ -506,8 +451,8 @@ if (isset($_POST['submit_btn'])) {
     <hr />
 
     <!-- GETTING ALL CLASS TO INPUT RESULT -->
-    <form method="POST" action="add-result">
-        <div class="form-row">
+    <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+        <div class="row form-row">
             <div class="col-md-3">
                 <div class="form-group">
                     <select name="class_id" id="class_id" onchange="checkSubject()" class="form-control" required>
@@ -598,7 +543,7 @@ if (isset($_POST['submit_btn'])) {
             </div>
             <div class="col-md-1">
                 <div class="form-group">
-                    <button name="preview_btn" onclick="get_result()" type="submit" class="btn btn-outline-primary"> Preview </button>
+                    <button name="preview_btn" onclick="add_spinner()" type="submit" class="btn btn-outline-primary spinner_btn"> Preview </button>
                 </div>
             </div>
         </div>
@@ -678,7 +623,7 @@ if (isset($_POST['submit_btn'])) {
                                         ?>
                                         <tr>
                                             <td colspan="7" class="text-center">
-                                                <button class="btn m-2 btn-outline-primary btn-sm " name="submit_btn" id="submitBtn" >Submit </button>
+                                                <button class="btn m-2 btn-outline-primary btn-sm spinner_btn"  onclick="add_spinner()" disabled name="submit_btn" id="submitBtn" >Submit </button>
                                             </td>
                                         </tr>
                                     <?php

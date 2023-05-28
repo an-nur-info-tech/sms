@@ -53,7 +53,7 @@ if(isset($_POST['login-btn']))
       $record = $db->single();
 
       if($record){
-        if($record->user_type === "Super Admin"){ // Redirect to Super Admin page
+        if($record->user_type == "Super Admin"){ // Redirect to Super Admin page
           //Verifying password
           if(password_verify($data['password'], $record->pwd)){
             //check if user accout has been restricted or not
@@ -92,7 +92,7 @@ if(isset($_POST['login-btn']))
             $_SESSION['location'] = "index";
           }
         }
-        elseif($record->user_type === "Admin"){ //Redirect Admin page
+        elseif($record->user_type == "Admin"){ //Redirect Admin page
           //Verifying password
           if(password_verify($data['password'], $record->pwd)){
             //check if user accout has been restricted or not
@@ -130,7 +130,7 @@ if(isset($_POST['login-btn']))
             $_SESSION['location'] = "index";
           }
         }
-        elseif($record->user_type === "Secondary"){ //Redirect Secondary page
+        elseif($record->user_type == "Secondary"){ //Redirect Secondary page
           //Verifying password
           if(password_verify($data['password'], $record->pwd)){
             //check if user accout has been restricted or not
@@ -168,7 +168,7 @@ if(isset($_POST['login-btn']))
             $_SESSION['location'] = "index";
           }
         }
-        elseif($record->user_type === "Primary"){ //Redirect Primary page
+        elseif($record->user_type == "Primary"){ //Redirect Primary page
           //Verifying password
           if(password_verify($data['password'], $record->pwd)){
             //check if user accout has been restricted or not
@@ -206,7 +206,7 @@ if(isset($_POST['login-btn']))
             $_SESSION['location'] = "index";
           }
         }
-        elseif($record->user_type === "Nursery"){ //Redirect Nursery page
+        elseif($record->user_type == "Nursery"){ //Redirect Nursery page
           //Verifying password
           if(password_verify($data['password'], $record->pwd)){
             //check if user accout has been restricted or not
@@ -302,4 +302,5 @@ if(isset($_POST['login-btn']))
       }
     }
   }
+  $db->Disconect();
 }

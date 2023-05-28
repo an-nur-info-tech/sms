@@ -56,7 +56,7 @@ include('includes/header.php');
   }
   ?>
   <!-- Student Content Row -->
-  <form method="POST" action="student-view-page">
+  <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
     <div class="form-row ">
       <div class="col-md-4">
         <div class="form-group">

@@ -150,7 +150,7 @@ if (isset($_POST['export_btn'])) {
           $writer = new Xls($spreadsheet);
           $file_to_save = $filename.'.'.$f_format;
         }
-        elseif($f_format == "csv")
+        else
         {
           $writer = new Csv($spreadsheet);
           $file_to_save = $filename.'.'.$f_format;
@@ -164,12 +164,8 @@ if (isset($_POST['export_btn'])) {
           header('Location: student-view-page');
         }
       }else{
-          $_SESSION['errorMsg'] = true;
-          $_SESSION['errorTitle'] = "Error";
-          $_SESSION['sessionMsg'] = "No record found!";
-          $_SESSION['sessionIcon'] = "error";
-          $_SESSION['location'] = "student-view-page";
-          die($db->getError());
+        echo "No student found in this class";
+        exit();
       }
     }else{
       die($db->getError());
@@ -410,6 +406,7 @@ if (isset($_POST['commentImportBtn']))
     else
     {
       echo "no records found";
+      exit();
     }
   }
 }

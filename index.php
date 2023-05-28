@@ -83,14 +83,14 @@ require_once('code.php');
             </div>
             <div class="card-body">
               <p>Please input your email and password for login access</p>
-              <form class="user" method="POST" action="index">
+              <form class="user" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
                 <div class="form-group">
                   <input type="text" onkeypress="checkInput()"  id="user_name" name="user_name" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Input email address">
                 </div>
                 <div class="form-group">
                   <input type="password" id="pwd" name="pwd" onkeypress="checkInput()"  class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
                 </div>
-                <button name="login-btn" id="login_btn" disabled type="submit" class="btn btn-primary btn-user btn-block">
+                <button name="login-btn" id="login_btn" onclick="add_spinner()" disabled type="submit" class="btn btn-primary btn-user btn-block spinner_btn">
                   Login
                 </button>
               </form>
@@ -111,6 +111,19 @@ require_once('code.php');
       let login_btn = document.querySelector("#login_btn");
 
       if ((user_name.length > 4) && (pwd.length > 4))login_btn.removeAttribute("disabled");
+    }
+
+    const add_spinner = () => {
+      let spinner_btn = document.querySelector(".spinner_btn");
+      let span = document.createElement("span");
+      
+      span.classList.add("spinner-border");
+      span.classList.add("spinner-border-sm");
+      span.setAttribute('role', 'status');
+      span.setAttribute('aria-hidden', 'true');
+      spinner_btn.innerHTML = " ";
+      spinner_btn.appendChild(span);
+      // spinner_btn.setAttribute('disabled', '');
     }
   </script>
 </body>

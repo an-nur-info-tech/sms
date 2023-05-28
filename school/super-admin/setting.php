@@ -20,7 +20,7 @@ if (isset($_POST['passwordBtn']))
         if (password_verify($current_password, $result->pwd))
         {
             // Check if New password match confirm password
-            if ($password = $current_password)
+            if ($password == $current_password)
             {
                 $db->query("UPDATE staff_tbl SET pwd = :hashed_P WHERE staff_id = :staff_id;");
                 $db->bind(':hashed_P', $hashed_P);
