@@ -181,7 +181,7 @@ $db->Disconect();
                     <div class="col-md-8">
                         <div class="form-group">
                             Comment Upload: &nbsp;<input type="file" class="form-control" name="comment_import_file" required>
-                            &nbsp;&nbsp;<button class="btn btn-primary"  type="submit" name="comment_btn">Upload</button>
+                            &nbsp;&nbsp;<button class="btn btn-primary spinner_btn" onclick="add_spinner()" type="submit" name="comment_btn">Upload</button>
                         </div>
                     </div>
                     <div class="col-md-4"></div>

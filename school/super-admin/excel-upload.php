@@ -260,10 +260,8 @@ if (isset($_POST['result_btn'])) {
         $_SESSION['sessionIcon'] = "error";
         $_SESSION['location'] = "excel-upload";
     }
-
-    //return $con = null;
+    $db->Disconect();
 }
-$db->Disconect();
 
 
 ?>
@@ -287,7 +285,7 @@ $db->Disconect();
                     <div class="col-md-8">
                         <div class="form-group">
                             Result upload: &nbsp;<input type="file" class="form-control" name="result_import_file" required>
-                            &nbsp;&nbsp;<button class="btn btn-primary"  type="submit" name="result_btn">Upload</button>
+                            &nbsp;&nbsp;<button class="btn btn-primary spinner_btn" onclick="add_spinner()"  type="submit" name="result_btn">Upload</button>
                         </div>
                     </div>
                     <div class="col-md-4"></div>

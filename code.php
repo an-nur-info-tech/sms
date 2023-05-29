@@ -45,11 +45,12 @@ if(isset($_POST['login-btn']))
     $db = new Database(); 
     //Checking database connection  
     if(!$db->isConnected()){
-      echo $db->getError().PHP_EOL;
+      die($db->getError());
     }
     else{//Fetching users table.
       $db->query("SELECT * FROM staff_tbl WHERE email=:email;");
       $db->bind(':email', $data['email']);
+      $db->execute();
       $record = $db->single();
 
       if($record){
@@ -59,7 +60,6 @@ if(isset($_POST['login-btn']))
             //check if user accout has been restricted or not
             if($record->act_status === 0){
               $_SESSION['errorMsg'] = true;
-              //header('Location: index');
               $_SESSION['errorTitle'] = "Restriction";
               $_SESSION['sessionMsg'] = "Acount has been deactivated";
               $_SESSION['sessionIcon'] = "error";
@@ -72,7 +72,6 @@ if(isset($_POST['login-btn']))
               $_SESSION['login-time'] = time(); //for auto logout
               $_SESSION['name'] = $record->fname. " ".$record->sname;
               $_SESSION['staff_id'] = $record->staff_id;
-              $db->Disconect();
 
               //$db->getLogger($record->email, "Access Granted"); TODO
               $_SESSION['errorMsg'] = true;
@@ -85,7 +84,6 @@ if(isset($_POST['login-btn']))
           else{
             //$db->getLogger($record->email, "Invalid password");
             $_SESSION['errorMsg'] = true;
-            //header('Location: index');
             $_SESSION['errorTitle'] = "Bad request";
             $_SESSION['sessionMsg'] = "Invalid password";
             $_SESSION['sessionIcon'] = "error";
@@ -98,7 +96,6 @@ if(isset($_POST['login-btn']))
             //check if user accout has been restricted or not
             if($record->act_status === 0){
               $_SESSION['errorMsg'] = true;
-              //header('Location: index');
               $_SESSION['errorTitle'] = "Restriction";
               $_SESSION['sessionMsg'] = "Acount has been deactivated";
               $_SESSION['sessionIcon'] = "error";
@@ -111,10 +108,8 @@ if(isset($_POST['login-btn']))
               $_SESSION['login-time'] = time(); //for auto logout
               $_SESSION['name'] = $record->fname. " ".$record->sname;
               $_SESSION['staff_id'] = $record->staff_id;
-              $db->Disconect();
 
               $_SESSION['errorMsg'] = true;
-              //header('Location: index');
               $_SESSION['errorTitle'] = "Great!";
               $_SESSION['sessionMsg'] = "Access Granted";
               $_SESSION['sessionIcon'] = "success";
@@ -136,7 +131,6 @@ if(isset($_POST['login-btn']))
             //check if user accout has been restricted or not
             if($record->act_status === 0){
               $_SESSION['errorMsg'] = true;
-             //header('Location: index');
               $_SESSION['errorTitle'] = "Restriction";
               $_SESSION['sessionMsg'] = "Acount has been deactivated";
               $_SESSION['sessionIcon'] = "error";
@@ -149,10 +143,8 @@ if(isset($_POST['login-btn']))
               $_SESSION['login-time'] = time(); //for auto logout
               $_SESSION['name'] = $record->fname. " ".$record->sname;
               $_SESSION['staff_id'] = $record->staff_id;
-              $db->Disconect();
 
               $_SESSION['errorMsg'] = true;
-              //header('Location: index');
               $_SESSION['errorTitle'] = "Great!";
               $_SESSION['sessionMsg'] = "Access Granted";
               $_SESSION['sessionIcon'] = "success";
@@ -161,7 +153,6 @@ if(isset($_POST['login-btn']))
           }
           else{
             $_SESSION['errorMsg'] = true;
-            //header('Location: index');
             $_SESSION['errorTitle'] = "Error";
             $_SESSION['sessionMsg'] = "Invalid password";
             $_SESSION['sessionIcon'] = "error";
@@ -174,7 +165,6 @@ if(isset($_POST['login-btn']))
             //check if user accout has been restricted or not
             if($record->act_status === 0){
               $_SESSION['errorMsg'] = true;
-              //header('Location: index');
               $_SESSION['errorTitle'] = "Restriction";
               $_SESSION['sessionMsg'] = "Acount has been deactivated";
               $_SESSION['sessionIcon'] = "error";
@@ -187,10 +177,8 @@ if(isset($_POST['login-btn']))
               $_SESSION['login-time'] = time(); //for auto logout
               $_SESSION['name'] = $record->fname. " ".$record->sname;
               $_SESSION['staff_id'] = $record->staff_id;
-              $db->Disconect();
 
               $_SESSION['errorMsg'] = true;
-              //header('Location: index');
               $_SESSION['errorTitle'] = "Great!";
               $_SESSION['sessionMsg'] = "Access Granted";
               $_SESSION['sessionIcon'] = "success";
@@ -199,7 +187,6 @@ if(isset($_POST['login-btn']))
           }
           else{
             $_SESSION['errorMsg'] = true;
-            //header('Location: index');
             $_SESSION['errorTitle'] = "Error";
             $_SESSION['sessionMsg'] = "Invalid password";
             $_SESSION['sessionIcon'] = "error";
@@ -212,7 +199,6 @@ if(isset($_POST['login-btn']))
             //check if user accout has been restricted or not
             if($record->act_status === 0){
               $_SESSION['errorMsg'] = true;
-              //header('Location: index');
               $_SESSION['errorTitle'] = "Restriction";
               $_SESSION['sessionMsg'] = "Acount has been deactivated";
               $_SESSION['sessionIcon'] = "error";
@@ -225,10 +211,8 @@ if(isset($_POST['login-btn']))
               $_SESSION['login-time'] = time(); //for auto logout
               $_SESSION['name'] = $record->fname. " ".$record->sname;
               $_SESSION['staff_id'] = $record->staff_id;
-              $db->Disconect();
 
               $_SESSION['errorMsg'] = true;
-              //header('Location: index');
               $_SESSION['errorTitle'] = "Great!";
               $_SESSION['sessionMsg'] = "Access Granted";
               $_SESSION['sessionIcon'] = "success";
@@ -237,7 +221,6 @@ if(isset($_POST['login-btn']))
           }
           else{
             $_SESSION['errorMsg'] = true;
-            //header('Location: index');
             $_SESSION['errorTitle'] = "Error";
             $_SESSION['sessionMsg'] = "Invalid password";
             $_SESSION['sessionIcon'] = "error";
@@ -247,18 +230,17 @@ if(isset($_POST['login-btn']))
       }
       else{ //Check students table
         //Fetching students record.
-        $db->query("SELECT * FROM students_tbl WHERE admNo=:admNo;");
+        $db->query("SELECT * FROM students_tbl WHERE admNo = :admNo;");
         $db->bind(':admNo', $data['email']);
+        $db->execute();
         $rec = $db->single();
 
         if($rec){ //Redirect to Students Page
-          
           //Verifying password
           if(password_verify($data['password'], $rec->pwd)){
             //check if user account has been restricted or not
             if($rec->act_status === 0){
               $_SESSION['errorMsg'] = true;
-              //header('Location: index');
               $_SESSION['errorTitle'] = "Restriction";
               $_SESSION['sessionMsg'] = "Acount has been deactivated";
               $_SESSION['sessionIcon'] = "error";
@@ -270,11 +252,9 @@ if(isset($_POST['login-btn']))
               $_SESSION['login-time'] = time(); //for auto logout
               $_SESSION['name'] = $record->lname. " ".$record->sname;
               $_SESSION['adminNo'] = $record->admNo;
-              $db->Disconect();
 
               //$db->getLogger($_POST['email'], "Access granted");
               $_SESSION['errorMsg'] = true;
-              //header('Location: index');
               $_SESSION['errorTitle'] = "Great!";
               $_SESSION['sessionMsg'] = "Access Granted";
               $_SESSION['sessionIcon'] = "success";
@@ -284,7 +264,6 @@ if(isset($_POST['login-btn']))
           else{//TODO
             //$db->getLogger($_POST['email'], "Invalid password");
             $_SESSION['errorMsg'] = true;
-            //header('Location: index');
             $_SESSION['errorTitle'] = "Error";
             $_SESSION['sessionMsg'] = "Invalid password";
             $_SESSION['sessionIcon'] = "error";
