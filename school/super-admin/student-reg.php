@@ -38,7 +38,7 @@ if (isset($_POST['submit_btn'])) {
   if ($fileToUpload) 
   { //Select Image
     //Checking for image size
-    if($_FILES['fileToUpload']['size'] > 102405 or $_FILES['fileToUpload']['size'] < 10240) {
+    if($_FILES['fileToUpload']['size'] > 102405 or $_FILES['fileToUpload']['size'] < 1024) {
       $error = true;
       $_SESSION['errorMsg'] = true;
       $_SESSION['errorTitle'] = "Error";
@@ -679,7 +679,7 @@ $db->Disconect();
       <div class="form-group col-md-4">
         <center>
           <img id="image" class="form-control-img img-thumbnail" width="100px" height="100px" />
-          <p class="text-danger" style="font-size: 13px;"> Image size should be in the range of 15KB to 100KB</p>
+          <p class="text-danger" style="font-size: 13px;"> Image size should be in the range of 1KB to 100KB</p>
           <input type="file" name="fileToUpload" onchange="loadFile(event)" />
         </center>
       </div>
@@ -688,7 +688,7 @@ $db->Disconect();
     <div class="form-row">
       <div class="form-group col-md-4">
         <label for="section">* Select section: </label>
-        <select name="section" id="select_section" class="form-control" onchange="select_Section()" >
+        <select name="section" id="select_section" class="form-control" onchange="select_Section()" required>
           <option value=""> Select section... </option>
           <option value="NS/"> Nursery </option>
           <option value="PS/"> Primary </option>
@@ -701,7 +701,7 @@ $db->Disconect();
       <div class="col-md-4">
         <div class="form-group">
           <label for="class_id" class="control-label">* Class </label>
-          <select name="class_id" id="class_id" class="form-control">
+          <select name="class_id" id="class_id" class="form-control" required>
             <option value=""> Select class...</option>
           </select>
         </div>
@@ -709,13 +709,13 @@ $db->Disconect();
       <div class="col-md-4">
         <div class="form-group">
           <label class="control-label" for="student_sname">* Surname: </label>
-          <input type="text" class="form-control" id="student_sname" placeholder="Surname" max="5" name="student_sname" auto-compplete="off">
+          <input type="text" class="form-control" id="student_sname" placeholder="Surname"  name="student_sname" auto-compplete="off" required>
         </div>
       </div>
       <div class="col-md-4 ">
         <div class="form-group">
           <label class="control-label" for="student_lname">* Last name: </label>
-          <input type="text" class="form-control" placeholder="Lastname" name="student_lname" auto-compplete="off" auto-compplete="off">
+          <input type="text" class="form-control" placeholder="Lastname" name="student_lname" auto-compplete="off" auto-compplete="off" required>
         </div>
       </div>
     </div>
@@ -730,13 +730,13 @@ $db->Disconect();
       <div class="col-md-4">
         <div class="form-group">
           <label for="dob">* D.O.B</label>
-          <input type="date" name="dob" class="form-control">
+          <input type="date" name="dob" class="form-control" required>
         </div>
       </div>
       <div class="col-md-4">
         <div class="form-group">
           <label for="religion">* Religion</label>
-          <select name="religion" class="form-control">
+          <select name="religion" class="form-control" required>
             <option value=""> Select religion </option>
             <option value="Islam"> Islam </option>
             <option value="Christian"> Christian </option>
@@ -751,7 +751,7 @@ $db->Disconect();
       <div class="col-md-4">
         <div class="form-group">
           <label for="gender">* Gender </label>
-          <select name="gender" class="form-control">
+          <select name="gender" class="form-control" required>
             <option value=""> Select gender...</option>
             <option value="Male"> Male </option>
             <option value="Female"> Female </option>
@@ -761,7 +761,7 @@ $db->Disconect();
       <div class="col-md-4">
         <div class="form-group">
           <label for="nationality"> * Nationality </label>
-          <input class="form-control" name="nationality" list="datalistioptions1" placeholder="Type in country" auto_complete="off">
+          <input class="form-control" name="nationality" list="datalistioptions1" placeholder="Type in country" auto_complete="off" required>
           <datalist id="datalistioptions1" auto-compplete="off">
             <option value=""> </option>
             <option value="Afghanistan"> Afghanistan </option>
@@ -782,7 +782,7 @@ $db->Disconect();
       <div class="col-md-4">
         <div class="form-group">
           <label for="student_state" class="form-label"> * State: </label>
-          <input class="form-control" name="student_state" list="datalistioptions" placeholder="Type in state" auto_complete="off">
+          <input class="form-control" name="student_state" list="datalistioptions" placeholder="Type in state" auto_complete="off" required>
           <datalist id="datalistioptions" auto-compplete="off">
             <option value=""> </option>
             <option value="Abia"> Abia </option>
@@ -831,7 +831,7 @@ $db->Disconect();
       <div class="col-md-4">
         <div class="form-group">
           <label for="lga">* L.G.A </label>
-          <input name="lga" class="form-control" placeholder="Enter LGA" auto-compplete="off">
+          <input name="lga" class="form-control" placeholder="Enter LGA" auto-compplete="off" required>
         </div>
       </div>
     </div>

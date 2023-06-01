@@ -1,55 +1,6 @@
 <?php
 include('includes/header.php');
-
-require_once('includes/PHPMailer/PHPMailer.php');
-require_once('includes/PHPMailer/Exception.php');
-require_once('includes/PHPMailer/SMTP.php');
-
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
-use PHPMailer\PHPMailer\Exception;
-
-function sendmail_verify($staff_id, $email, $fname, $sname, $oname)
-{
-  //Create an instance; passing `true` enables exceptions
-  $mail = new PHPMailer(true);
-
-  //Server settings
-  //$mail->SMTPDebug = 2;                      //Enable verbose debug output
-  $mail->isSMTP();                                            //Send using SMTP
-  $mail->Host = 'smtp.gmail.com';                     //Set the SMTP server to send through
-  $mail->SMTPAuth = true;                                   //Enable SMTP authentication
-
-  $mail->Username = '';                     //SMTP username 
-  $mail->Password = '';                               //SMTP password 
-  $mail->SMTPSecure = "tls";            //Enable implicit TLS encryption
-  $mail->Port = 587;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
-  //Recipients
-  //$mail->setFrom('wasiubello60@gmail.com', 'SuccessSchoolsAdministrator[Ibrahim Bello]');
-  $mail->addAddress($email);     //Add a recipient
-
-  //Content
-  $mail->isHTML(true);
-  $mail->Subject = 'Staff registration form (Success Schools Sokoto)';
-  $mail_template =
-    "
-    <h1> Form Registration </h1>
-    <h3> Please click the below link to complete your registration form</h3>
-    <p>Please do not reply this mail</p>
-    Click <a href='http://olasinfotech.unaux.com/successschool/registration-form.php?staff_id=$staff_id+sname=$sname+fname=$fname+oname=$oname'>Here</a>
-    <p style='color: red;'>Please note that this mail was sent to you based on request for registration in SUCCESS SCHOOLS SOKOTO 
-    if in one way or other you received mail from this email kindly contact the 
-    Admin(IBRAHIM BELLO).<br> From the ICT Department Success Schools Sokoto. <br> Thanks for your co-operations</p> 
-  ";
-
-  $mail->Body = $mail_template;
-  if (!$mail->Send()) {
-    $warningMsg = 'Mail error: ' . $mail->ErrorInfo;
-    return false;
-  } else {
-    return true;
-  }
-}
+include('includes/send-mail.php');
 
 if (isset($_POST['submit_btn'])) {
   $error = false;
@@ -57,7 +8,7 @@ if (isset($_POST['submit_btn'])) {
   $email = trim($_POST['email']);
   $user_type = $_POST['user_type'];
   $user_role = $_POST['user_role'];
-  $fname = $title . " " . trim($_POST['fname']);
+  $fname = $title." ".trim($_POST['fname']);
   $sname = trim($_POST['sname']);
   $oname = trim($_POST['oname']);
 
@@ -93,7 +44,7 @@ if (isset($_POST['submit_btn'])) {
             $getNumber = str_replace($staff, "", $get_staff);
             $id_increase = $getNumber + 1;
             $get_string = str_pad($id_increase, 4, 0, STR_PAD_LEFT);
-            $staff_id = $staff . $get_string;
+            $staff_id = $staff.$get_string;
   
             $db->query(
               "INSERT INTO staff_tbl(staff_id, user_type, user_role, email, pwd, fname, sname, oname)
@@ -108,19 +59,20 @@ if (isset($_POST['submit_btn'])) {
             $db->bind(':sname', $sname);
             $db->bind(':oname', $oname);
             
-            if (!$db->execute()) {
+            if (($db->execute()) && send_mail($staff_id, $email, $fname, $sname, $oname)) {
+              $_SESSION['errorMsg'] = true;
+              $_SESSION['errorTitle'] = "Success";
+              $_SESSION['sessionMsg'] = "Record added with email sent!";
+              $_SESSION['sessionIcon'] = "success";
+              $_SESSION['location'] = "staff-reg-page";
+              
+            } else {
               $_SESSION['errorMsg'] = true;
               $_SESSION['errorTitle'] = "Error";
               $_SESSION['sessionMsg'] = "Error occured!";
               $_SESSION['sessionIcon'] = "error";
               $_SESSION['location'] = "staff-reg-page";
               die($db->getError());
-            } else {
-              $_SESSION['errorMsg'] = true;
-              $_SESSION['errorTitle'] = "Success";
-              $_SESSION['sessionMsg'] = "Record added!";
-              $_SESSION['sessionIcon'] = "success";
-              $_SESSION['location'] = "staff-reg-page";
             }
           }
         } else {
@@ -140,19 +92,20 @@ if (isset($_POST['submit_btn'])) {
           $db->bind(':sname', $sname);
           $db->bind(':oname', $oname);
   
-          if (!$db->execute()) {
+          if (($db->execute()) && send_mail($staff_id, $email, $fname, $sname, $oname)) {
+            $_SESSION['errorMsg'] = true;
+            $_SESSION['errorTitle'] = "Success";
+            $_SESSION['sessionMsg'] = "Record added with email sent!";
+            $_SESSION['sessionIcon'] = "success";
+            $_SESSION['location'] = "staff-reg-page";
+            
+          } else {
             $_SESSION['errorMsg'] = true;
             $_SESSION['errorTitle'] = "Error";
             $_SESSION['sessionMsg'] = "Error occured!";
             $_SESSION['sessionIcon'] = "error";
             $_SESSION['location'] = "staff-reg-page";
             die($db->getError());
-          } else {
-            $_SESSION['errorMsg'] = true;
-            $_SESSION['errorTitle'] = "Success";
-            $_SESSION['sessionMsg'] = "Record added!";
-            $_SESSION['sessionIcon'] = "success";
-            $_SESSION['location'] = "staff-reg-page";
           }
         }
       }

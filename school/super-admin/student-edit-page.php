@@ -23,13 +23,13 @@ if (isset($_POST['update_btn'])) {
   //specifying the directory where the file is going to be placed.
   $target_dir = "../uploads/students/";
   //specifying path of the file to be uploaded
-  $target_file = $target_dir . basename($fileToUpload);
+  $target_file = $target_dir.basename($fileToUpload);
   //Getting the file extension
   $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
   //check if file type is an image
   $imgType = ["jpg", "gif", "jpeg", "png"];
 
-  if ($fileToUpload) { //Update with Image
+  if ($_FILES["fileToUpload"]["tmp_name"]) { //Update with Image
     //Checking for image size
     if (!in_array($imageFileType, $imgType)) {
       $error = true;
@@ -38,7 +38,7 @@ if (isset($_POST['update_btn'])) {
       $_SESSION['sessionMsg'] = "The file is not an image type";
       $_SESSION['sessionIcon'] = "error";
       $_SESSION['location'] = "student-view-page";
-    } else if ($_FILES['fileToUpload']['size'] > 102405 or $_FILES['fileToUpload']['size'] < 10240) {
+    } else if ($_FILES['fileToUpload']['size'] > 102405 or $_FILES['fileToUpload']['size'] < 1024) {
       $error = true;
       $_SESSION['errorMsg'] = true;
       $_SESSION['errorTitle'] = "Error";
@@ -46,44 +46,9 @@ if (isset($_POST['update_btn'])) {
       $_SESSION['sessionIcon'] = "error";
       $_SESSION['location'] = "student-view-page";
     } else {
-      // **********************************************
-      list($width, $height) = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-      //var_dump($_FILES["profilePicture"]["type"]);
-      $newWidth = 500;
-      $newHeight = 500;
-      // $directory = "views/img/users/" . $_POST["name"];
-
-      if ($_FILES['fileToUpload']['type'] == "image/jpeg") {
-        // $ra = mt_rand(100, 999);
-        // $root = "views/img/users/" . $_POST["name"] . "/" . $ra . ".jpeg";
-
-        $source = imagecreatefromjpeg($_FILES["fileToUpload"]["tmp_name"]);
-        $destination = imagecreatetruecolor($newWidth, $newHeight);
-        imagecopyresized($destination, $source, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
-        imagejpeg($destination, $target_file);
-      }
-      if ($_FILES['fileToUpload']['type'] == "image/png") {
-          // $ra = mt_rand(100, 999);
-          // $root = "views/img/users/" . $_POST["name"] . "/" . $ra . ".png";
-
-          $source = imagecreatefromjpeg($_FILES["fileToUpload"]["tmp_name"]);
-          $destination = imagecreatetruecolor($newWidth, $newHeight);
-          imagecopyresized($destination, $source, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
-          imagejpeg($destination, $target_file);
-      }
-      if ($_FILES['fileToUpload']['type'] == "image/jpg") {
-          // $ra = mt_rand(100, 999);
-          // $root = "views/img/users/" . $_POST["name"] . "/" . $ra . ".png";
-
-          $source = imagecreatefromjpeg($_FILES["fileToUpload"]["tmp_name"]);
-          $destination = imagecreatetruecolor($newWidth, $newHeight);
-          imagecopyresized($destination, $source, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
-          imagejpeg($destination, $target_file);
-      }
-      // **********************************************
       if (!empty($data['oldImage'])) {
         //Removing the old image if exist
-        $db1->query("UPDATE students_tbl SET id = :class_id, 
+        $db1->query("UPDATE students_tbl SET class_id = :class_id, 
         passport = :target_file,
         sname=:student_sname, 
         lname=:student_lname, 
@@ -260,7 +225,7 @@ if (isset($_POST['update_btn'])) {
               <div class="form-group col-md-4">
                 <center>
                   <img id="image" src="<?php echo $result->passport; ?>" class="form-control-img" width="100px" height="100px" />
-                  <p class="text-danger" style="font-size: 13px;"> Image size should be in the range of 15KB to 100KB</p>
+                  <p class="text-danger" style="font-size: 13px;"> Image size should be in the range of 1KB to 100KB</p>
                   <input type="file" name="fileToUpload" onchange="loadFile(event)" />
                   <input type="hidden" value="<?php echo $result->passport; ?>" name="oldImage">
                 </center>
