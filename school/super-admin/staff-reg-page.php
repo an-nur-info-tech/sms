@@ -35,7 +35,7 @@ if (isset($_POST['submit_btn'])) {
       } 
       else {
         //Enter data new data if no record before
-        $staff = "Stf/" . date('y') . "/";
+        $staff = "stf/" . date('y') . "/";
         $db->query("SELECT id FROM staff_tbl ORDER BY id DESC LIMIT 1;");
         $data = $db->resultset();
         if ($db->rowCount() > 0) {
@@ -58,26 +58,20 @@ if (isset($_POST['submit_btn'])) {
             $db->bind(':fname', $fname);
             $db->bind(':sname', $sname);
             $db->bind(':oname', $oname);
-            
-            if (($db->execute()) && send_mail($staff_id, $email, $fname, $sname, $oname)) {
-              $_SESSION['errorMsg'] = true;
-              $_SESSION['errorTitle'] = "Success";
-              $_SESSION['sessionMsg'] = "Record added with email sent!";
-              $_SESSION['sessionIcon'] = "success";
-              $_SESSION['location'] = "staff-reg-page";
-              
+            $db->execute();
+            if (($db->rowCount() > 0)) {
+              send_mail($staff_id, $email, $fname, $sname, $oname);              
             } else {
               $_SESSION['errorMsg'] = true;
               $_SESSION['errorTitle'] = "Error";
               $_SESSION['sessionMsg'] = "Error occured!";
               $_SESSION['sessionIcon'] = "error";
               $_SESSION['location'] = "staff-reg-page";
-              die($db->getError());
             }
           }
         } else {
           //Enter record if the table is empty 
-          $staff_id = "Stf/" . date('y') . "/0001";
+          $staff_id = "stf/" . date('y') . "/0001";
           $db->query(
             "INSERT INTO staff_tbl(staff_id, user_type, user_role, email, pwd, fname, sname, oname)
             VALUES(:staff_id, :user_type, :user_role, :email, :hashed_P, :fname, :sname, :oname);
@@ -91,8 +85,8 @@ if (isset($_POST['submit_btn'])) {
           $db->bind(':fname', $fname);
           $db->bind(':sname', $sname);
           $db->bind(':oname', $oname);
-  
-          if (($db->execute()) && send_mail($staff_id, $email, $fname, $sname, $oname)) {
+          $db->execute();
+          if (($db->rowCount() > 0) && send_mail($staff_id, $email, $fname, $sname, $oname)) {
             $_SESSION['errorMsg'] = true;
             $_SESSION['errorTitle'] = "Success";
             $_SESSION['sessionMsg'] = "Record added with email sent!";
@@ -105,7 +99,6 @@ if (isset($_POST['submit_btn'])) {
             $_SESSION['sessionMsg'] = "Error occured!";
             $_SESSION['sessionIcon'] = "error";
             $_SESSION['location'] = "staff-reg-page";
-            die($db->getError());
           }
         }
       }
@@ -241,7 +234,7 @@ if (isset($_POST['act_disabled'])) {
                   <input type="text" name="fname" class="form-control mb-3" placeholder="* First name" required>
                 </div>
                 <div class="form-group">
-                  <input type="text" name="sname" class="form-control" placeholder="* Surname" required>
+                  <input type="text" name="sname" onkeypress="enable_staff_btn(this.value)" class="form-control" placeholder="* Surname" required>
                 </div>
                 <div class="form-group">
                   <input type="text" name="oname" class="form-control" placeholder="Other name">
@@ -251,7 +244,7 @@ if (isset($_POST['act_disabled'])) {
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
-            <button type="submit" name="submit_btn" class="btn btn-sm btn-primary"> Save </button>
+            <button type="submit" name="submit_btn" disabled class="btn btn-sm btn-primary spinner_btn" onclick="add_spinner()"> Save </button>
           </div>
         </form>
       </div>

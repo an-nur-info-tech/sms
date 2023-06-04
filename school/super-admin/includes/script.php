@@ -533,6 +533,16 @@ $(".subjectEditBtn").click(function() {
   })
 });
 /*-------x---- SUBJECT EDIT MODAL -------x----*/
+
+const enable_staff_btn = (args) => {
+  if (args.length > 2)
+  {
+    $(".spinner_btn").removeAttr('disabled');
+  }else{
+    document.querySelector(".spinner_btn").setAttribute('disabled', '');
+  }
+
+}
 </script>
 </body>
 

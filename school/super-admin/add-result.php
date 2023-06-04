@@ -84,7 +84,7 @@ if (isset($_POST['submit_btn_single'])) {
 
 if (isset($_POST['submit_btn'])) {
     
-    if (isset($_POST['checkB'])) // Checks if checkbox is checked
+    if (isset($_POST['checkB']) && isset($_POST['ca']) && isset($_POST['exam'])) // Checks if checkbox is checked
     {
         $checkB = $_POST['checkB']; // Arrays of checkbox
 
@@ -94,12 +94,14 @@ if (isset($_POST['submit_btn'])) {
         $session_id = $_POST['session_id'];
         $term_id = $_POST['term_id'];
         $subject_id = $_POST['subject_id'];
-        // $admNo = $_POST['admNo']; // Arrays of total
-        // $grade = $_POST['grade']; // Arrays of grade
-        // $remark = $_POST['remark']; // Arrays of remark
-
-        // $subject_id = $_POST['subject_id'];
-        foreach ($checkB as $key => $value)
+        
+        /* $count = 0;  testing
+        foreach ($_POST['checkB'] as $row)
+        {
+            echo "$checkB[$count] $ca[$count] $exam[$count] ";
+            $count++;
+        } */
+        /* foreach ($checkB as $key => $value)
         {
             $admNo = $value;
             // echo "$admNo $ca[$key] $exam[$key] $subject_id $term_id $class_id $session_id".PHP_EOL;
@@ -200,12 +202,6 @@ if (isset($_POST['submit_btn'])) {
                         $_SESSION['sessionIcon'] = "error";
                         $_SESSION['location'] = "add-result";
                     } else {
-                        // $db->query(
-                        //     "INSERT INTO 
-                        //     result_tbl(class_id, session_id, term_id, subject_id, admNo, ca, exam) 
-                        //     VALUES(:class_id, :session_id, :term_id, :subject_id, :admNo, :ca, :exam);
-                        // "
-                        // );
                         $db->query(
                             "INSERT INTO 
                             result_tbl(class_id, session_id, term_id, subject_id, admNo, ca, exam, total, grade, remark) 
@@ -223,26 +219,25 @@ if (isset($_POST['submit_btn'])) {
                         $db->bind(':total', $total);
                         $db->bind(':grade', $grade);
                         $db->bind(':remark', $remark);
-
-                        if (!$db->execute()) {
-                            $_SESSION['errorMsg'] = true;
-                            $_SESSION['errorTitle'] = "Error";
-                            $_SESSION['sessionMsg'] = "Error occured!";
-                            $_SESSION['sessionIcon'] = "error";
-                            $_SESSION['location'] = "add-result";
-                            die($db->getError());
-                        } else {
+                        $db->execute();
+                        if ($db->rowCount() > 0) {
                             $_SESSION['errorMsg'] = true;
                             $_SESSION['errorTitle'] = "Success";
                             $_SESSION['sessionMsg'] = "Result uploaded";
                             $_SESSION['sessionIcon'] = "success";
+                            $_SESSION['location'] = "add-result";
+                        } else {
+                            $_SESSION['errorMsg'] = true;
+                            $_SESSION['errorTitle'] = "Error";
+                            $_SESSION['sessionMsg'] = "Error occured!";
+                            $_SESSION['sessionIcon'] = "error";
                             $_SESSION['location'] = "add-result";
                         }
                     }
                 }
             }
 
-        }
+        } */
     }
     else 
     {
@@ -623,7 +618,7 @@ if (isset($_POST['submit_btn'])) {
                                         ?>
                                         <tr>
                                             <td colspan="7" class="text-center">
-                                                <button class="btn m-2 btn-outline-primary btn-sm spinner_btn"  onclick="add_spinner()" disabled name="submit_btn" id="submitBtn" >Submit </button>
+                                                <button class="btn m-2 btn-outline-primary btn-sm spinner_btn" disabled onclick="add_spinner()"  name="submit_btn" id="submitBtn" >Submit </button>
                                             </td>
                                         </tr>
                                     <?php

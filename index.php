@@ -57,8 +57,8 @@ require_once('code.php');
       <div class="col-md-6">
         <div class="card o-hidden border-0 shadow-lg">
           <?php
-            if (isset($_SESSION['errorMsg'])) {
-              echo '<script>
+          if (isset($_SESSION['errorMsg'])) {
+            echo '<script>
                         Swal.fire({
                           title: "' . $_SESSION['errorTitle'] . '",
                           text: "' . $_SESSION['sessionMsg'] . '",
@@ -71,33 +71,33 @@ require_once('code.php');
                             }
                         })
                     </script>';
-              unset($_SESSION['errorTitle']);
-              unset($_SESSION['errorMsg']);
-              unset($_SESSION['sessionMsg']);
-              unset($_SESSION['location']);
-              unset($_SESSION['sessionIcon']);
-            }
+            unset($_SESSION['errorTitle']);
+            unset($_SESSION['errorMsg']);
+            unset($_SESSION['sessionMsg']);
+            unset($_SESSION['location']);
+            unset($_SESSION['sessionIcon']);
+          }
           ?>
-            <div class="card-header p-2 text-center">
-              <h1 class="text-gray-900">Login Page</h1>
-            </div>
+          <div class="card-header p-2 text-center">
+            <h1 class="text-gray-900">Login Page</h1>
+          </div>
+          <form class="user" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
             <div class="card-body">
               <p>Please input your email and password for login access</p>
-              <form class="user" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-                <div class="form-group">
-                  <input type="text" onkeypress="checkInput()"  id="user_name" name="user_name" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Input email address">
-                </div>
-                <div class="form-group">
-                  <input type="password" id="pwd" name="pwd" onkeypress="checkInput()"  class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
-                </div>
-                <button name="login-btn" id="login_btn" onclick="add_spinner()" disabled type="submit" class="btn btn-primary btn-user btn-block spinner_btn">
-                  Login
-                </button>
-              </form>
-          </div>
-          <div class="card-footer text-center mt-3">
-            <a class="small" href="forgot-password"> Forgot Password? </a>
-          </div>
+              <div class="form-group">
+                <input type="text" onkeypress="checkInput()" id="user_name" name="user_name" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Input email address">
+              </div>
+              <div class="form-group">
+                <input type="password" id="pwd" name="pwd" onkeypress="checkInput()" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
+              </div>
+              <button name="login-btn" id="login_btn" onclick="add_spinner()" disabled type="submit" class="btn btn-primary btn-user btn-block spinner_btn">
+                Login
+              </button>
+            </div>
+            <div class="card-footer text-center mt-3">
+              <a class="small" type="submit" href="forgot-password"> Forgot Password? </a>
+            </div>
+          </form>
         </div>
       </div>
       <div class="col-md-3"></div>
@@ -110,13 +110,13 @@ require_once('code.php');
       let pwd = document.querySelector("#pwd").value;
       let login_btn = document.querySelector("#login_btn");
 
-      if ((user_name.length > 4) && (pwd.length > 4))login_btn.removeAttribute("disabled");
+      if ((user_name.length > 4) && (pwd.length > 4)) login_btn.removeAttribute("disabled");
     }
 
     const add_spinner = () => {
       let spinner_btn = document.querySelector(".spinner_btn");
       let span = document.createElement("span");
-      
+
       span.classList.add("spinner-border");
       span.classList.add("spinner-border-sm");
       span.setAttribute('role', 'status');
@@ -127,4 +127,5 @@ require_once('code.php');
     }
   </script>
 </body>
+
 </html>

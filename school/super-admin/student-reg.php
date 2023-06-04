@@ -38,7 +38,7 @@ if (isset($_POST['submit_btn'])) {
   if ($fileToUpload) 
   { //Select Image
     //Checking for image size
-    if($_FILES['fileToUpload']['size'] > 102405 or $_FILES['fileToUpload']['size'] < 1024) {
+    if($_FILES['fileToUpload']['size'] > 102405 || $_FILES['fileToUpload']['size'] < 1024) {
       $error = true;
       $_SESSION['errorMsg'] = true;
       $_SESSION['errorTitle'] = "Error";
