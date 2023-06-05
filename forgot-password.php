@@ -12,10 +12,6 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-//Load Composer's autoloader
-// require 'vendor/autoload.php';
-
-
 if (isset($_POST['forgot_btn'])) {
     $db = new Database();
 
@@ -24,93 +20,100 @@ if (isset($_POST['forgot_btn'])) {
     //fetching user record to check for verification
     $db->query("SELECT * FROM staff_tbl WHERE email = :email LIMIT 1;");
     $db->bind(':email', $email);
-    $db->execute();    
-    if ($db->rowCount() > 0)
-    {
-        $email = $db->single()->email;
-        $id = $db->single()->staff_id;
-
-        // Update the change_pwd from the database
-        $db->query("UPDATE staff_tbl SET change_pwd = 1 WHERE staff_id = :id"); // Request for change of password
-        $db->bind(':id', $id);
-        $db->execute();
-        if($db->rowCount() > 0)
+    if ($db->execute()){
+        $result = $db->single();
+        if ($db->rowCount() > 0)
         {
-            //Create an instance; passing `true` enables exceptions
-            $mail = new PHPMailer(true);
-
-            try {
-                //Server settings
-                // $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
-                $mail->isSMTP();                                            //Send using SMTP
-                $mail->Host       = '';                     //Set the SMTP server to send through
-                $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-                $mail->Username   = '';                     //SMTP username
-                $mail->Password   = '';                               //SMTP password
-                $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;  //           //Enable implicit TLS encryption
-                $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
-            
-                //Recipients
-                $mail->setFrom('', '');
-                $mail->addAddress($email);     //Add a recipient
-                // $mail->addAddress('ellen@example.com');               //Name is optional
-                // $mail->addReplyTo('info@example.com', 'Information');
-                // $mail->addCC('cc@example.com');
-                // $mail->addBCC('bcc@example.com');
-            
-                //Content
-                $mail->isHTML(true);                                  //Set email format to HTML
-                $mail->Subject = 'Password reset request';
-                $mail_template =
-                    "
-                    <h1> Password Reset </h1>
-                    <h4> You requested for password reset if yes Please click 
-                        <a href='https://test.an-nur-info-tech.com/password-reset?id=$id'>
-                        Here
-                        </a>
-                    to complete the reset of the password
-                    </h4>
-                    <p>
-                        If you did not request please click 
-                        <a href='https://test.an-nur-info-tech.com/cancel-password-reset?id=$id'>
-                        Here
-                        </a>
-                    </p> 
-                ";
-                $mail->Body    = $mail_template;
-                // $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-            
-                $mail->send();
-                // echo 'Message has been sent';
-                $_SESSION['errorMsg'] = true;
-                $_SESSION['errorTitle'] = "Success";
-                $_SESSION['sessionMsg'] = "Check your email for password reset link";
-                $_SESSION['sessionIcon'] = "success";
-                $_SESSION['location'] = "index";
-            } catch (Exception $e) {
-                // echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-                $_SESSION['errorMsg'] = true;
-                $_SESSION['errorTitle'] = "Error";
-                $_SESSION['sessionMsg'] = "Mailer Error: {$mail->ErrorInfo}";
-                $_SESSION['sessionIcon'] = "error";
-                $_SESSION['location'] = "forgot-password";
+            $email = $result->email;
+            $id = $result->staff_id;
+    
+            // Update the change_pwd from the database
+            $db->query("UPDATE staff_tbl SET change_pwd = 1 WHERE staff_id = :id"); // Request for change of password
+            $db->bind(':id', $id);
+            if ($db->execute())
+            {
+                if($db->rowCount() > 0)
+                {
+                    //Create an instance; passing `true` enables exceptions
+                    $mail = new PHPMailer(true);
+        
+                    try {
+                        //Server settings
+                        // $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+                        $mail->isSMTP();                                            //Send using SMTP
+                        $mail->Host       = '';                     //Set the SMTP server to send through
+                        $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+                        $mail->Username   = '';                     //SMTP username
+                        $mail->Password   = '';                               //SMTP password
+                        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;  //           //Enable implicit TLS encryption
+                        $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+        
+                        //Recipients
+                        $mail->setFrom('', '');
+                        $mail->addAddress($email);     //Add a recipient
+                        // $mail->addAddress('ellen@example.com');               //Name is optional
+                        // $mail->addReplyTo('info@example.com', 'Information');
+                        // $mail->addCC('cc@example.com');
+                        // $mail->addBCC('bcc@example.com');
+        
+                        //Content
+                        $mail->isHTML(true);                                  //Set email format to HTML
+                        $mail->Subject = 'Password reset request';
+                        $mail_template =
+                            "
+                            <h1> Password Reset </h1>
+                            <h4> You requested for password reset if yes Please click 
+                                <a href='https://test.an-nur-info-tech.com/password-reset?id=$id'>
+                                Here
+                                </a>
+                            to complete the reset of the password
+                            </h4>
+                            <p>
+                                If you did not request please click 
+                                <a href='https://test.an-nur-info-tech.com/cancel-password-reset?id=$id'>
+                                Here
+                                </a>
+                            </p> 
+                        ";
+                        $mail->Body    = $mail_template;
+                        // $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+        
+                        $mail->send();
+                        // echo 'Message has been sent';
+                        $_SESSION['errorMsg'] = true;
+                        $_SESSION['errorTitle'] = "Success";
+                        $_SESSION['sessionMsg'] = "Check your email for password reset link";
+                        $_SESSION['sessionIcon'] = "success";
+                        $_SESSION['location'] = "index";
+                    } catch (Exception $e) {
+                        // echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+                        $_SESSION['errorMsg'] = true;
+                        $_SESSION['errorTitle'] = "Error";
+                        $_SESSION['sessionMsg'] = "Mailer Error: {$mail->ErrorInfo}";
+                        $_SESSION['sessionIcon'] = "error";
+                        $_SESSION['location'] = "forgot-password";
+                    }
+                }else{
+                    $_SESSION['errorMsg'] = true;
+                    $_SESSION['errorTitle'] = "Error";
+                    $_SESSION['sessionMsg'] = "Error (pwd_udt)";
+                    $_SESSION['sessionIcon'] = "error";
+                    $_SESSION['location'] = "forgot-password";
+                }
+            }else{
+                die($db->getError());
             }
+            
         }else{
             $_SESSION['errorMsg'] = true;
-            $_SESSION['errorTitle'] = "Error";
-            $_SESSION['sessionMsg'] = "Error (pwd_udt)";
-            $_SESSION['sessionIcon'] = "error";
+            $_SESSION['errorTitle'] = "Oops...";
+            $_SESSION['sessionMsg'] = "No email found!";
+            $_SESSION['sessionIcon'] = "warning";
             $_SESSION['location'] = "forgot-password";
         }
-        
     }else{
-        $_SESSION['errorMsg'] = true;
-        $_SESSION['errorTitle'] = "Oops...";
-        $_SESSION['sessionMsg'] = "No email found!";
-        $_SESSION['sessionIcon'] = "warning";
-        $_SESSION['location'] = "forgot-password";
-    }
-
+        die($db->getError());
+    } 
     $db->Disconect();
 }
 ?>
@@ -161,7 +164,7 @@ if (isset($_POST['forgot_btn'])) {
     </script>
 </head>
 
-<body>
+<body class="bg-gradient-primary">
   <?php
   if (isset($_SESSION['errorMsg'])) {
     echo '<script>

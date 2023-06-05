@@ -8,7 +8,7 @@ if (isset($_POST['submit_btn'])) {
   $email = trim($_POST['email']);
   $user_type = $_POST['user_type'];
   $user_role = $_POST['user_role'];
-  $fname = $title." ".trim($_POST['fname']);
+  $fname = $title . " " . trim($_POST['fname']);
   $sname = trim($_POST['sname']);
   $oname = trim($_POST['oname']);
 
@@ -23,17 +23,14 @@ if (isset($_POST['submit_btn'])) {
     //$db->single();
     if (!$db->execute()) {
       die("No conncection " . $db->getError());
-    }
-    else 
-    {
+    } else {
       if ($db->rowCount() > 0) {
         $_SESSION['errorMsg'] = true;
         $_SESSION['errorTitle'] = "Ooops...";
         $_SESSION['sessionMsg'] = "Email exist!";
         $_SESSION['sessionIcon'] = "error";
         $_SESSION['location'] = "staff-reg-page";
-      } 
-      else {
+      } else {
         //Enter data new data if no record before
         $staff = "stf/" . date('y') . "/";
         $db->query("SELECT id FROM staff_tbl ORDER BY id DESC LIMIT 1;");
@@ -44,8 +41,8 @@ if (isset($_POST['submit_btn'])) {
             $getNumber = str_replace($staff, "", $get_staff);
             $id_increase = $getNumber + 1;
             $get_string = str_pad($id_increase, 4, 0, STR_PAD_LEFT);
-            $staff_id = $staff.$get_string;
-  
+            $staff_id = $staff . $get_string;
+
             $db->query(
               "INSERT INTO staff_tbl(staff_id, user_type, user_role, email, pwd, fname, sname, oname)
               VALUES(:staff_id, :user_type, :user_role, :email, :hashed_P, :fname, :sname, :oname);"
@@ -60,7 +57,7 @@ if (isset($_POST['submit_btn'])) {
             $db->bind(':oname', $oname);
             $db->execute();
             if (($db->rowCount() > 0)) {
-              send_mail($staff_id, $email, $fname, $sname, $oname);              
+              send_mail($staff_id, $email);
             } else {
               $_SESSION['errorMsg'] = true;
               $_SESSION['errorTitle'] = "Error";
@@ -86,13 +83,8 @@ if (isset($_POST['submit_btn'])) {
           $db->bind(':sname', $sname);
           $db->bind(':oname', $oname);
           $db->execute();
-          if (($db->rowCount() > 0) && send_mail($staff_id, $email, $fname, $sname, $oname)) {
-            $_SESSION['errorMsg'] = true;
-            $_SESSION['errorTitle'] = "Success";
-            $_SESSION['sessionMsg'] = "Record added with email sent!";
-            $_SESSION['sessionIcon'] = "success";
-            $_SESSION['location'] = "staff-reg-page";
-            
+          if (($db->rowCount() > 0)) {
+            send_mail($staff_id, $email);
           } else {
             $_SESSION['errorMsg'] = true;
             $_SESSION['errorTitle'] = "Error";
@@ -102,6 +94,56 @@ if (isset($_POST['submit_btn'])) {
           }
         }
       }
+    }
+  }
+  $db->Disconect();
+}
+
+// Resend activation link
+if (isset($_POST['activation_link_btn']))
+{
+  $db = new Database();
+
+  $email_link_txt = trim($_POST['email_link_txt']);
+  $email2change = $_POST['link2change'];
+  $staff_id = $_POST['staff_id_lnk'];
+  
+  // Check if email equal to email to change
+  if ($email_link_txt == $email2change){
+    send_mail($staff_id, $email_link_txt);
+  }
+  else{
+    // Check if email exit
+    $db->query("SELECT * FROM staff_tbl WHERE email= :email_link_txt;");
+    $db->bind(':email_link_txt', $email_link_txt);
+    if ($db->execute()){
+      if ($db->rowCount() > 0){
+        $_SESSION['errorMsg'] = true;
+        $_SESSION['errorTitle'] = "Ooops...";
+        $_SESSION['sessionMsg'] = "Email exist in database";
+        $_SESSION['sessionIcon'] = "warning";
+        $_SESSION['location'] = "staff-reg-page";
+      }else{
+        // Update email and send a mail
+        $db->query("UPDATE staff_tbl SET email = :email_link_txt WHERE email= :email2change;");
+        $db->bind(':email_link_txt', $email_link_txt);
+        $db->bind(':email2change', $email2change);
+        if ($db->execute()){
+          if ($db->rowCount() > 0){
+            send_mail($staff_id, $email);
+          }else{
+            $_SESSION['errorMsg'] = true;
+            $_SESSION['errorTitle'] = "Error";
+            $_SESSION['sessionMsg'] = "Error occured!";
+            $_SESSION['sessionIcon'] = "error";
+            $_SESSION['location'] = "staff-reg-page";
+          }
+        }else{
+          die($db->getError());
+        }
+      }
+    }else{
+      die($db->getError());
     }
   }
   $db->Disconect();
@@ -192,7 +234,7 @@ if (isset($_POST['act_disabled'])) {
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <form method="POST" action="staff-reg-page">
+        <form method="post" action="staff-reg-page">
           <div class="modal-body">
             <div class="form-row">
               <div class="col-md-9">
@@ -204,6 +246,7 @@ if (isset($_POST['act_disabled'])) {
                   <label> User Section:</label>
                   <select name="user_type" class="form-control" required>
                     <option value="">User section...</option>
+                    <option value="Super Admin"> Super Admin </option>
                     <option value="Admin"> Admin </option>
                     <option value="Secondary"> Secondary </option>
                     <option value="Primary"> Primary </option>
@@ -274,7 +317,6 @@ if (isset($_POST['act_disabled'])) {
               <th class="table-primary">Section</th>
               <th class="table-primary">Role</th>
               <th class="table-primary">Status</th>
-              <th class="table-primary">Gender</th>
               <th class="table-primary">Actions</th>
             </tr>
           </thead>
@@ -295,11 +337,18 @@ if (isset($_POST['act_disabled'])) {
                   <tr>
                     <td><?php echo $count; ?></td>
                     <td><?php if ($row->act_verify == 0) {
-                          echo "Not verify";
+                          echo "<small class='text-danger email_link' staff_lnk='$row->staff_id' email_link= '$row->email' title='Click to resend activation link' data-toggle='modal' data-target='#activation_link_modal'>Not verified</small>";
                         } else {
-                          echo "Verified";
+                          echo "<small class='text-primary'>Verified</small>";
                         } ?></td>
-                    <td><img src="..\<?php echo $row->passport; ?>" alt="staff image" height="50" width="50"></td>
+                    <td><img src="
+                    <?php
+                    if (empty($row->passport) || $row->passport == null) {
+                      echo "../uploads/default.png";
+                    } else {
+                      echo $row->passport;
+                    }
+                    ?>" alt="staff image" height="50" width="50"></td>
                     <td><?php echo $row->staff_id; ?></td>
                     <td><?php echo $row->fname . " " . $row->sname . " " . $row->oname; ?></td>
                     <td><?php echo $row->email; ?>
@@ -311,33 +360,32 @@ if (isset($_POST['act_disabled'])) {
                     <td><?php echo $row->user_role; ?></td>
                     <td>
                       <!-- Users enable and disable-->
-                      <form method="POST" action="staff-reg-page">
+                      <form method="post" action="staff-reg-page">
                         <input type="hidden" name="staff_id" value="<?php echo $row->staff_id; ?>">
                         <?php
                         if ($row->act_status == 0) {
                         ?>
                           <input type="hidden" name="staff_id" value="<?php echo $row->staff_id; ?>">
-                          <button type="submit" title="This account has been disabled" name="act_disabled" class="btn btn-sm btn-danger"> <?php echo "Disabled"; ?> </button>
+                          <button type="submit" title="Click to enable account" name="act_disabled" onclick="add_spinner()" class="btn btn-sm btn-danger spinner_btn"> <?php echo "Disabled"; ?> </button>
                         <?php
                         }
                         if ($row->act_status == 1) {
                         ?>
                           <input type="hidden" name="staff_id" value="<?php echo $row->staff_id; ?>">
-                          <button type="submit" title="This account is enabled" name="act_enabled" class="btn btn-sm btn-primary"> <?php echo "Enabled"; ?> </button>
+                          <button type="submit" title="Click to disable account" name="act_enabled" onclick="add_spinner()" class="btn btn-sm btn-primary spinner_btn"> <?php echo "Enabled"; ?> </button>
                         <?php
                         }
                         ?>
                         </button>
                       </form>
                     </td>
-                    <td><?php echo $row->gender; ?></td>
                     <td>
-                      <form method="" action="">
-                        <input type="hidden" value="<?php echo $row->staff_id; ?>">
-                        <button title="Click to view" type="submit" class="btn btn-sm btn-outline-default"><i class="fa fa-eye"></i></button>
-                        <button title="Click to edit" type="submit" class="btn btn-sm btn-outline-primary"><i class="fas fa-fw fa-edit"></i></button>
-                        <button title="Click to delete" type="submit" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash"></i></button>
-                      </form>
+                      <div class="form-row form-inline">
+                        <button title="Click to view" view_btn="<?php echo $row->staff_id; ?>" type="submit" class="btn btn-sm btn-outline-default"><i class="fa fa-eye"></i></button>
+                        <button title="Click to edit" edit_btn="<?php echo $row->staff_id; ?>" type="submit" class="btn btn-sm btn-outline-primary"><i class="fas fa-fw fa-edit"></i></button>
+                        <button title="Click to delete" delete_btn="<?php echo $row->staff_id; ?>" type="submit" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash"></i></button>
+
+                      </div>
                     </td>
                   </tr>
                 <?php
@@ -360,10 +408,35 @@ if (isset($_POST['act_disabled'])) {
       </div>
     </div>
   </div>
-  <br><br><br>
-  <br>
 
-
+  <!-- Activation_link_modal -->
+  <div class="modal fade" id="activation_link_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Account activation link page</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <form method="post" action="staff-reg-page">
+          <div class="modal-body">
+            <p>Please check the mail address and make sure is accurate then click on <strong>Resend activation link</strong></p>
+            <div class="form-group">
+              <label>Email:</label>
+              <input type="email" id="email_link_txt" name="email_link_txt" class="form-control" required>
+              <input type="hidden" id="link2change" name="link2change" class="form-control" required>
+              <input type="hidden" id="staff_id_lnk" name="staff_id_lnk" class="form-control" required>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" name="activation_link_btn" class="btn btn-sm btn-primary spinner_btn" onclick="add_spinner()"> Resend activation link </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
 <!-- /.container-fluid -->
 

@@ -136,7 +136,7 @@ if (isset($_GET['id'])) {
         </script>
     </head>
 
-    <body>
+    <body class="bg-gradient-primary">
         <?php
         if (isset($_SESSION['errorMsg'])) {
             echo '<script>

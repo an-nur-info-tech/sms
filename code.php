@@ -7,6 +7,7 @@ if(session_status() == PHP_SESSION_NONE)
 require_once('school/database/Database.php');
 
 
+
 if(isset($_POST['login-btn']))
 {
     $_SESSION['errorMsg'] = false;
@@ -58,7 +59,7 @@ if(isset($_POST['login-btn']))
           //Verifying password
           if(password_verify($data['password'], $record->pwd)){
             //check if user accout has been restricted or not
-            if($record->act_status === 0){
+            if($record->act_status == 0){
               $_SESSION['errorMsg'] = true;
               $_SESSION['errorTitle'] = "Restriction";
               $_SESSION['sessionMsg'] = "Acount has been deactivated";
@@ -94,7 +95,7 @@ if(isset($_POST['login-btn']))
           //Verifying password
           if(password_verify($data['password'], $record->pwd)){
             //check if user accout has been restricted or not
-            if($record->act_status === 0){
+            if($record->act_status == 0){
               $_SESSION['errorMsg'] = true;
               $_SESSION['errorTitle'] = "Restriction";
               $_SESSION['sessionMsg'] = "Acount has been deactivated";
@@ -129,7 +130,7 @@ if(isset($_POST['login-btn']))
           //Verifying password
           if(password_verify($data['password'], $record->pwd)){
             //check if user accout has been restricted or not
-            if($record->act_status === 0){
+            if($record->act_status == 0){
               $_SESSION['errorMsg'] = true;
               $_SESSION['errorTitle'] = "Restriction";
               $_SESSION['sessionMsg'] = "Acount has been deactivated";
@@ -163,7 +164,7 @@ if(isset($_POST['login-btn']))
           //Verifying password
           if(password_verify($data['password'], $record->pwd)){
             //check if user accout has been restricted or not
-            if($record->act_status === 0){
+            if($record->act_status == 0){
               $_SESSION['errorMsg'] = true;
               $_SESSION['errorTitle'] = "Restriction";
               $_SESSION['sessionMsg'] = "Acount has been deactivated";
@@ -197,7 +198,7 @@ if(isset($_POST['login-btn']))
           //Verifying password
           if(password_verify($data['password'], $record->pwd)){
             //check if user accout has been restricted or not
-            if($record->act_status === 0){
+            if($record->act_status == 0){
               $_SESSION['errorMsg'] = true;
               $_SESSION['errorTitle'] = "Restriction";
               $_SESSION['sessionMsg'] = "Acount has been deactivated";

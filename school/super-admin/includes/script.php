@@ -541,8 +541,19 @@ const enable_staff_btn = (args) => {
   }else{
     document.querySelector(".spinner_btn").setAttribute('disabled', '');
   }
-
 }
+
+/* RESEND ACTIVATION LINK */
+$(".email_link").click(function(){
+  let currentEmail = $(this).attr("email_link");
+  let staff_id_lnk = $(this).attr("staff_lnk");
+
+  $("#link2change").val(currentEmail);
+  $("#email_link_txt").val(currentEmail);
+  $("#staff_id_lnk").val(staff_id_lnk);
+
+});
+/* XX RESEND ACTIVATION LINK XX */
 </script>
 </body>
 
