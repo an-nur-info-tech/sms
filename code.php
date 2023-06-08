@@ -240,7 +240,7 @@ if(isset($_POST['login-btn']))
           //Verifying password
           if(password_verify($data['password'], $rec->pwd)){
             //check if user account has been restricted or not
-            if($rec->act_status === 0){
+            if($rec->act_status == 0){
               $_SESSION['errorMsg'] = true;
               $_SESSION['errorTitle'] = "Restriction";
               $_SESSION['sessionMsg'] = "Acount has been deactivated";
@@ -251,8 +251,8 @@ if(isset($_POST['login-btn']))
               $_SESSION['valid'] = true;
               $_SESSION['user-type'] = "student";
               $_SESSION['login-time'] = time(); //for auto logout
-              $_SESSION['name'] = $record->lname. " ".$record->sname;
-              $_SESSION['adminNo'] = $record->admNo;
+              $_SESSION['name'] = $rec->lname. " ".$rec->sname." ".$rec->oname;
+              $_SESSION['adminNo'] = $rec->admNo;
 
               //$db->getLogger($_POST['email'], "Access granted");
               $_SESSION['errorMsg'] = true;

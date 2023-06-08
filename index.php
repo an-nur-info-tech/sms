@@ -15,10 +15,32 @@ require_once('code.php');
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>School Management System</title>
+  <?php
+  $db = new Database();
+  $db->query("SELECT * FROM frontend_tbl");
+  if ($db->execute()) {
+    if ($db->rowCount() > 0) {
+      $row = $db->single();
+      $title = $row->project_name;
+      $logo_img = $row->img_logo;
+      $project_note = $row->project_note;
+  ?>
+      <title><?php echo $title; ?></title>
+      <link rel="icon" href="./school/super-admin/<?php echo $logo_img; ?>" type="image/png" />
 
-  <link rel="icon" href="../img/success.png" type="image/png" />
+    <?php
+    } else {
+    ?>
+      <title>School Mangements System</title>
+      <!-- <link rel="icon" href="./school/uploads/img/success.png" type="image/png" /> --> -->
 
+  <?php
+    }
+  } else {
+    die($db->getError());
+  }
+  $db->Disconect();
+  ?>
   <!-- Custom fonts for this template-->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
@@ -46,10 +68,10 @@ require_once('code.php');
 <body class="bg-gradient-primary">
 
   <div class="container">
-    <div class="row mt-3 text-center text-white">
+    <div class="row mt-5 text-center text-white">
       <div class="col-md-12">
-        <h1>School Management System</h1>
-        <p class="text-gray-300">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Rem et, at, explicabo eaque laudantium adipisci facere ullam officia quis sapiente Lorem, ipsum dolor sit amet consectetur adipisicing elit. Rem et, at, explicabo eaque laudantium adipisci facere ullam officia quis sapiente illo aliquam? Nam quos recusandae, laborum a ullam et culpa reiciendis voluptas harum nemo beatae quia facilis nostrum, libero eligendi.</p>
+        <h1><?php echo $title; ?></h1>
+        <p class="text-gray-300"><?php echo $project_note; ?></p>
       </div>
     </div>
     <div class="row justify-content-center mt-5">

@@ -12,11 +12,11 @@
               if ($db->rowCount() > 0) {
                   $row = $db->single();
                   $logo_img = $row->img_logo;
-                  echo "<img src='$logo_img'  width='60' height='60'>";
+                echo "<img src='$logo_img' width='50' height='50'>";
               
                 }else{
 
-                  echo "<img src='../uploads/img/success.png' width='50' height='50'>";
+                echo "<img src='../uploads/img/success.png' width='50' height='50'>";
               }
             } 
           ?>

@@ -16,27 +16,24 @@ if (isset($_POST['forgot_btn'])) {
     $db = new Database();
 
     $email = $_POST['email'];
-    
+
     //fetching user record to check for verification
     $db->query("SELECT * FROM staff_tbl WHERE email = :email LIMIT 1;");
     $db->bind(':email', $email);
-    if ($db->execute()){
+    if ($db->execute()) {
         $result = $db->single();
-        if ($db->rowCount() > 0)
-        {
+        if ($db->rowCount() > 0) {
             $email = $result->email;
             $id = $result->staff_id;
-    
+
             // Update the change_pwd from the database
             $db->query("UPDATE staff_tbl SET change_pwd = 1 WHERE staff_id = :id"); // Request for change of password
             $db->bind(':id', $id);
-            if ($db->execute())
-            {
-                if($db->rowCount() > 0)
-                {
+            if ($db->execute()) {
+                if ($db->rowCount() > 0) {
                     //Create an instance; passing `true` enables exceptions
                     $mail = new PHPMailer(true);
-        
+
                     try {
                         //Server settings
                         // $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
@@ -47,7 +44,7 @@ if (isset($_POST['forgot_btn'])) {
                         $mail->Password   = '';                               //SMTP password
                         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;  //           //Enable implicit TLS encryption
                         $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
-        
+
                         //Recipients
                         $mail->setFrom('', '');
                         $mail->addAddress($email);     //Add a recipient
@@ -55,7 +52,7 @@ if (isset($_POST['forgot_btn'])) {
                         // $mail->addReplyTo('info@example.com', 'Information');
                         // $mail->addCC('cc@example.com');
                         // $mail->addBCC('bcc@example.com');
-        
+
                         //Content
                         $mail->isHTML(true);                                  //Set email format to HTML
                         $mail->Subject = 'Password reset request';
@@ -77,7 +74,7 @@ if (isset($_POST['forgot_btn'])) {
                         ";
                         $mail->Body    = $mail_template;
                         // $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-        
+
                         $mail->send();
                         // echo 'Message has been sent';
                         $_SESSION['errorMsg'] = true;
@@ -93,27 +90,26 @@ if (isset($_POST['forgot_btn'])) {
                         $_SESSION['sessionIcon'] = "error";
                         $_SESSION['location'] = "forgot-password";
                     }
-                }else{
+                } else {
                     $_SESSION['errorMsg'] = true;
                     $_SESSION['errorTitle'] = "Error";
                     $_SESSION['sessionMsg'] = "Error (pwd_udt)";
                     $_SESSION['sessionIcon'] = "error";
                     $_SESSION['location'] = "forgot-password";
                 }
-            }else{
+            } else {
                 die($db->getError());
             }
-            
-        }else{
+        } else {
             $_SESSION['errorMsg'] = true;
             $_SESSION['errorTitle'] = "Oops...";
             $_SESSION['sessionMsg'] = "No email found!";
             $_SESSION['sessionIcon'] = "warning";
             $_SESSION['location'] = "forgot-password";
         }
-    }else{
+    } else {
         die($db->getError());
-    } 
+    }
     $db->Disconect();
 }
 ?>
@@ -127,10 +123,32 @@ if (isset($_POST['forgot_btn'])) {
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>School Management System</title>
+    <?php
+    $db = new Database();
+    $db->query("SELECT * FROM frontend_tbl");
+    if ($db->execute()) {
+        if ($db->rowCount() > 0) {
+            $row = $db->single();
+            $title = $row->project_name;
+            $logo_img = $row->img_logo;
+            $project_note = $row->project_note;
+    ?>
+            <title><?php echo $title; ?></title>
+            <link rel="icon" href="./school/super-admin/<?php echo $logo_img; ?>" type="image/png" />
 
-    <link rel="icon" href="./school/uploads/img/success.png" type="image/png" />
+        <?php
+        } else {
+        ?>
+            <title>School Mangements System</title>
+            <!-- <link rel="icon" href="./school/uploads/img/success.png" type="image/png" /> --> -->
 
+    <?php
+        }
+    } else {
+        die($db->getError());
+    }
+    $db->Disconect();
+    ?>
     <!-- Custom fonts for this template-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
@@ -165,9 +183,9 @@ if (isset($_POST['forgot_btn'])) {
 </head>
 
 <body class="bg-gradient-primary">
-  <?php
-  if (isset($_SESSION['errorMsg'])) {
-    echo '<script>
+    <?php
+    if (isset($_SESSION['errorMsg'])) {
+        echo '<script>
               Swal.fire({
                 title: "' . $_SESSION['errorTitle'] . '",
                 text: "' . $_SESSION['sessionMsg'] . '",
@@ -180,16 +198,16 @@ if (isset($_POST['forgot_btn'])) {
                   }
               })
           </script>';
-    unset($_SESSION['errorTitle']);
-    unset($_SESSION['errorMsg']);
-    unset($_SESSION['sessionMsg']);
-    unset($_SESSION['location']);
-    unset($_SESSION['sessionIcon']);
-  }
-  ?>
+        unset($_SESSION['errorTitle']);
+        unset($_SESSION['errorMsg']);
+        unset($_SESSION['sessionMsg']);
+        unset($_SESSION['location']);
+        unset($_SESSION['sessionIcon']);
+    }
+    ?>
     <!-- Begin Page Content -->
     <div class="container">
-  <!-- Alerts messages -->
+        <!-- Alerts messages -->
         <div class="card m-5">
             <div class="card-header text-center">
                 <h1 class="text-primary"> Forgotten Password Page </h1>
@@ -202,25 +220,24 @@ if (isset($_POST['forgot_btn'])) {
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label class="control-label" for="email"> Email: </label>
-                                <input type="email" onkeyup="check_input(this.value)" class="form-control" name="email" required >
+                                <input type="email" onkeyup="check_input(this.value)" class="form-control" name="email" required>
                             </div>
                             <div class="form-group text-center">
                                 <button type="submit" class="btn btn-primary spinner_btn" disabled onclick="add_spinner()" name="forgot_btn"> Submit </button>
                             </div>
                         </div>
                         <div class="col-md-4"></div>
-                    </div>                  
+                    </div>
                 </form>
             </div>
             <div class="card-footer text-center mt-3">
-              <a class="small" type="submit" href="index"> Back </a>
+                <a class="small" type="submit" href="index"> Back </a>
             </div>
         </div>
     </div>
     <script type="text/javascript">
         const check_input = (email) => {
-            if (email.length > 5)
-            {
+            if (email.length > 5) {
                 document.querySelector(".spinner_btn").removeAttribute("disabled");
             }
         }

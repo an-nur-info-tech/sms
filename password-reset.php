@@ -4,7 +4,7 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 include('./school/database/Database.php');
-    
+
 
 if (isset($_POST['submit_btn'])) {
     $db = new Database();
@@ -15,74 +15,63 @@ if (isset($_POST['submit_btn'])) {
     $c_pwd = $_POST['c_pwd'];
     $hashed_P = password_hash($pwd, PASSWORD_BCRYPT);
 
-    if ($pwd == $c_pwd)
-    {
+    if ($pwd == $c_pwd) {
         // Check if change_pwd == 1 (for request password)
         $db->query("SELECT * FROM staff_tbl WHERE staff_id = :staff_id LIMIT 1;");
         $db->bind(':staff_id', $staff_id);
-        $db->execute();    
-        if ($db->rowCount() > 0)
-        {
-            $result = $db->single()->change_pwd;   
-            
-            if ($result == 1){ // Change password
+        $db->execute();
+        if ($db->rowCount() > 0) {
+            $result = $db->single()->change_pwd;
+
+            if ($result == 1) { // Change password
 
                 $db->query("UPDATE staff_tbl SET pwd = :hashed_P, change_pwd = 2 WHERE staff_id = :staff_id;");
                 $db->bind(':hashed_P', $hashed_P);
                 $db->bind(':staff_id', $staff_id);
-                if ($db->execute())
-                {
-                    if ($db->rowCount() > 0)
-                    {
+                if ($db->execute()) {
+                    if ($db->rowCount() > 0) {
                         $_SESSION['errorMsg'] = true;
                         $_SESSION['errorTitle'] = "Success";
                         $_SESSION['sessionMsg'] = "Password changed";
                         $_SESSION['sessionIcon'] = "success";
                         $_SESSION['location'] = "index";
-                    }
-                    else 
-                    {
+                    } else {
                         $_SESSION['errorMsg'] = true;
                         $_SESSION['errorTitle'] = "Error";
                         $_SESSION['sessionMsg'] = "Change failed";
                         $_SESSION['sessionIcon'] = "error";
                         $_SESSION['location'] = "password-reset";
                     }
-                }
-                else 
-                {
+                } else {
                     die($db->getError());
                 }
-            }else if ($result == 2) // Password changed already (link expired)
+            } else if ($result == 2) // Password changed already (link expired)
             {
                 $_SESSION['errorMsg'] = true;
                 $_SESSION['errorTitle'] = "Oops...";
                 $_SESSION['sessionMsg'] = "Link has expired, please login again";
                 $_SESSION['sessionIcon'] = "warning";
                 $_SESSION['location'] = "index";
-            }else{
+            } else {
                 $_SESSION['errorMsg'] = true;
                 $_SESSION['errorTitle'] = "Error";
                 $_SESSION['sessionMsg'] = "Invalid request";
                 $_SESSION['sessionIcon'] = "warning";
                 $_SESSION['location'] = "index";
             }
-            
-        }else{
+        } else {
             $_SESSION['errorMsg'] = true;
             $_SESSION['errorTitle'] = "Error";
             $_SESSION['sessionMsg'] = "Request not found!";
             $_SESSION['sessionIcon'] = "warning";
             $_SESSION['location'] = "index";
         }
-    }
-    else
-    {
+    } else {
         $_SESSION['errorMsg'] = true;
         $_SESSION['errorTitle'] = "Ooops...";
         $_SESSION['sessionMsg'] = "Password does not match confirm password!";
         $_SESSION['sessionIcon'] = "warning";
-        $_SESSION['location'] = "password-reset"; 
+        $_SESSION['location'] = "password-reset";
     }
     $db->Disconect();
 }
@@ -99,9 +88,32 @@ if (isset($_GET['id'])) {
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>School Management System</title>
+        <?php
+        $db = new Database();
+        $db->query("SELECT * FROM frontend_tbl");
+        if ($db->execute()) {
+            if ($db->rowCount() > 0) {
+                $row = $db->single();
+                $title = $row->project_name;
+                $logo_img = $row->img_logo;
+                $project_note = $row->project_note;
+        ?>
+                <title><?php echo $title; ?></title>
+                <link rel="icon" href="./school/super-admin/<?php echo $logo_img; ?>" type="image/png" />
 
-        <link rel="icon" href="./school/uploads/img/success.png" type="image/png" />
+            <?php
+            } else {
+            ?>
+                <title>School Mangements System</title>
+                <!-- <link rel="icon" href="./school/uploads/img/success.png" type="image/png" /> --> -->
+
+        <?php
+            }
+        } else {
+            die($db->getError());
+        }
+        $db->Disconect();
+        ?>
 
         <!-- Custom fonts for this template-->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -176,8 +188,9 @@ if (isset($_GET['id'])) {
                                 <div class="form-group">
                                     <label class="control-label" for="pwd"> Password: </label>
                                     <input type="password" onkeyup="check_password_strength()" id="pwd" class="form-control" name="pwd" required>
-                                    <!-- <input type="text"  class="form-control" value="<?php //echo $_GET['email']; ?>" name="email" required> -->
-                                    <input type="hidden"  class="form-control" value="<?php echo $_GET['id'] ?>" name="staff_id" required>
+                                    <!-- <input type="text"  class="form-control" value="<?php //echo $_GET['email']; 
+                                                                                            ?>" name="email" required> -->
+                                    <input type="hidden" class="form-control" value="<?php echo $_GET['id'] ?>" name="staff_id" required>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label" for="c_pwd"> Confirm Password: </label>

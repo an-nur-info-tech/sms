@@ -25,6 +25,27 @@ if (isset($_POST['single_view_btn'])) {
     $term_id = $_POST['term_id'];
 
     $db = new Database();
+    // Fetch frontend informations
+    $db = new Database();
+    $db->query("SELECT * FROM frontend_tbl");
+    if ($db->execute()) {
+        if ($db->rowCount() > 0) {
+            $row = $db->single();
+            $school_name = $row->school_name;
+            $school_sections = $row->school_sections;
+            $school_addr = $row->school_addr;
+            $contact = "$row->school_contact1, $row->school_contact2";
+            $email = $row->email;
+            $img_logo = $row->img_logo;
+        }else{
+            $school_name = "An-Nur Info-Tech";
+            $school_sections = "Nursery, Primary, and Secondary";
+            $school_addr = "No. 125 Idi-ogun Offa, Kwara State.";
+            $contact = "+234 8137541749, +234 7058875762";
+            $email = "wasiubello60@gmail.com";
+            $img_logo = '../uploads/img/apple-touch-icon.png';
+        }
+    }
     // Fetch result
     $db->query(
         "SELECT * FROM result_tbl AS rt
@@ -73,38 +94,38 @@ if (isset($_POST['single_view_btn'])) {
                 //Add image logo
                 //$pdf ->Image('img/logoPdf.png', 7,7,33,34);
                 $pdf->SetFont('Arial', 'B', 25);
-                $pdf->Cell(190, 10, 'SUCCESS SCHOOLS SOKOTO', 0, 0, 'C');
+                $pdf->Cell(190, 10, $school_name, 0, 0, 'C');
                 $pdf->ln(7);
                 $pdf->SetFont(
                     'Times',
                     'I',
                     12
                 );
-                $pdf->Cell(180, 10, 'Nursery, Primary and Secondary', 0, 0, 'C');
+                $pdf->Cell(180, 10, $school_sections, 0, 0, 'C');
                 $pdf->ln(7);
                 $pdf->SetFont(
                     'Times',
                     'B',
                     14
                 );
-                $pdf->Cell(180, 10, "Off Western Bypass Sokoto, Sokoto State.", 0, 0, 'C');
+                $pdf->Cell(180, 10, $school_addr, 0, 0, 'C');
                 $pdf->ln(10);
                 $pdf->SetFont(
                     'Times',
                     'I',
                     12
                 );
-                $pdf->Cell(180, 10, "Tel: 08036505717, 08060860664", 0, 0, 'C');
+                $pdf->Cell(180, 10, "Tel: $contact", 0, 0, 'C');
                 $pdf->ln(5);
                 $pdf->SetFont(
                     'Times',
                     'I',
                     12
                 );
-                $pdf->Cell(180, 10, "Email: successschoolsnigeria@gmail.com", 0, 0, 'C');
+                $pdf->Cell(180, 10, "Email: $email", 0, 0, 'C');
                 $pdf->ln(20);
                 //Adding another image for the next record
-                $pdf->Image('../uploads/img/logoPdf.png', 7, 7, 33, 34);
+                $pdf->Image($img_logo, 7, 7, 33, 34);
                 $pdf->ln();
                 //Student Information goes here
                 $pdf->SetFont(
@@ -314,15 +335,23 @@ if (isset($_POST['single_view_btn'])) {
                 $db->bind(':term_id', $term_id);
 
                 //PRINCIPAL AUTO COMMENT TODO
-                if (($average < 10) || ($average <= 45)) {
-                    $p_c = "This is a poor result";
-                } else if (($average >= 46) || ($average >= 50)) {
+                if($average <= 39 )
+                {
+                    $p_c = "This is a poor result, you can do more better";
+                } 
+                if (($average >= 40) || ($average >= 49)) {
+                    $p_c = "This is below average, you can try harder";
+                }
+                if (($average >= 50) || ($average >= 59)) {
                     $p_c = "An average result, you can try harder";
-                } else if (($average >= 51) || ($average >= 60)) {
-                    $p_c = "Good, you can do better";
-                } else if (($average >= 61) || ($average >= 75)) {
+                }  
+                if (($average >= 60) || ($average >= 69)) {
+                    $p_c = "Good result, you can do better";
+                }  
+                if (($average >= 70) || ($average >= 79)) {
                     $p_c = "Bravo! Do not give up";
-                } else if (($average >= 76) || ($average >= 100)) {
+                }  
+                if (($average >= 80) || ($average >= 100)) {
                     $p_c = "Excellent! Keep the energy intact";
                 }
                 if ($db->execute()) {
@@ -408,22 +437,22 @@ if (isset($_POST['single_view_btn'])) {
                             $pdf->SetFont('Times', 'B', 9);
                             $pdf->Cell(53, 5, 'NEXT TERM BEGIN', 1, 0, 'L');
 
+                            
                             //Getting Next Term begins from the database
-                            $db->query("SELECT next_term FROM next_term_tbl ORDER BY next_term_id DESC;");
+                            $db->query("SELECT next_term_begin FROM tbl_year_session WHERE session_id = :session_id AND term_id = :term_id;");
+                            $db->bind(':session_id', $session_id);
+                            $db->bind(':term_id', $term_id);                            
                             if ($db->execute()) {
                                 if ($db->rowCount() > 0) {
-                                    $nxt_term = $db->single();
+                                    $nxt_term = $db->single()->next_term_begin;
                                     $pdf->SetFont('Times', '', 11);
-                                    $pdf->Cell(80, 5, $nxt_term->next_term, 1, 1, 'L');
+                                    $pdf->Cell(80, 5, $nxt_term, 1, 1, 'L');
                                 } else {
-                                    $error = "Resumption date not scheduled";
                                     $pdf->SetFont('Times', '', 11);
-                                    $pdf->Cell(80, 5, $error, 1, 1, 'L');
+                                    $pdf->Cell(80, 5, 'Resumption date not scheduled', 1, 1, 'L');
                                 }
                             } else {
-                                die("Query failed" . $db->getError());
-                                exit();
-                                //$pdf->Cell(80, 5, $error, 1, 1, 'L');
+                                die("Query failed".$db->getError());
                             }
                         }
                     } else {
@@ -453,38 +482,38 @@ if (isset($_POST['single_view_btn'])) {
                 //Add image logo
                 //$pdf ->Image('img/logoPdf.png', 7,7,33,34);
                 $pdf->SetFont('Arial', 'B', 25);
-                $pdf->Cell(190, 10, 'SUCCESS SCHOOLS SOKOTO', 0, 0, 'C');
+                $pdf->Cell(190, 10, $school_name, 0, 0, 'C');
                 $pdf->ln(7);
                 $pdf->SetFont(
                     'Times',
                     'I',
                     12
                 );
-                $pdf->Cell(180, 10, 'Nursery, Primary and Secondary', 0, 0, 'C');
+                $pdf->Cell(180, 10, $school_sections, 0, 0, 'C');
                 $pdf->ln(7);
                 $pdf->SetFont(
                     'Times',
                     'B',
                     14
                 );
-                $pdf->Cell(180, 10, "Off Western Bypass Sokoto, Sokoto State.", 0, 0, 'C');
+                $pdf->Cell(180, 10, $school_addr, 0, 0, 'C');
                 $pdf->ln(10);
                 $pdf->SetFont(
                     'Times',
                     'I',
                     12
                 );
-                $pdf->Cell(180, 10, "Tel: 08036505717, 08060860664", 0, 0, 'C');
+                $pdf->Cell(180, 10, "Tel: $contact", 0, 0, 'C');
                 $pdf->ln(5);
                 $pdf->SetFont(
                     'Times',
                     'I',
                     12
                 );
-                $pdf->Cell(180, 10, "Email: successschoolsnigeria@gmail.com", 0, 0, 'C');
+                $pdf->Cell(180, 10, "Email: $email", 0, 0, 'C');
                 $pdf->ln(20);
                 //Adding another image for the next record
-                $pdf->Image('../uploads/img/logoPdf.png', 7, 7, 33, 34);
+                $pdf->Image($img_logo, 7, 7, 33, 34);
                 $pdf->ln();
                 //Student Information goes here
                 $pdf->SetFont(
@@ -730,15 +759,23 @@ if (isset($_POST['single_view_btn'])) {
                 $db->bind(':term_id', $term_id);
 
                 //PRINCIPAL AUTO COMMENT TODO
-                if (($average < 10) || ($average <= 45)) {
-                    $p_c = "This is a poor result";
-                } else if (($average >= 46) || ($average >= 50)) {
+                if($average <= 39 )
+                {
+                    $p_c = "This is a poor result, you can do more better";
+                } 
+                if (($average >= 40) || ($average >= 49)) {
+                    $p_c = "This is below average, you can try harder";
+                }
+                if (($average >= 50) || ($average >= 59)) {
                     $p_c = "An average result, you can try harder";
-                } else if (($average >= 51) || ($average >= 60)) {
-                    $p_c = "Good, you can do better";
-                } else if (($average >= 61) || ($average >= 75)) {
+                }  
+                if (($average >= 60) || ($average >= 69)) {
+                    $p_c = "Good result, you can do better";
+                }  
+                if (($average >= 70) || ($average >= 79)) {
                     $p_c = "Bravo! Do not give up";
-                } else if (($average >= 76) || ($average >= 100)) {
+                }  
+                if (($average >= 80) || ($average >= 100)) {
                     $p_c = "Excellent! Keep the energy intact";
                 }
                 if ($db->execute()) {
@@ -825,21 +862,20 @@ if (isset($_POST['single_view_btn'])) {
                             $pdf->Cell(53, 5, 'NEXT TERM BEGIN', 1, 0, 'L');
 
                             //Getting Next Term begins from the database
-                            $db->query("SELECT next_term FROM next_term_tbl ORDER BY next_term_id DESC;");
+                            $db->query("SELECT next_term_begin FROM tbl_year_session WHERE session_id = :session_id AND term_id = :term_id;");
+                            $db->bind(':session_id', $session_id);
+                            $db->bind(':term_id', $term_id);                            
                             if ($db->execute()) {
                                 if ($db->rowCount() > 0) {
-                                    $nxt_term = $db->single();
+                                    $nxt_term = $db->single()->next_term_begin;
                                     $pdf->SetFont('Times', '', 11);
-                                    $pdf->Cell(80, 5, $nxt_term->next_term, 1, 1, 'L');
+                                    $pdf->Cell(80, 5, $nxt_term, 1, 1, 'L');
                                 } else {
-                                    $error = "Resumption date not scheduled";
                                     $pdf->SetFont('Times', '', 11);
-                                    $pdf->Cell(80, 5, $error, 1, 1, 'L');
+                                    $pdf->Cell(80, 5, 'Resumption date not scheduled', 1, 1, 'L');
                                 }
                             } else {
-                                die("Query failed" . $db->getError());
-                                exit();
-                                //$pdf->Cell(80, 5, $error, 1, 1, 'L');
+                                die("Query failed".$db->getError());
                             }
                         }
                     } else {
@@ -867,38 +903,38 @@ if (isset($_POST['single_view_btn'])) {
                 //Add image logo
                 //$pdf ->Image('img/logoPdf.png', 7,7,33,34);
                 $pdf->SetFont('Arial', 'B', 25);
-                $pdf->Cell(190, 10, 'SUCCESS SCHOOLS SOKOTO', 0, 0, 'C');
+                $pdf->Cell(190, 10, $school_name, 0, 0, 'C');
                 $pdf->ln(7);
                 $pdf->SetFont(
                     'Times',
                     'I',
                     12
                 );
-                $pdf->Cell(180, 10, 'Nursery, Primary and Secondary', 0, 0, 'C');
+                $pdf->Cell(180, 10, $school_sections, 0, 0, 'C');
                 $pdf->ln(7);
                 $pdf->SetFont(
                     'Times',
                     'B',
                     14
                 );
-                $pdf->Cell(180, 10, "Off Western Bypass Sokoto, Sokoto State.", 0, 0, 'C');
+                $pdf->Cell(180, 10, $school_addr, 0, 0, 'C');
                 $pdf->ln(10);
                 $pdf->SetFont(
                     'Times',
                     'I',
                     12
                 );
-                $pdf->Cell(180, 10, "Tel: 08036505717, 08060860664", 0, 0, 'C');
+                $pdf->Cell(180, 10, "Tel: $contact", 0, 0, 'C');
                 $pdf->ln(5);
                 $pdf->SetFont(
                     'Times',
                     'I',
                     12
                 );
-                $pdf->Cell(180, 10, "Email: successschoolsnigeria@gmail.com", 0, 0, 'C');
+                $pdf->Cell(180, 10, "Email: $email", 0, 0, 'C');
                 $pdf->ln(20);
                 //Adding another image for the next record
-                $pdf->Image('../uploads/img/logoPdf.png', 7, 7, 33, 34);
+                $pdf->Image($img_logo, 7, 7, 33, 34);
                 $pdf->ln();
                 //Student Information goes here
                 $pdf->SetFont(
@@ -1011,20 +1047,10 @@ if (isset($_POST['single_view_btn'])) {
                     foreach ($results as $row)
                     {
                         $subject_id = $row->subject_id;
-
-                        //Converting subject id to subject name
-                        // $subject_query = mysqli_query($con, "SELECT * FROM subject_tbl WHERE subject_id = '$subject';");
-                        // if($subject_query){
-                        //     foreach($subject_query as $subject_fetch)
-                        //     {
-                        //         $subject = $subject_fetch['subject_name'];
-                        //         $subject_id = $subject_fetch['subject_id'];
-
-                                //Row ENGLISH LANGUAGE
+                        
                         $pdf ->SetFont('Times','', 10);
                         $pdf ->Cell(75,5, $row->subject_name, 1,0,'L');
-                        //     }
-                        // }
+                        
                         if (($row->ca == 0) || ($row->ca == null) || empty($row->ca)) {
                             $ca = "N/A";
                         } else {
@@ -1191,8 +1217,8 @@ if (isset($_POST['single_view_btn'])) {
                 $db->execute();
                 if ($db->rowCount() > 0)
                 {
-                    $average = $db->single();
-                    $pdf ->Cell(35,5,'AVERAGE = '.round(($average->average), 2, PHP_ROUND_HALF_UP),1,1,'C');
+                    $average = $db->single()->average;
+                    $pdf ->Cell(35,5,'AVERAGE = '.round(($average), 2, PHP_ROUND_HALF_UP),1,1,'C');
                 }else{
                     $pdf ->Cell(35,5,'N/A', 1,1,'C');
                 }
@@ -1292,15 +1318,23 @@ if (isset($_POST['single_view_btn'])) {
                                 exit();
                             }
                             //PRINCIPAL AUTO COMMENT TODO
-                            if (($average < 10) || ($average <= 45)) {
-                                $p_c = "This is a poor result";
-                            } else if (($average >= 46) || ($average >= 50)) {
+                            if($average <= 39 )
+                            {
+                                $p_c = "This is a poor result, you can do more better";
+                            } 
+                            if (($average >= 40) || ($average >= 49)) {
+                                $p_c = "This is below average, you can try harder";
+                            }
+                            if (($average >= 50) || ($average >= 59)) {
                                 $p_c = "An average result, you can try harder";
-                            } else if (($average >= 51) || ($average >= 60)) {
-                                $p_c = "Good, you can do better";
-                            } else if (($average >= 61) || ($average >= 75)) {
+                            }  
+                            if (($average >= 60) || ($average >= 69)) {
+                                $p_c = "Good result, you can do better";
+                            }  
+                            if (($average >= 70) || ($average >= 79)) {
                                 $p_c = "Bravo! Do not give up";
-                            } else if (($average >= 76) || ($average >= 100)) {
+                            }  
+                            if (($average >= 80) || ($average >= 100)) {
                                 $p_c = "Excellent! Keep the energy intact";
                             }
                             //CLASS TEACHER AND PRINCIPAL COMMENTS
@@ -1317,19 +1351,20 @@ if (isset($_POST['single_view_btn'])) {
                             $pdf->Cell(53, 5, 'NEXT TERM BEGIN', 1, 0, 'L');
 
                             //Getting Next Term begins from the database
-                            $db->query("SELECT next_term FROM next_term_tbl ORDER BY next_term_id DESC;");
+                            $db->query("SELECT next_term_begin FROM tbl_year_session WHERE session_id = :session_id AND term_id = :term_id;");
+                            $db->bind(':session_id', $session_id);
+                            $db->bind(':term_id', $term_id);                            
                             if ($db->execute()) {
                                 if ($db->rowCount() > 0) {
-                                    $nxt_term = $db->single();
+                                    $nxt_term = $db->single()->next_term_begin;
                                     $pdf->SetFont('Times', '', 11);
-                                    $pdf->Cell(80, 5, $nxt_term->next_term, 1, 1, 'L');
+                                    $pdf->Cell(80, 5, $nxt_term, 1, 1, 'L');
                                 } else {
-                                    $error = "Resumption date not scheduled";
                                     $pdf->SetFont('Times', '', 11);
-                                    $pdf->Cell(80, 5, $error, 1, 1, 'L');
+                                    $pdf->Cell(80, 5, 'Resumption date not scheduled', 1, 1, 'L');
                                 }
                             } else {
-                                die("Query failed" . $db->getError());;
+                                die("Query failed".$db->getError());
                             }
                         }
                     } else {
@@ -1363,6 +1398,28 @@ if (isset($_POST['download_view_btn'])) {
     $admNo = $_POST['admNo'];
     $session_id = $_POST['session_id'];
     $term_id = $_POST['term_id'];
+
+    // Fetch frontend informations
+    $db = new Database();
+    $db->query("SELECT * FROM frontend_tbl");
+    if ($db->execute()) {
+        if ($db->rowCount() > 0) {
+            $row = $db->single();
+            $school_name = $row->school_name;
+            $school_sections = $row->school_sections;
+            $school_addr = $row->school_addr;
+            $contact = "$row->school_contact1, $row->school_contact2";
+            $email = $row->email;
+            $img_logo = $row->img_logo;
+        }else{
+            $school_name = "An-Nur Info-Tech";
+            $school_sections = "Nursery, Primary, and Secondary";
+            $school_addr = "No. 125 Idi-ogun Offa, Kwara State.";
+            $contact = "+234 8137541749, +234 7058875762";
+            $email = "wasiubello60@gmail.com";
+            $img_logo = '../uploads/img/apple-touch-icon.png';
+        }
+    }
 
     $db = new Database();
     // Fetch result
@@ -1413,38 +1470,38 @@ if (isset($_POST['download_view_btn'])) {
                 //Add image logo
                 //$pdf ->Image('img/logoPdf.png', 7,7,33,34);
                 $pdf->SetFont('Arial', 'B', 25);
-                $pdf->Cell(190, 10, 'SUCCESS SCHOOLS SOKOTO', 0, 0, 'C');
+                $pdf->Cell(190, 10, $school_name, 0, 0, 'C');
                 $pdf->ln(7);
                 $pdf->SetFont(
                     'Times',
                     'I',
                     12
                 );
-                $pdf->Cell(180, 10, 'Nursery, Primary and Secondary', 0, 0, 'C');
+                $pdf->Cell(180, 10, $school_sections, 0, 0, 'C');
                 $pdf->ln(7);
                 $pdf->SetFont(
                     'Times',
                     'B',
                     14
                 );
-                $pdf->Cell(180, 10, "Off Western Bypass Sokoto, Sokoto State.", 0, 0, 'C');
+                $pdf->Cell(180, 10, $school_addr, 0, 0, 'C');
                 $pdf->ln(10);
                 $pdf->SetFont(
                     'Times',
                     'I',
                     12
                 );
-                $pdf->Cell(180, 10, "Tel: 08036505717, 08060860664", 0, 0, 'C');
+                $pdf->Cell(180, 10, "Tel: $contact", 0, 0, 'C');
                 $pdf->ln(5);
                 $pdf->SetFont(
                     'Times',
                     'I',
                     12
                 );
-                $pdf->Cell(180, 10, "Email: successschoolsnigeria@gmail.com", 0, 0, 'C');
+                $pdf->Cell(180, 10, "Email: $email", 0, 0, 'C');
                 $pdf->ln(20);
                 //Adding another image for the next record
-                $pdf->Image('../uploads/img/logoPdf.png', 7, 7, 33, 34);
+                $pdf->Image($img_logo, 7, 7, 33, 34);
                 $pdf->ln();
                 //Student Information goes here
                 $pdf->SetFont(
@@ -1652,15 +1709,23 @@ if (isset($_POST['download_view_btn'])) {
                 $db->bind(':term_id', $term_id);
 
                 //PRINCIPAL AUTO COMMENT TODO
-                if (($average < 10) || ($average <= 45)) {
-                    $p_c = "This is a poor result";
-                } else if (($average >= 46) || ($average >= 50)) {
+                if($average <= 39 )
+                {
+                    $p_c = "This is a poor result, you can do more better";
+                } 
+                if (($average >= 40) || ($average >= 49)) {
+                    $p_c = "This is below average, you can try harder";
+                }
+                if (($average >= 50) || ($average >= 59)) {
                     $p_c = "An average result, you can try harder";
-                } else if (($average >= 51) || ($average >= 60)) {
-                    $p_c = "Good, you can do better";
-                } else if (($average >= 61) || ($average >= 75)) {
+                }  
+                if (($average >= 60) || ($average >= 69)) {
+                    $p_c = "Good result, you can do better";
+                }  
+                if (($average >= 70) || ($average >= 79)) {
                     $p_c = "Bravo! Do not give up";
-                } else if (($average >= 76) || ($average >= 100)) {
+                }  
+                if (($average >= 80) || ($average >= 100)) {
                     $p_c = "Excellent! Keep the energy intact";
                 }
                 if ($db->execute()) {
@@ -1747,21 +1812,20 @@ if (isset($_POST['download_view_btn'])) {
                             $pdf->Cell(53, 5, 'NEXT TERM BEGIN', 1, 0, 'L');
 
                             //Getting Next Term begins from the database
-                            $db->query("SELECT next_term FROM next_term_tbl ORDER BY next_term_id DESC;");
+                            $db->query("SELECT next_term_begin FROM tbl_year_session WHERE session_id = :session_id AND term_id = :term_id;");
+                            $db->bind(':session_id', $session_id);
+                            $db->bind(':term_id', $term_id);                            
                             if ($db->execute()) {
                                 if ($db->rowCount() > 0) {
-                                    $nxt_term = $db->single();
+                                    $nxt_term = $db->single()->next_term_begin;
                                     $pdf->SetFont('Times', '', 11);
-                                    $pdf->Cell(80, 5, $nxt_term->next_term, 1, 1, 'L');
+                                    $pdf->Cell(80, 5, $nxt_term, 1, 1, 'L');
                                 } else {
-                                    $error = "Resumption date not scheduled";
                                     $pdf->SetFont('Times', '', 11);
-                                    $pdf->Cell(80, 5, $error, 1, 1, 'L');
+                                    $pdf->Cell(80, 5, 'Resumption date not scheduled', 1, 1, 'L');
                                 }
                             } else {
-                                die("Query failed" . $db->getError());
-                                exit();
-                                //$pdf->Cell(80, 5, $error, 1, 1, 'L');
+                                die("Query failed".$db->getError());
                             }
                         }
                     } else {
@@ -1789,38 +1853,38 @@ if (isset($_POST['download_view_btn'])) {
                 //Add image logo
                 //$pdf ->Image('img/logoPdf.png', 7,7,33,34);
                 $pdf->SetFont('Arial', 'B', 25);
-                $pdf->Cell(190, 10, 'SUCCESS SCHOOLS SOKOTO', 0, 0, 'C');
+                $pdf->Cell(190, 10, $school_name, 0, 0, 'C');
                 $pdf->ln(7);
                 $pdf->SetFont(
                     'Times',
                     'I',
                     12
                 );
-                $pdf->Cell(180, 10, 'Nursery, Primary and Secondary', 0, 0, 'C');
+                $pdf->Cell(180, 10, $school_sections, 0, 0, 'C');
                 $pdf->ln(7);
                 $pdf->SetFont(
                     'Times',
                     'B',
                     14
                 );
-                $pdf->Cell(180, 10, "Off Western Bypass Sokoto, Sokoto State.", 0, 0, 'C');
+                $pdf->Cell(180, 10, $school_addr, 0, 0, 'C');
                 $pdf->ln(10);
                 $pdf->SetFont(
                     'Times',
                     'I',
                     12
                 );
-                $pdf->Cell(180, 10, "Tel: 08036505717, 08060860664", 0, 0, 'C');
+                $pdf->Cell(180, 10, "Tel: $contact", 0, 0, 'C');
                 $pdf->ln(5);
                 $pdf->SetFont(
                     'Times',
                     'I',
                     12
                 );
-                $pdf->Cell(180, 10, "Email: successschoolsnigeria@gmail.com", 0, 0, 'C');
+                $pdf->Cell(180, 10, "Email: $email", 0, 0, 'C');
                 $pdf->ln(20);
                 //Adding another image for the next record
-                $pdf->Image('../uploads/img/logoPdf.png', 7, 7, 33, 34);
+                $pdf->Image($img_logo, 7, 7, 33, 34);
                 $pdf->ln();
                 //Student Information goes here
                 $pdf->SetFont(
@@ -2066,15 +2130,23 @@ if (isset($_POST['download_view_btn'])) {
                 $db->bind(':term_id', $term_id);
 
                 //PRINCIPAL AUTO COMMENT TODO
-                if (($average < 10) || ($average <= 45)) {
-                    $p_c = "This is a poor result";
-                } else if (($average >= 46) || ($average >= 50)) {
+                if($average <= 39 )
+                {
+                    $p_c = "This is a poor result, you can do more better";
+                } 
+                if (($average >= 40) || ($average >= 49)) {
+                    $p_c = "This is below average, you can try harder";
+                }
+                if (($average >= 50) || ($average >= 59)) {
                     $p_c = "An average result, you can try harder";
-                } else if (($average >= 51) || ($average >= 60)) {
-                    $p_c = "Good, you can do better";
-                } else if (($average >= 61) || ($average >= 75)) {
+                }  
+                if (($average >= 60) || ($average >= 69)) {
+                    $p_c = "Good result, you can do better";
+                }  
+                if (($average >= 70) || ($average >= 79)) {
                     $p_c = "Bravo! Do not give up";
-                } else if (($average >= 76) || ($average >= 100)) {
+                }  
+                if (($average >= 80) || ($average >= 100)) {
                     $p_c = "Excellent! Keep the energy intact";
                 }
                 if ($db->execute()) {
@@ -2161,21 +2233,20 @@ if (isset($_POST['download_view_btn'])) {
                             $pdf->Cell(53, 5, 'NEXT TERM BEGIN', 1, 0, 'L');
 
                             //Getting Next Term begins from the database
-                            $db->query("SELECT next_term FROM next_term_tbl ORDER BY next_term_id DESC;");
+                            $db->query("SELECT next_term_begin FROM tbl_year_session WHERE session_id = :session_id AND term_id = :term_id;");
+                            $db->bind(':session_id', $session_id);
+                            $db->bind(':term_id', $term_id);                            
                             if ($db->execute()) {
                                 if ($db->rowCount() > 0) {
-                                    $nxt_term = $db->single();
+                                    $nxt_term = $db->single()->next_term_begin;
                                     $pdf->SetFont('Times', '', 11);
-                                    $pdf->Cell(80, 5, $nxt_term->next_term, 1, 1, 'L');
+                                    $pdf->Cell(80, 5, $nxt_term, 1, 1, 'L');
                                 } else {
-                                    $error = "Resumption date not scheduled";
                                     $pdf->SetFont('Times', '', 11);
-                                    $pdf->Cell(80, 5, $error, 1, 1, 'L');
+                                    $pdf->Cell(80, 5, 'Resumption date not scheduled', 1, 1, 'L');
                                 }
                             } else {
-                                die("Query failed" . $db->getError());
-                                exit();
-                                //$pdf->Cell(80, 5, $error, 1, 1, 'L');
+                                die("Query failed".$db->getError());
                             }
                         }
                     } else {
@@ -2201,38 +2272,38 @@ if (isset($_POST['download_view_btn'])) {
                 //Add image logo
                 //$pdf ->Image('img/logoPdf.png', 7,7,33,34);
                 $pdf->SetFont('Arial', 'B', 25);
-                $pdf->Cell(190, 10, 'SUCCESS SCHOOLS SOKOTO', 0, 0, 'C');
+                $pdf->Cell(190, 10, $school_name, 0, 0, 'C');
                 $pdf->ln(7);
                 $pdf->SetFont(
                     'Times',
                     'I',
                     12
                 );
-                $pdf->Cell(180, 10, 'Nursery, Primary and Secondary', 0, 0, 'C');
+                $pdf->Cell(180, 10, $school_sections, 0, 0, 'C');
                 $pdf->ln(7);
                 $pdf->SetFont(
                     'Times',
                     'B',
                     14
                 );
-                $pdf->Cell(180, 10, "Off Western Bypass Sokoto, Sokoto State.", 0, 0, 'C');
+                $pdf->Cell(180, 10, $school_addr, 0, 0, 'C');
                 $pdf->ln(10);
                 $pdf->SetFont(
                     'Times',
                     'I',
                     12
                 );
-                $pdf->Cell(180, 10, "Tel: 08036505717, 08060860664", 0, 0, 'C');
+                $pdf->Cell(180, 10, "Tel: $contact", 0, 0, 'C');
                 $pdf->ln(5);
                 $pdf->SetFont(
                     'Times',
                     'I',
                     12
                 );
-                $pdf->Cell(180, 10, "Email: successschoolsnigeria@gmail.com", 0, 0, 'C');
+                $pdf->Cell(180, 10, "Email: $email", 0, 0, 'C');
                 $pdf->ln(20);
                 //Adding another image for the next record
-                $pdf->Image('../uploads/img/logoPdf.png', 7, 7, 33, 34);
+                $pdf->Image($img_logo, 7, 7, 33, 34);
                 $pdf->ln();
                 //Student Information goes here
                 $pdf->SetFont(
@@ -2594,15 +2665,23 @@ if (isset($_POST['download_view_btn'])) {
                             $pdf->Cell(53, 5, "CLASS TEACHER'S NAME", 1, 0, 'L');
 
                             //PRINCIPAL AUTO COMMENT TODO
-                            if (($average < 10) || ($average <= 45)) {
-                                $p_c = "This is a poor result";
-                            } else if (($average >= 46) || ($average >= 50)) {
+                            if($average <= 39 )
+                            {
+                                $p_c = "This is a poor result, you can do more better";
+                            } 
+                            if (($average >= 40) || ($average >= 49)) {
+                                $p_c = "This is below average, you can try harder";
+                            }
+                            if (($average >= 50) || ($average >= 59)) {
                                 $p_c = "An average result, you can try harder";
-                            } else if (($average >= 51) || ($average >= 60)) {
-                                $p_c = "Good, you can do better";
-                            } else if (($average >= 61) || ($average >= 75)) {
+                            }  
+                            if (($average >= 60) || ($average >= 69)) {
+                                $p_c = "Good result, you can do better";
+                            }  
+                            if (($average >= 70) || ($average >= 79)) {
                                 $p_c = "Bravo! Do not give up";
-                            } else if (($average >= 76) || ($average >= 100)) {
+                            }  
+                            if (($average >= 80) || ($average >= 100)) {
                                 $p_c = "Excellent! Keep the energy intact";
                             }
                             
@@ -2644,19 +2723,20 @@ if (isset($_POST['download_view_btn'])) {
                             $pdf->Cell(53, 5, 'NEXT TERM BEGIN', 1, 0, 'L');
 
                             //Getting Next Term begins from the database
-                            $db->query("SELECT next_term FROM next_term_tbl ORDER BY next_term_id DESC;");
+                            $db->query("SELECT next_term_begin FROM tbl_year_session WHERE session_id = :session_id AND term_id = :term_id;");
+                            $db->bind(':session_id', $session_id);
+                            $db->bind(':term_id', $term_id);                            
                             if ($db->execute()) {
                                 if ($db->rowCount() > 0) {
-                                    $nxt_term = $db->single();
+                                    $nxt_term = $db->single()->next_term_begin;
                                     $pdf->SetFont('Times', '', 11);
-                                    $pdf->Cell(80, 5, $nxt_term->next_term, 1, 1, 'L');
+                                    $pdf->Cell(80, 5, $nxt_term, 1, 1, 'L');
                                 } else {
-                                    $error = "Resumption date not scheduled";
                                     $pdf->SetFont('Times', '', 11);
-                                    $pdf->Cell(80, 5, $error, 1, 1, 'L');
+                                    $pdf->Cell(80, 5, 'Resumption date not scheduled', 1, 1, 'L');
                                 }
                             } else {
-                                die("Query failed" . $db->getError());;
+                                die("Query failed".$db->getError());
                             }
                         }
                     } else {

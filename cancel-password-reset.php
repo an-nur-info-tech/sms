@@ -16,24 +16,20 @@ if (isset($_POST['cancel_pwd_reset_btn'])) {
         $_SESSION['location'] = "index";
     } else {
         //Check if the account has already been deactivated or else deactivate
-        $db->query("SELECT act_status, change_pwd FROM staff_tbl WHERE staff_id = :staff_id;"); 
+        $db->query("SELECT act_status, change_pwd FROM staff_tbl WHERE staff_id = :staff_id;");
         $db->bind(':staff_id', $staff_id);
         $db->execute();
-        if ($db->rowCount() > 0)
-        {
+        if ($db->rowCount() > 0) {
             $result = $db->single();
-            if (($result->act_status == 0) && ($result->change_pwd == 0) || ($result->act_status == 1) && ($result->change_pwd == 0))
-            {
+            if (($result->act_status == 0) && ($result->change_pwd == 0) || ($result->act_status == 1) && ($result->change_pwd == 0)) {
                 $_SESSION['errorMsg'] = true;
                 $_SESSION['errorTitle'] = "Oops...!";
                 $_SESSION['sessionMsg'] = "Account secured already";
                 $_SESSION['sessionIcon'] = "warning";
                 $_SESSION['location'] = "index";
-            }
-            else
-            {
+            } else {
                 // Disable user account and change change_pwd back to 0
-                $db->query("UPDATE staff_tbl SET act_status = 0, change_pwd = 0 WHERE staff_id = :staff_id"); 
+                $db->query("UPDATE staff_tbl SET act_status = 0, change_pwd = 0 WHERE staff_id = :staff_id");
                 $db->bind(':staff_id', $staff_id);
                 $db->execute();
                 if ($db->rowCount() > 0) {
@@ -68,10 +64,32 @@ if (isset($_GET['id'])) {
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>School Management System</title>
+        <?php
+        $db = new Database();
+        $db->query("SELECT * FROM frontend_tbl");
+        if ($db->execute()) {
+            if ($db->rowCount() > 0) {
+                $row = $db->single();
+                $title = $row->project_name;
+                $logo_img = $row->img_logo;
+                $project_note = $row->project_note;
+        ?>
+                <title><?php echo $title; ?></title>
+                <link rel="icon" href="./school/super-admin/<?php echo $logo_img; ?>" type="image/png" />
 
-        <link rel="icon" href="./school/uploads/img/success.png" type="image/png" />
+            <?php
+            } else {
+            ?>
+                <title>School Mangements System</title>
+                <!-- <link rel="icon" href="./school/uploads/img/success.png" type="image/png" /> --> -->
 
+        <?php
+            }
+        } else {
+            die($db->getError());
+        }
+        $db->Disconect();
+        ?>
         <!-- Custom fonts for this template-->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 

@@ -2,7 +2,7 @@
 if(isset($_POST['logout_btn']))
 {
     session_start();
-
+    
     unset($_SESSION['valid']);
     unset($_SESSION['user-email']); 
     unset($_SESSION['user-type']); 
