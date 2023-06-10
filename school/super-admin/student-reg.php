@@ -35,10 +35,9 @@ if (isset($_POST['submit_btn'])) {
   //check if file type is an image
   $imgType = ["jpg", "gif", "jpeg", "png"];
 
-  if ($fileToUpload) 
-  { //Select Image
+  if ($fileToUpload) { //Select Image
     //Checking for image size
-    if($_FILES['fileToUpload']['size'] > 102405 || $_FILES['fileToUpload']['size'] < 1024) {
+    if ($_FILES['fileToUpload']['size'] > 102405 || $_FILES['fileToUpload']['size'] < 1024) {
       $error = true;
       $_SESSION['errorMsg'] = true;
       $_SESSION['errorTitle'] = "Error";
@@ -46,8 +45,8 @@ if (isset($_POST['submit_btn'])) {
       $_SESSION['sessionIcon'] = "error";
       $_SESSION['location'] = "student-reg";
     }
-    
-    if(!in_array($imageFileType, $imgType)) {
+
+    if (!in_array($imageFileType, $imgType)) {
       $error = true;
       $_SESSION['errorMsg'] = true;
       $_SESSION['errorTitle'] = "Error";
@@ -57,7 +56,7 @@ if (isset($_POST['submit_btn'])) {
     }
 
     // check if file exists
-    if(file_exists($target_file)) {
+    if (file_exists($target_file)) {
       $error = true;
       $_SESSION['errorMsg'] = true;
       $_SESSION['errorTitle'] = "Error";
@@ -70,9 +69,8 @@ if (isset($_POST['submit_btn'])) {
       if ($section == "NS/") { //Nursery school
         $section_nur = $section . date('y') . "/";
         $db->query("SELECT student_id FROM students_tbl  ORDER BY student_id DESC LIMIT 1;"); //Get the last record for creation of custom adm number
-        
-        if ($db->execute())
-        {
+
+        if ($db->execute()) {
           if ($db->rowCount() > 0) { //Creating admission number from last record if available
             $result = $db->resultset();
             foreach ($result as $record) {
@@ -82,7 +80,7 @@ if (isset($_POST['submit_btn'])) {
               $get_string = str_pad($id_increase, 4, 0, STR_PAD_LEFT);
               $id = $section_nur . $get_string;
               $hash_pwd = password_hash('123654', PASSWORD_BCRYPT);
-  
+
               $db->query(
                 "INSERT INTO 
                 students_tbl(admNo, pwd, sname, lname, oname, class_id, passport, dob, religion, gender, nationality, 
@@ -103,14 +101,14 @@ if (isset($_POST['submit_btn'])) {
               $db->bind(':nationality', $data['nationality']);
               $db->bind(':student_state', $data['student_state']);
               $db->bind(':lga', $data['lga']);
-  
-              if(move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file) && ($db->execute())) {
+
+              if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file) && ($db->execute())) {
                 $_SESSION['errorMsg'] = true;
                 $_SESSION['errorTitle'] = "Success";
                 $_SESSION['sessionMsg'] = "Record added!";
                 $_SESSION['sessionIcon'] = "success";
                 $_SESSION['location'] = "student-reg";
-              }else {
+              } else {
                 $_SESSION['errorMsg'] = true;
                 $_SESSION['errorTitle'] = "Error";
                 $_SESSION['sessionMsg'] = "Error occured!";
@@ -122,7 +120,7 @@ if (isset($_POST['submit_btn'])) {
           } else { //Initial admission number if no record in the database
             $section_nur = $section . date('y') . "/0001";
             $hash_pwd = password_hash('123654', PASSWORD_BCRYPT);
-  
+
             $db->query(
               "INSERT INTO 
               students_tbl(admNo, pwd, sname, lname, oname, class_id, passport, dob, religion, gender, nationality, 
@@ -143,14 +141,14 @@ if (isset($_POST['submit_btn'])) {
             $db->bind(':nationality', $data['nationality']);
             $db->bind(':student_state', $data['student_state']);
             $db->bind(':lga', $data['lga']);
-  
-            if(move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file) && ($db->execute())) {
+
+            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file) && ($db->execute())) {
               $_SESSION['errorMsg'] = true;
               $_SESSION['errorTitle'] = "Success";
               $_SESSION['sessionMsg'] = "Record added!";
               $_SESSION['sessionIcon'] = "success";
               $_SESSION['location'] = "student-reg";
-            }else {
+            } else {
               $_SESSION['errorMsg'] = true;
               $_SESSION['errorTitle'] = "Error";
               $_SESSION['sessionMsg'] = "Error occured!";
@@ -163,9 +161,8 @@ if (isset($_POST['submit_btn'])) {
       } elseif ($section == "PS/") { //Primary school
         $section_nur = $section . date('y') . "/";
         $db->query("SELECT student_id FROM students_tbl  ORDER BY student_id DESC LIMIT 1;"); //Get the last record for creation of custom adm number
-        
-        if ($db->execute())
-        {
+
+        if ($db->execute()) {
           if ($db->rowCount() > 0) { //Creating admission number from last record if available
             $result = $db->resultset();
             foreach ($result as $record) {
@@ -175,7 +172,7 @@ if (isset($_POST['submit_btn'])) {
               $get_string = str_pad($id_increase, 4, 0, STR_PAD_LEFT);
               $id = $section_nur . $get_string;
               $hash_pwd = password_hash('123654', PASSWORD_BCRYPT);
-  
+
               $db->query(
                 "INSERT INTO 
                 students_tbl(admNo, pwd, sname, lname, oname, class_id, passport, dob, religion, gender, nationality, 
@@ -196,14 +193,14 @@ if (isset($_POST['submit_btn'])) {
               $db->bind(':nationality', $data['nationality']);
               $db->bind(':student_state', $data['student_state']);
               $db->bind(':lga', $data['lga']);
-  
-              if(move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file) && ($db->execute())) {
+
+              if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file) && ($db->execute())) {
                 $_SESSION['errorMsg'] = true;
                 $_SESSION['errorTitle'] = "Success";
                 $_SESSION['sessionMsg'] = "Record added!";
                 $_SESSION['sessionIcon'] = "success";
                 $_SESSION['location'] = "student-reg";
-              }else {
+              } else {
                 $_SESSION['errorMsg'] = true;
                 $_SESSION['errorTitle'] = "Error";
                 $_SESSION['sessionMsg'] = "Error occured!";
@@ -215,7 +212,7 @@ if (isset($_POST['submit_btn'])) {
           } else { //Initial admission number if no record in the database
             $section_nur = $section . date('y') . "/0001";
             $hash_pwd = password_hash('123654', PASSWORD_BCRYPT);
-  
+
             $db->query(
               "INSERT INTO 
               students_tbl(admNo, pwd, sname, lname, oname, class_id, passport, dob, religion, gender, nationality, 
@@ -236,14 +233,14 @@ if (isset($_POST['submit_btn'])) {
             $db->bind(':nationality', $data['nationality']);
             $db->bind(':student_state', $data['student_state']);
             $db->bind(':lga', $data['lga']);
-  
-            if(move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file) && ($db->execute())) {
+
+            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file) && ($db->execute())) {
               $_SESSION['errorMsg'] = true;
               $_SESSION['errorTitle'] = "Success";
               $_SESSION['sessionMsg'] = "Record added!";
               $_SESSION['sessionIcon'] = "success";
               $_SESSION['location'] = "student-reg";
-            }else {
+            } else {
               $_SESSION['errorMsg'] = true;
               $_SESSION['errorTitle'] = "Error";
               $_SESSION['sessionMsg'] = "Error occured!";
@@ -256,9 +253,8 @@ if (isset($_POST['submit_btn'])) {
       } elseif ($section == "SS/") { //Secondary School
         $section_nur = $section . date('y') . "/";
         $db->query("SELECT student_id FROM students_tbl  ORDER BY student_id DESC LIMIT 1;"); //Get the last record for creation of custom adm number
-        
-        if ($db->execute())
-        {
+
+        if ($db->execute()) {
           if ($db->rowCount() > 0) { //Creating admission number from last record if available
             $result = $db->resultset();
             foreach ($result as $record) {
@@ -268,7 +264,7 @@ if (isset($_POST['submit_btn'])) {
               $get_string = str_pad($id_increase, 4, 0, STR_PAD_LEFT);
               $id = $section_nur . $get_string;
               $hash_pwd = password_hash('123654', PASSWORD_BCRYPT);
-  
+
               $db->query(
                 "INSERT INTO 
                 students_tbl(admNo, pwd, sname, lname, oname, class_id, passport, dob, religion, gender, nationality, 
@@ -289,14 +285,14 @@ if (isset($_POST['submit_btn'])) {
               $db->bind(':nationality', $data['nationality']);
               $db->bind(':student_state', $data['student_state']);
               $db->bind(':lga', $data['lga']);
-  
-              if(move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file) && ($db->execute())) {
+
+              if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file) && ($db->execute())) {
                 $_SESSION['errorMsg'] = true;
                 $_SESSION['errorTitle'] = "Success";
                 $_SESSION['sessionMsg'] = "Record added!";
                 $_SESSION['sessionIcon'] = "success";
                 $_SESSION['location'] = "student-reg";
-              }else {
+              } else {
                 $_SESSION['errorMsg'] = true;
                 $_SESSION['errorTitle'] = "Error";
                 $_SESSION['sessionMsg'] = "Error occured!";
@@ -308,7 +304,7 @@ if (isset($_POST['submit_btn'])) {
           } else { //Initial admission number if no record in the database
             $section_nur = $section . date('y') . "/0001";
             $hash_pwd = password_hash('123654', PASSWORD_BCRYPT);
-  
+
             $db->query(
               "INSERT INTO 
               students_tbl(admNo, pwd, sname, lname, oname, class_id, passport, dob, religion, gender, nationality, 
@@ -329,14 +325,14 @@ if (isset($_POST['submit_btn'])) {
             $db->bind(':nationality', $data['nationality']);
             $db->bind(':student_state', $data['student_state']);
             $db->bind(':lga', $data['lga']);
-  
-            if(move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file) && ($db->execute())) {
+
+            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file) && ($db->execute())) {
               $_SESSION['errorMsg'] = true;
               $_SESSION['errorTitle'] = "Success";
               $_SESSION['sessionMsg'] = "Record added!";
               $_SESSION['sessionIcon'] = "success";
               $_SESSION['location'] = "student-reg";
-            }else {
+            } else {
               $_SESSION['errorMsg'] = true;
               $_SESSION['errorTitle'] = "Error";
               $_SESSION['sessionMsg'] = "Error occured!";
@@ -353,9 +349,8 @@ if (isset($_POST['submit_btn'])) {
       if ($section == "NS/") { //Nursery school
         $section_nur = $section . date('y') . "/";
         $db->query("SELECT student_id FROM students_tbl  ORDER BY student_id DESC LIMIT 1;"); //Get the last record for creation of custom adm number
-        
-        if ($db->execute())
-        {
+
+        if ($db->execute()) {
           if ($db->rowCount() > 0) { //Creating admission number from last record if available
             $result = $db->resultset();
             foreach ($result as $record) {
@@ -365,7 +360,7 @@ if (isset($_POST['submit_btn'])) {
               $get_string = str_pad($id_increase, 4, 0, STR_PAD_LEFT);
               $id = $section_nur . $get_string;
               $hash_pwd = password_hash('123654', PASSWORD_BCRYPT);
-  
+
               $db->query(
                 "INSERT INTO 
                 students_tbl(admNo, pwd, sname, lname, oname, class_id, dob, religion, gender, nationality, 
@@ -385,17 +380,15 @@ if (isset($_POST['submit_btn'])) {
               $db->bind(':nationality', $data['nationality']);
               $db->bind(':student_state', $data['student_state']);
               $db->bind(':lga', $data['lga']);
-              
-              if(!$db->execute()) {
+
+              if (!$db->execute()) {
                 $_SESSION['errorMsg'] = true;
                 $_SESSION['errorTitle'] = "Error";
                 $_SESSION['sessionMsg'] = "Error occured!";
                 $_SESSION['sessionIcon'] = "error";
                 $_SESSION['location'] = "student-reg";
                 die($db->getError());
-              } 
-              else 
-              {
+              } else {
                 $_SESSION['errorMsg'] = true;
                 $_SESSION['errorTitle'] = "Success";
                 $_SESSION['sessionMsg'] = "Record added!";
@@ -425,17 +418,15 @@ if (isset($_POST['submit_btn'])) {
             $db->bind(':nationality', $data['nationality']);
             $db->bind(':student_state', $data['student_state']);
             $db->bind(':lga', $data['lga']);
-  
-            if(!$db->execute()) {
+
+            if (!$db->execute()) {
               $_SESSION['errorMsg'] = true;
               $_SESSION['errorTitle'] = "Error";
               $_SESSION['sessionMsg'] = "Error occured!";
               $_SESSION['sessionIcon'] = "error";
               $_SESSION['location'] = "student-reg";
               die($db->getError());
-            } 
-            else 
-            {
+            } else {
               $_SESSION['errorMsg'] = true;
               $_SESSION['errorTitle'] = "Success";
               $_SESSION['sessionMsg'] = "Record added!";
@@ -447,9 +438,8 @@ if (isset($_POST['submit_btn'])) {
       } elseif ($section == "PS/") { //Primary school
         $section_nur = $section . date('y') . "/";
         $db->query("SELECT student_id FROM students_tbl  ORDER BY student_id DESC LIMIT 1;"); //Get the last record for creation of custom adm number
-        
-        if ($db->execute())
-        {
+
+        if ($db->execute()) {
           if ($db->rowCount() > 0) { //Creating admission number from last record if available
             $result = $db->resultset();
             foreach ($result as $record) {
@@ -478,17 +468,15 @@ if (isset($_POST['submit_btn'])) {
               $db->bind(':nationality', $data['nationality']);
               $db->bind(':student_state', $data['student_state']);
               $db->bind(':lga', $data['lga']);
-  
-              if(!$db->execute()) {
+
+              if (!$db->execute()) {
                 $_SESSION['errorMsg'] = true;
                 $_SESSION['errorTitle'] = "Error";
                 $_SESSION['sessionMsg'] = "Error occured!";
                 $_SESSION['sessionIcon'] = "error";
                 $_SESSION['location'] = "student-reg";
                 die($db->getError());
-              } 
-              else 
-              {
+              } else {
                 $_SESSION['errorMsg'] = true;
                 $_SESSION['errorTitle'] = "Success";
                 $_SESSION['sessionMsg'] = "Record added!";
@@ -519,17 +507,15 @@ if (isset($_POST['submit_btn'])) {
             $db->bind(':nationality', $data['nationality']);
             $db->bind(':student_state', $data['student_state']);
             $db->bind(':lga', $data['lga']);
-            
-            if(!$db->execute()) {
+
+            if (!$db->execute()) {
               $_SESSION['errorMsg'] = true;
               $_SESSION['errorTitle'] = "Error";
               $_SESSION['sessionMsg'] = "Error occured!";
               $_SESSION['sessionIcon'] = "error";
               $_SESSION['location'] = "student-reg";
               die($db->getError());
-            } 
-            else 
-            {
+            } else {
               $_SESSION['errorMsg'] = true;
               $_SESSION['errorTitle'] = "Success";
               $_SESSION['sessionMsg'] = "Record added!";
@@ -541,9 +527,8 @@ if (isset($_POST['submit_btn'])) {
       } elseif ($section == "SS/") { //Secondary School
         $section_nur = $section . date('y') . "/";
         $db->query("SELECT student_id FROM students_tbl  ORDER BY student_id DESC LIMIT 1;"); //Get the last record for creation of custom adm number
-        
-        if ($db->execute())
-        {
+
+        if ($db->execute()) {
           if ($db->rowCount() > 0) { //Creating admission number from last record if available
             $result = $db->resultset();
             foreach ($result as $record) {
@@ -572,17 +557,15 @@ if (isset($_POST['submit_btn'])) {
               $db->bind(':nationality', $data['nationality']);
               $db->bind(':student_state', $data['student_state']);
               $db->bind(':lga', $data['lga']);
-  
-              if(!$db->execute()) {
+
+              if (!$db->execute()) {
                 $_SESSION['errorMsg'] = true;
                 $_SESSION['errorTitle'] = "Error";
                 $_SESSION['sessionMsg'] = "Error occured!";
                 $_SESSION['sessionIcon'] = "error";
                 $_SESSION['location'] = "student-reg";
                 die($db->getError());
-              } 
-              else 
-              {
+              } else {
                 $_SESSION['errorMsg'] = true;
                 $_SESSION['errorTitle'] = "Success";
                 $_SESSION['sessionMsg'] = "Record added!";
@@ -612,17 +595,15 @@ if (isset($_POST['submit_btn'])) {
             $db->bind(':nationality', $data['nationality']);
             $db->bind(':student_state', $data['student_state']);
             $db->bind(':lga', $data['lga']);
-  
-            if(!$db->execute()) {
+
+            if (!$db->execute()) {
               $_SESSION['errorMsg'] = true;
               $_SESSION['errorTitle'] = "Error";
               $_SESSION['sessionMsg'] = "Error occured!";
               $_SESSION['sessionIcon'] = "error";
               $_SESSION['location'] = "student-reg";
               die($db->getError());
-            } 
-            else 
-            {
+            } else {
               $_SESSION['errorMsg'] = true;
               $_SESSION['errorTitle'] = "Success";
               $_SESSION['sessionMsg'] = "Record added!";
@@ -634,8 +615,8 @@ if (isset($_POST['submit_btn'])) {
       }
     }
   }
+  $db->Disconect();
 }
-$db->Disconect();
 
 
 ?>
@@ -671,7 +652,7 @@ $db->Disconect();
     unset($_SESSION['sessionIcon']);
   }
   ?>
-  
+
   <!-- Student Content Row -->
   <form method="post" action="student-reg" enctype="multipart/form-data">
     <div class="form-row">
@@ -709,7 +690,7 @@ $db->Disconect();
       <div class="col-md-4">
         <div class="form-group">
           <label class="control-label" for="student_sname">* Surname: </label>
-          <input type="text" class="form-control" id="student_sname" placeholder="Surname"  name="student_sname" auto-compplete="off" required>
+          <input type="text" class="form-control" id="student_sname" placeholder="Surname" name="student_sname" auto-compplete="off" required>
         </div>
       </div>
       <div class="col-md-4 ">
@@ -742,6 +723,7 @@ $db->Disconect();
             <option value="Christian"> Christian </option>
             <option value="Judaism"> Judaism </option>
             <option value="Buddhism"> Buddhism </option>
+            <option value="Traditional"> Traditional </option>
           </select>
         </div>
       </div>
@@ -775,6 +757,9 @@ $db->Disconect();
             <option value="Austria"> Austria </option>
             <option value="Azerbaijan"> Azerbaijan </option>
             <option value="Nigeria"> Nigeria </option>
+            <option value="USA"> USA </option>
+            <option value="UK"> UK </option>
+            <option value="Canada"> Canada </option>
             <option value="Indian"> Indian </option>
           </datalist>
         </div>

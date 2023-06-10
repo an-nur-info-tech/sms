@@ -255,11 +255,11 @@ if (isset($_POST['submit_btn'])) {
         <p class="text-danger"> Please review before submitting you can only upload once </p>
     </div><br>
     <!-- GETTING SINGLE STUDENT TO INPUT RESULT -->
-    <form method="POST" action="add-result">
+    <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
         <div class="form-row">
             <div class="col-md-3">
                 <div class="form-group">
-                    <input type="text" name="admNo" class="form-control" list="admNo" placeholder="Adm Number" autocomplete="off" />
+                    <input type="text" name="admNo" class="form-control" list="admNo" placeholder="Adm Number" autocomplete="off" required>
                     <datalist id="admNo">
                         <option value=""> </option>
                         <!-- Fetching data from class table -->
@@ -342,14 +342,14 @@ if (isset($_POST['submit_btn'])) {
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <button name="single_pre_btn" onclick="add_spinner()" type="submit" class="btn btn-outline-primary spinner_btn"> Preview </button>
+                    <button name="single_pre_btn"  type="submit" class="btn btn-outline-primary"> Preview </button>
                 </div>
             </div>
         </div>
     </form>
 
     <!-- ADDING RESULT ON A SINGLE STUDENT -->
-    <form method="POST" action="add-result">
+    <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
         <table class="table table-bordered table-hover" width="100%" cellspacing="0">
             <thead>
                 <th class="table-primary"> Name/Admission No. </th>
@@ -420,8 +420,8 @@ if (isset($_POST['submit_btn'])) {
                                 <input name="session_id" type="hidden" value="<?php echo $session_id; ?>">
                                 <input name="term_id" type="hidden" value="<?php echo $term_id; ?>">
                             </td>
-                            <td> <input type="number" name="ca" id="ca" onkeypress="add()" onkeyup="add()" class="form-control"></td>
-                            <td> <input type="number" name="exam" id="exam" onkeypress="add()" onkeyup="add()" class="form-control"> </td>
+                            <td> <input type="number" name="ca" id="ca" onkeypress="add()" onkeyup="add()" class="form-control" required></td>
+                            <td> <input type="number" name="exam" id="exam" onkeypress="add()" onkeyup="add()" class="form-control" required> </td>
                             <input type="hidden" name="total" id="total" placeholder=" Total" class="form-control">
                             <!-- <input type="hidden" name="average" id="average" placeholder=" Average" class="form-control"> -->
                             <input type="hidden" name="grade" id="grade" placeholder=" grade" class="form-control">
@@ -538,14 +538,14 @@ if (isset($_POST['submit_btn'])) {
             </div>
             <div class="col-md-1">
                 <div class="form-group">
-                    <button name="preview_btn" onclick="add_spinner()" type="submit" class="btn btn-outline-primary spinner_btn"> Preview </button>
+                    <button name="preview_btn"  type="submit" class="btn btn-outline-primary"> Preview </button>
                 </div>
             </div>
         </div>
     </form>
 
     <!-- Previewing data according to classess Onclick -->
-    <form method="POST" action="add-result">
+    <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
         <?php
         if (isset($_POST['preview_btn'])) {
             $class_id = $_POST['class_id'];

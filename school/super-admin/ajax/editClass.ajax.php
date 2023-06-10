@@ -1,8 +1,8 @@
 <?php 
 include_once '../../database/Database.php';
-$db = new Database();
 
 if(isset($_POST["select_section"])){    
+    $db = new Database();
     $sec = $_POST["select_section"]; //Section value
 
     //Display class according to their section
@@ -58,10 +58,13 @@ if(isset($_POST["select_section"])){
     else
     {
         echo "<option value = ''> Select class... </option>";
-    }      
+    } 
+    $db->Disconect();     
 }
 
 if(isset($_POST["assignClassID"])){    
+    $db = new Database();
+
     $db->query("SELECT * FROM staff_tbl;");
     if ($db->execute()){
         if ($db->rowCount() > 0){
@@ -80,9 +83,12 @@ if(isset($_POST["assignClassID"])){
     }else{
         die($db->getError());
     }
+    $db->Disconect();
 }
 
 if(isset($_POST["editClassID"])){
+    $db = new Database();
+
     $editClassID = $_POST['editClassID'];
     
     $db->query("SELECT * FROM class_tbl WHERE class_id = :editClassID;");
@@ -99,11 +105,14 @@ if(isset($_POST["editClassID"])){
     }else{
         echo json_encode("Error");
     }
+    $db->Disconect();
 }
 
  /*   CHECK SUBJECT ON ADD RESULT PAGE */
 if(isset($_POST['class_id']))
 {
+    $db = new Database();
+
     $class_id = $_POST['class_id'];
 
     $db->query(
@@ -129,5 +138,5 @@ if(isset($_POST['class_id']))
             echo '<option value=""> Class has no subject </option>';
         }
     }
+    $db->Disconect();
 }
-$db->Disconect();

@@ -1,9 +1,9 @@
 <?php 
 include_once '../../database/Database.php';
-$db = new Database();
 
 if (isset($_POST['subject_id']))
 {
+    $db = new Database();
     // $subject_id = $_POST['subject_id'];
 
     $db->query("SELECT * FROM staff_tbl;");
@@ -24,5 +24,5 @@ if (isset($_POST['subject_id']))
     }else{
         die($db->getError());
     }
+    $db->Disconect();
 }
-$db->Disconect();

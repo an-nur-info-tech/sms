@@ -187,7 +187,7 @@ if (isset($_POST['deleteSubjectBtn'])) {
                     <td> <?php echo $row->subject_name; ?> </td>
                     <td>
                       <div class="form-inline">
-                        <div class="m-1">
+                        <div class="m-2">
                             <button class="btn btn-sm btn-outline-primary subjectEditBtn" subjectEditID = "<?php echo $row->subject_id; ?>" data-toggle="modal" data-target="#subjectEditBtn" name="subjectEditBtn"> <i class="fas fa-fw fa-edit"></i> Edit</button>
                         </div>
                         <div>

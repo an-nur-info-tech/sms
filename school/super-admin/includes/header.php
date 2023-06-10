@@ -56,7 +56,6 @@ if (session_status() == PHP_SESSION_NONE) {
   <!-- Sweet alert scripts -->
   <script src="../assets/sweetalert2/sweetalert.all.min.js"></script>
 
-
 </head>
 
 <body id="page-top">
