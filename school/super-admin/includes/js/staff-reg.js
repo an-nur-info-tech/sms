@@ -1,4 +1,6 @@
 const enable_staff_btn = (args) => {
+    // let  lga = getBySelector("#lga");
+    // let gsm1 = getBySelector("#gsm1");
     if (args.length > 2) {
         $(".spinner_btn").removeAttr('disabled');
     } else {
@@ -80,3 +82,11 @@ $(".view_staff_id").click(function () {
     });
 });
   /* XX Staff View XX */
+
+/* Staff Delete */
+$(".delete_staff_id").click(function () {
+    let staff_id = $(this).attr("delete_staff_id");
+
+    $("#staff_ID").val(staff_id);
+});
+  /* XX Staff Edit XX */

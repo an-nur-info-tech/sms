@@ -290,6 +290,49 @@ if (isset($_POST['update_staff_btn'])) {
   }
   $db->Disconect();
 }
+
+// Staff delete
+if (isset($_POST['deleteStaffBtn'])) {
+  $userID = $_POST['userID'];
+  $staff_ID = $_POST['staff_ID'];
+  $lookup = $_SESSION['staff_id']." deLEtED";
+
+  if ($userID == $lookup) //Check if user input is equal to the lookup
+  {
+    $db = new Database();
+    $db->query("UPDATE staff_tbl SET deleted = 1 WHERE staff_id = :staff_ID;");
+    $db->bind(':staff_ID', $staff_ID);
+    if (!$db->execute()) {
+      die($db->getError());
+    } else {
+      if ($db->rowCount() > 0)
+      {
+        $_SESSION['errorMsg'] = true;
+        $_SESSION['errorTitle'] = "Success";
+        $_SESSION['sessionMsg'] = "Record deleted";
+        $_SESSION['sessionIcon'] = "success";
+        $_SESSION['location'] = "staff-reg-page";
+      }
+      else 
+      {
+        $_SESSION['errorMsg'] = true;
+        $_SESSION['errorTitle'] = "Error";
+        $_SESSION['sessionMsg'] = "Something went wrong";
+        $_SESSION['sessionIcon'] = "error";
+        $_SESSION['location'] = "staff-reg-page";
+      }
+    }
+    $db->Disconect();
+  }
+  else
+  {
+    $_SESSION['errorMsg'] = true;
+    $_SESSION['errorTitle'] = "Ooops..";
+    $_SESSION['sessionMsg'] = "Input does not match, case are sensitive";
+    $_SESSION['sessionIcon'] = "warning";
+    $_SESSION['location'] = "staff-reg-page";
+  }
+}
 ?>
 
 <!-- Begin Page Content -->
@@ -375,7 +418,7 @@ if (isset($_POST['update_staff_btn'])) {
                   <input type="text" name="fname" class="form-control mb-3" placeholder="* First name" required>
                 </div>
                 <div class="form-group">
-                  <input type="text" name="sname" onkeypress="enable_staff_btn(this.value)" class="form-control" placeholder="* Surname" required>
+                  <input type="text" name="sname" class="form-control" placeholder="* Surname" required>
                 </div>
                 <div class="form-group">
                   <input type="text" name="oname" class="form-control" placeholder="Other name">
@@ -438,11 +481,11 @@ if (isset($_POST['update_staff_btn'])) {
                 </div>
                 <div class="form-group">
                   <label for="LGA">* LGA:</label>
-                  <input type="text" name="lga" placeholder="Local government area" autocomplete="off" class="form-control">
+                  <input type="text" name="lga" id="lga" placeholder="Local government area" autocomplete="off" class="form-control">
                 </div>
                 <div class="form-group">
                   <label for="gsm">* Mobile no.:</label>
-                  <input type="number" name="gsm1" placeholder="Mobile number" class="form-control">
+                  <input type="number" name="gsm1" id="gsm1" placeholder="Mobile number" class="form-control">
                 </div>
                 <div class="form-group">
                   <label for="gsm"> Alternate mobile no.:</label>
@@ -454,7 +497,7 @@ if (isset($_POST['update_staff_btn'])) {
                 </div>
                 <div class="form-group">
                   <label for="address">* Addres:</label>
-                  <textarea name="addr" placeholder="User address information" class="form-control"></textarea>
+                  <textarea name="addr" onkeypress="enable_staff_btn(this.value)" placeholder="User address information" class="form-control"></textarea>
                 </div>
               </div>
             </div>
@@ -563,13 +606,32 @@ if (isset($_POST['update_staff_btn'])) {
                       <td>
                         <div class="form-group form-inline">
                           <div class="m-1">
-                            <button title="Click to view" view_staff_id="<?php echo $row->staff_id; ?>" type="button" data-toggle="modal" data-target="#viewModal" class="btn btn-sm btn-outline-secondary view_staff_id"><i class="fa fa-eye"></i></button>
+                            <button title="Click to view" 
+                            view_staff_id="<?php echo $row->staff_id; ?>" 
+                            type="button" 
+                            data-toggle="modal" 
+                            data-target="#viewModal" 
+                            class="btn btn-sm btn-outline-secondary view_staff_id"><i class="fa fa-eye"></i></button>
                           </div>
                           <div class="m-1">
-                            <button title="Click to edit" edit_staff_name="<?php echo "$row->fname $row->sname $row->oname"; ?>" edit_staff_mail="<?php echo $row->email; ?>" edit_staff_id="<?php echo $row->staff_id; ?>" edit_staff_section="<?php echo $row->user_type; ?>" edit_staff_role="<?php echo $row->user_role; ?>" type="button" data-toggle="modal" data-target="#editModal" class="btn btn-sm btn-outline-primary edit_staff_mail"><i class="fas fa-fw fa-edit"></i></button>
+                            <button title="Click to edit" 
+                            edit_staff_name="<?php echo "$row->fname $row->sname $row->oname"; ?>" 
+                            edit_staff_mail="<?php echo $row->email; ?>" 
+                            edit_staff_id="<?php echo $row->staff_id; ?>" 
+                            edit_staff_section="<?php echo $row->user_type; ?>" 
+                            edit_staff_role="<?php echo $row->user_role; ?>" 
+                            type="button" 
+                            data-toggle="modal" 
+                            data-target="#editModal" 
+                            class="btn btn-sm btn-outline-primary edit_staff_mail"><i class="fas fa-fw fa-edit"></i></button>
                           </div>
                           <div class="m-1">
-                            <button title="Click to delete" delete_staff_id="<?php echo $row->staff_id; ?>" type="button" data-toggle="modal" data-target="" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash"></i></button>
+                            <button title="Click to delete" 
+                            delete_staff_id="<?php echo $row->staff_id; ?>" 
+                            type="button" 
+                            data-toggle="modal" 
+                            data-target="#deleteModal" 
+                            class="btn btn-sm btn-outline-danger delete_staff_id"><i class="fa fa-trash"></i></button>
                           </div>
                         </div>
                       </td>
@@ -765,6 +827,32 @@ if (isset($_POST['update_staff_btn'])) {
       </div>
     </div>
   </div>
+
+  <!-- Delete Class Modal-->
+  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Staff Delete Page</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <form method="post" action="staff-reg-page">
+          <div class="modal-body">
+            <p>Are you sure to delete this Staff? if yes, type in your staff ID followed by deLEtED e.g stf/21/0001 deLEtED</p>
+            <input type="text" name="userID" autocomplete="off" placeholder="stf/21/0001 deLEtED"  class="form-control" required>
+            <input type="hidden" id="staff_ID" name="staff_ID" class="form-control">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
+            <button type="submit" name="deleteStaffBtn" class="btn btn-sm btn-primary"> Yes </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
 </div>
 <!-- /.container-fluid -->
 
