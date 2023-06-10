@@ -293,36 +293,43 @@ if (isset($_POST['update_staff_btn'])) {
 
 // Staff delete
 if (isset($_POST['deleteStaffBtn'])) {
+  $current_user = $_SESSION['staff_id'];
   $userID = $_POST['userID'];
   $staff_ID = $_POST['staff_ID'];
   $lookup = $_SESSION['staff_id']." deLEtED";
 
   if ($userID == $lookup) //Check if user input is equal to the lookup
   {
-    $db = new Database();
-    $db->query("UPDATE staff_tbl SET deleted = 1 WHERE staff_id = :staff_ID;");
-    $db->bind(':staff_ID', $staff_ID);
-    if (!$db->execute()) {
-      die($db->getError());
-    } else {
-      if ($db->rowCount() > 0)
-      {
-        $_SESSION['errorMsg'] = true;
-        $_SESSION['errorTitle'] = "Success";
-        $_SESSION['sessionMsg'] = "Record deleted";
-        $_SESSION['sessionIcon'] = "success";
-        $_SESSION['location'] = "staff-reg-page";
+
+    if ($current_user == $staff_ID){
+      echo "<script>alert('You can not delete yourself');</script>";
+    }else{
+      
+      $db = new Database();
+      $db->query("UPDATE staff_tbl SET deleted = 1 WHERE staff_id = :staff_ID;");
+      $db->bind(':staff_ID', $staff_ID);
+      if (!$db->execute()) {
+        die($db->getError());
+      } else {
+        if ($db->rowCount() > 0)
+        {
+          $_SESSION['errorMsg'] = true;
+          $_SESSION['errorTitle'] = "Success";
+          $_SESSION['sessionMsg'] = "Record deleted";
+          $_SESSION['sessionIcon'] = "success";
+          $_SESSION['location'] = "staff-reg-page";
+        }
+        else 
+        {
+          $_SESSION['errorMsg'] = true;
+          $_SESSION['errorTitle'] = "Error";
+          $_SESSION['sessionMsg'] = "Something went wrong";
+          $_SESSION['sessionIcon'] = "error";
+          $_SESSION['location'] = "staff-reg-page";
+        }
       }
-      else 
-      {
-        $_SESSION['errorMsg'] = true;
-        $_SESSION['errorTitle'] = "Error";
-        $_SESSION['sessionMsg'] = "Something went wrong";
-        $_SESSION['sessionIcon'] = "error";
-        $_SESSION['location'] = "staff-reg-page";
-      }
+      $db->Disconect();
     }
-    $db->Disconect();
   }
   else
   {
