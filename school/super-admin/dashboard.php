@@ -10,7 +10,7 @@ include('includes/header.php');
 <div class="container-fluid">
   <!-- Page Heading -->
   <div class="d-sm-flex  align-items-center justify-content-between mb-3">
-    <h1 class="h3 mb-0 font-weight-bold text-primary">Super admin Dashboard [<?php echo $_SESSION['name']; ?>]</h1>
+    <h1 class="h3 mb-0 font-weight-bold text-primary">Super Admin Dashboard [<?php echo $_SESSION['name']; ?>]</h1>
   </div><br>
 
   <!-- DataTales Example -->

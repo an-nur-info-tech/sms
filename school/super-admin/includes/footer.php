@@ -6,7 +6,25 @@
 <footer class="sticky-footer bg-white">
     <div class="container my-auto">
         <div class="copyright text-center my-auto">
-        <span>Copyright &copy; Success Schools Sokoto 2021 Developed By | An-Nur Info Tech.</span>
+            <span>
+            <?php
+                $db = new Database();
+                $db->query("SELECT * FROM frontend_tbl");
+                if ($db->execute()) {
+                    if ($db->rowCount() > 0) {
+                    $row = $db->single();
+                    $footer = $row->footer;
+                
+                    echo $footer;
+                    }else{
+                        echo "No footer info inserted";
+                    }
+                } else {
+                    die($db->getError());
+                }
+                $db->Disconect();
+            ?>
+            </span>
         </div>
     </div>
 </footer>

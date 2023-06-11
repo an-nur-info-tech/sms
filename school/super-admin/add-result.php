@@ -1,8 +1,8 @@
 <?php
 include('includes/header.php');
-$db = new Database();
 
 if (isset($_POST['submit_btn_single'])) {
+    $db = new Database();
 
     // echo $subject_id;
     // var_dump($result);
@@ -80,169 +80,179 @@ if (isset($_POST['submit_btn_single'])) {
             }
         }
     }
+
+    $db->Disconect();
 }
 
 if (isset($_POST['submit_btn'])) {
-    
-    if (isset($_POST['checkB']) && isset($_POST['ca']) && isset($_POST['exam'])) // Checks if checkbox is checked
-    {
-        $checkB = $_POST['checkB']; // Arrays of checkbox
 
-        $ca = $_POST['ca']; // Arrays of CA
-        $exam = $_POST['exam']; // Arrays of Exams
-        $class_id = $_POST['class_id'];
-        $session_id = $_POST['session_id'];
-        $term_id = $_POST['term_id'];
-        $subject_id = $_POST['subject_id'];
+    $_SESSION['errorMsg'] = true;
+    $_SESSION['errorTitle'] = "Ooops...";
+    $_SESSION['sessionMsg'] = "Work in progress on this...";
+    $_SESSION['sessionIcon'] = "error";
+    $_SESSION['location'] = "add-result";
+    // if (isset($_POST['checkB']) && isset($_POST['ca']) && isset($_POST['exam'])) // Checks if checkbox is checked
+    // {
+    //     $db = new Database();
+
+    //     $checkB = $_POST['checkB']; // Arrays of checkbox
+
+    //     $ca = $_POST['ca']; // Arrays of CA
+    //     $exam = $_POST['exam']; // Arrays of Exams
+    //     $class_id = $_POST['class_id'];
+    //     $session_id = $_POST['session_id'];
+    //     $term_id = $_POST['term_id'];
+    //     $subject_id = $_POST['subject_id'];
         
-        /* $count = 0;  testing
-        foreach ($_POST['checkB'] as $row)
-        {
-            echo "$checkB[$count] $ca[$count] $exam[$count] ";
-            $count++;
-        } */
-        /* foreach ($checkB as $key => $value)
-        {
-            $admNo = $value;
-            // echo "$admNo $ca[$key] $exam[$key] $subject_id $term_id $class_id $session_id".PHP_EOL;
-            if (($ca[$key] < 0) || ($ca[$key] > 40)) {
-                $_SESSION['errorMsg'] = true;
-                $_SESSION['errorTitle'] = "Ooops...";
-                $_SESSION['sessionMsg'] = "CA should <= 40";
-                $_SESSION['sessionIcon'] = "error";
-                $_SESSION['location'] = "add-result";
-            }
-            else if (($exam[$key] < 0) || ($exam[$key] > 60)) {
-                $_SESSION['errorMsg'] = true;
-                $_SESSION['errorTitle'] = "Ooops...";
-                $_SESSION['sessionMsg'] = "Exam should <= 60";
-                $_SESSION['sessionIcon'] = "error";
-                $_SESSION['location'] = "add-result";
-            }
-            else
-            {
-                // echo "$admNo $exam[$key]  $ca[$key]";
-                $total = (int)$exam[$key] + (int)$ca[$key]; //Adding C.A with Exam as total
-                //let average = total/100;
-                // var av_reduce = average.toFixed(2);
+    //     /* $count = 0;  testing
+    //     foreach ($_POST['checkB'] as $row)
+    //     {
+    //         echo "$checkB[$count] $ca[$count] $exam[$count] ";
+    //         $count++;
+    //     } */
+    //     /* foreach ($checkB as $key => $value)
+    //     {
+    //         $admNo = $value;
+    //         // echo "$admNo $ca[$key] $exam[$key] $subject_id $term_id $class_id $session_id".PHP_EOL;
+    //         if (($ca[$key] < 0) || ($ca[$key] > 40)) {
+    //             $_SESSION['errorMsg'] = true;
+    //             $_SESSION['errorTitle'] = "Ooops...";
+    //             $_SESSION['sessionMsg'] = "CA should <= 40";
+    //             $_SESSION['sessionIcon'] = "error";
+    //             $_SESSION['location'] = "add-result";
+    //         }
+    //         else if (($exam[$key] < 0) || ($exam[$key] > 60)) {
+    //             $_SESSION['errorMsg'] = true;
+    //             $_SESSION['errorTitle'] = "Ooops...";
+    //             $_SESSION['sessionMsg'] = "Exam should <= 60";
+    //             $_SESSION['sessionIcon'] = "error";
+    //             $_SESSION['location'] = "add-result";
+    //         }
+    //         else
+    //         {
+    //             // echo "$admNo $exam[$key]  $ca[$key]";
+    //             $total = (int)$exam[$key] + (int)$ca[$key]; //Adding C.A with Exam as total
+    //             //let average = total/100;
+    //             // var av_reduce = average.toFixed(2);
             
-                if($total <= 39 )
-                {
-                  $grade = "F9";
-                  $remark = "Fail";
-                }
-                if(($total >= 40) || ($total >= 44))
-                {
-                  $grade = "E8";
-                  $remark = "Pass";
-                }
-                if(($total >= 45) || ($total >= 49))
-                {
-                  $grade = "D7";
-                  $remark = "Pass";
-                }
-                if(($total >= 50) || ($total >= 59))
-                {
-                  $grade = "C6";
-                  $remark = "Credit";
-                }
-                if(($total >= 60) || ($total >= 64))
-                {
-                  $grade = "C5";
-                  $remark = "Credit";
-                }
-                if(($total >= 65) || ($total >= 69))
-                {
-                  $grade = "C4";
-                  $remark = "Credit";
-                }
-                if(($total >= 70) || ($total >= 74))
-                {
-                  $grade = "B3";
-                  $remark = "Good";
-                }
-                if(($total >= 75) || ($total >= 79))
-                {
-                  $grade = "B2";
-                  $remark = "Good";
-                }
-                if(($total >= 80) || ($total >= 100))
-                {
-                  $grade = "A1";
-                  $remark = "Excellent";
-                }
-                //Checking if result uploaded already or not
-                 $db->query(
-                    "SELECT * FROM result_tbl 
-                    WHERE admNo = :admNo
-                    AND subject_id = :subject_id 
-                    AND session_id = :session_id 
-                    AND term_id = :term_id;
-                    AND class_id = :class_id;
-                    "
-                );
-                $db->bind(':admNo', $admNo);
-                $db->bind(':subject_id', $subject_id);
-                $db->bind(':session_id', $session_id);
-                $db->bind(':term_id', $term_id);
-                $db->bind(':class_id', $class_id);
+    //             if($total <= 39 )
+    //             {
+    //               $grade = "F9";
+    //               $remark = "Fail";
+    //             }
+    //             if(($total >= 40) || ($total >= 44))
+    //             {
+    //               $grade = "E8";
+    //               $remark = "Pass";
+    //             }
+    //             if(($total >= 45) || ($total >= 49))
+    //             {
+    //               $grade = "D7";
+    //               $remark = "Pass";
+    //             }
+    //             if(($total >= 50) || ($total >= 59))
+    //             {
+    //               $grade = "C6";
+    //               $remark = "Credit";
+    //             }
+    //             if(($total >= 60) || ($total >= 64))
+    //             {
+    //               $grade = "C5";
+    //               $remark = "Credit";
+    //             }
+    //             if(($total >= 65) || ($total >= 69))
+    //             {
+    //               $grade = "C4";
+    //               $remark = "Credit";
+    //             }
+    //             if(($total >= 70) || ($total >= 74))
+    //             {
+    //               $grade = "B3";
+    //               $remark = "Good";
+    //             }
+    //             if(($total >= 75) || ($total >= 79))
+    //             {
+    //               $grade = "B2";
+    //               $remark = "Good";
+    //             }
+    //             if(($total >= 80) || ($total >= 100))
+    //             {
+    //               $grade = "A1";
+    //               $remark = "Excellent";
+    //             }
+    //             //Checking if result uploaded already or not
+    //              $db->query(
+    //                 "SELECT * FROM result_tbl 
+    //                 WHERE admNo = :admNo
+    //                 AND subject_id = :subject_id 
+    //                 AND session_id = :session_id 
+    //                 AND term_id = :term_id;
+    //                 AND class_id = :class_id;
+    //                 "
+    //             );
+    //             $db->bind(':admNo', $admNo);
+    //             $db->bind(':subject_id', $subject_id);
+    //             $db->bind(':session_id', $session_id);
+    //             $db->bind(':term_id', $term_id);
+    //             $db->bind(':class_id', $class_id);
 
-                if (!$db->execute()) {
-                    $_SESSION['errorMsg'] = true;
-                    $_SESSION['errorTitle'] = "Error";
-                    $_SESSION['sessionMsg'] = "Error occured!";
-                    $_SESSION['sessionIcon'] = "error";
-                    $_SESSION['location'] = "add-result";
-                    die($db->getError());
-                } else {
-                    if ($db->rowCount() > 0) {
-                        $_SESSION['errorMsg'] = true;
-                        $_SESSION['errorTitle'] = "Ooops...";
-                        $_SESSION['sessionMsg'] = "Result exist...";
-                        $_SESSION['sessionIcon'] = "error";
-                        $_SESSION['location'] = "add-result";
-                    } else {
-                        $db->query(
-                            "INSERT INTO 
-                            result_tbl(class_id, session_id, term_id, subject_id, admNo, ca, exam, total, grade, remark) 
-                            VALUES(:class_id, :session_id, :term_id, :subject_id, :admNo, :ca, :exam, :total, :grade, :remark);
-                        "
-                        );
+    //             if (!$db->execute()) {
+    //                 $_SESSION['errorMsg'] = true;
+    //                 $_SESSION['errorTitle'] = "Error";
+    //                 $_SESSION['sessionMsg'] = "Error occured!";
+    //                 $_SESSION['sessionIcon'] = "error";
+    //                 $_SESSION['location'] = "add-result";
+    //                 die($db->getError());
+    //             } else {
+    //                 if ($db->rowCount() > 0) {
+    //                     $_SESSION['errorMsg'] = true;
+    //                     $_SESSION['errorTitle'] = "Ooops...";
+    //                     $_SESSION['sessionMsg'] = "Result exist...";
+    //                     $_SESSION['sessionIcon'] = "error";
+    //                     $_SESSION['location'] = "add-result";
+    //                 } else {
+    //                     $db->query(
+    //                         "INSERT INTO 
+    //                         result_tbl(class_id, session_id, term_id, subject_id, admNo, ca, exam, total, grade, remark) 
+    //                         VALUES(:class_id, :session_id, :term_id, :subject_id, :admNo, :ca, :exam, :total, :grade, :remark);
+    //                     "
+    //                     );
 
-                        $db->bind(':class_id', $class_id);
-                        $db->bind(':session_id', $session_id);
-                        $db->bind(':term_id', $term_id);
-                        $db->bind(':subject_id', $subject_id);
-                        $db->bind(':admNo', $admNo);
-                        $db->bind(':ca', $ca[$key]);
-                        $db->bind(':exam', $exam[$key]);
-                        $db->bind(':total', $total);
-                        $db->bind(':grade', $grade);
-                        $db->bind(':remark', $remark);
-                        $db->execute();
-                        if ($db->rowCount() > 0) {
-                            $_SESSION['errorMsg'] = true;
-                            $_SESSION['errorTitle'] = "Success";
-                            $_SESSION['sessionMsg'] = "Result uploaded";
-                            $_SESSION['sessionIcon'] = "success";
-                            $_SESSION['location'] = "add-result";
-                        } else {
-                            $_SESSION['errorMsg'] = true;
-                            $_SESSION['errorTitle'] = "Error";
-                            $_SESSION['sessionMsg'] = "Error occured!";
-                            $_SESSION['sessionIcon'] = "error";
-                            $_SESSION['location'] = "add-result";
-                        }
-                    }
-                }
-            }
+    //                     $db->bind(':class_id', $class_id);
+    //                     $db->bind(':session_id', $session_id);
+    //                     $db->bind(':term_id', $term_id);
+    //                     $db->bind(':subject_id', $subject_id);
+    //                     $db->bind(':admNo', $admNo);
+    //                     $db->bind(':ca', $ca[$key]);
+    //                     $db->bind(':exam', $exam[$key]);
+    //                     $db->bind(':total', $total);
+    //                     $db->bind(':grade', $grade);
+    //                     $db->bind(':remark', $remark);
+    //                     $db->execute();
+    //                     if ($db->rowCount() > 0) {
+    //                         $_SESSION['errorMsg'] = true;
+    //                         $_SESSION['errorTitle'] = "Success";
+    //                         $_SESSION['sessionMsg'] = "Result uploaded";
+    //                         $_SESSION['sessionIcon'] = "success";
+    //                         $_SESSION['location'] = "add-result";
+    //                     } else {
+    //                         $_SESSION['errorMsg'] = true;
+    //                         $_SESSION['errorTitle'] = "Error";
+    //                         $_SESSION['sessionMsg'] = "Error occured!";
+    //                         $_SESSION['sessionIcon'] = "error";
+    //                         $_SESSION['location'] = "add-result";
+    //                     }
+    //                 }
+    //             }
+    //         }
 
-        } */
-    }
-    else 
-    {
-        echo "Select what to add";
-    }
+    //     } */
+    //     $db->Disconect();
+    // }
+    // else 
+    // {
+    //     echo "Select what to add";
+    // }
 }
 ?>
 <!-- Begin Page Content -->
@@ -264,12 +274,14 @@ if (isset($_POST['submit_btn'])) {
                         <option value=""> </option>
                         <!-- Fetching data from class table -->
                         <?php
-                        $db->query("SELECT * FROM students_tbl WHERE admNo LIKE '%JSS%' OR admNo LIKE '%SS%';");
-                        $data = $db->resultset();
-                        if (!$db->isConnected()) {
-                            die("Error " . $db->getError());
+                        $db = new Database();
+
+                        $db->query("SELECT * FROM students_tbl;");
+                        if (!$db->execute()) {
+                            die("Error ".$db->getError());
                         } else {
                             if ($db->rowCount() > 0) {
+                                $data = $db->resultset();
                                 foreach ($data as $row) {
                         ?>
                                     <option value="<?php echo $row->admNo; ?>"> <?php echo $row->admNo; ?> </option>
@@ -532,6 +544,7 @@ if (isset($_POST['submit_btn'])) {
                         <?php
                             }
                         }
+                        $db->Disconect();
                         ?>
                     </select>
                 </div>
@@ -548,6 +561,8 @@ if (isset($_POST['submit_btn'])) {
     <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
         <?php
         if (isset($_POST['preview_btn'])) {
+            $db = new Database();
+
             $class_id = $_POST['class_id'];
             $subject_id = $_POST['subject_id'];
             $session_id = $_POST['session_id'];
@@ -639,6 +654,7 @@ if (isset($_POST['submit_btn'])) {
                 </div>
             </div>
         <?php
+            $db->Disconect();
         }
         ?>
     </form>

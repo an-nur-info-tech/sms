@@ -4,7 +4,7 @@ if(session_status() == PHP_SESSION_NONE){
 }
 
 //Auto logout on idle
-$idle_time = 1000;  //Time of idle
+$idle_time = 900;  // 60 x 15 => Logout after 15 minutes
 
 // Checks for authorization
 if(!$_SESSION['staff_id'] && !$_SESSION['valid'])

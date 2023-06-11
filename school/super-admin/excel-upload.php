@@ -277,7 +277,7 @@ if (isset($_POST['result_btn'])) {
     <form method="POST" action="excel-upload" enctype="multipart/form-data">
         <div class="card mt-5">
             <div class="card-header">
-                Subjects Template Upload
+                Subjects Broadsheet Template Upload
             </div>
             <div class="card-body">
                 <p class="text-danger" >Before uploading make sure everything is acurate, all the CA and Exams have no alphabets or characters</p>

@@ -81,12 +81,8 @@ if (isset($_POST['export_btn'])) {
           header('Location: student-view-page');
         }
       }else{
-          $_SESSION['errorMsg'] = true;
-          $_SESSION['errorTitle'] = "Error";
-          $_SESSION['sessionMsg'] = "No record found!";
-          $_SESSION['sessionIcon'] = "error";
-          $_SESSION['location'] = "student-view-page";
-          die($db->getError());
+          echo "No record";
+          exit();
       }
     }else{
       die($db->getError());

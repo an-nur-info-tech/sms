@@ -93,7 +93,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
     <form action="export" method="post" target="_blank">
         <div class="card mt-5">
             <div class="card-header">
-                Subjects Template Download
+                Subjects Broadsheet Template Download
             </div>
             <div class="card-body">
                 <p>Please select necessary field to download subject required to your local machine. <span class="text-danger"> Once downloaded do not temper with the values except the CA and Exam.</span></p>
