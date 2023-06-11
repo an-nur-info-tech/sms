@@ -158,50 +158,27 @@ const checkAllSelect = () => {
 // Check if checkbox is checked to enable/disable the CA and EXAM input box in single upload TODO
 const checkSingleSelect = () => {
     let checkB = getBySelectAll("#checkB");
-    // let submitBtn = document.querySelector("#submitBtn");
-    // let caCheck = getBySelectAll("#caCheck").value;
-    // let examCheck = getBySelectAll("#examCheck").value;
-    /* checkB.forEach( data =>
-    {
-      
-      if (data.checked === true)
-      {
-        data.value = 1;
-      } 
-      if (data.checked === false)
-      {
-        data.value = "";
-      }
-
-    }); */
-    /* checkB.forEach(function(){
-      console.log(this.length);
-    }); */
-    /* for (let i = 0; i < checkB.length; i++)
+    let submitBtn = getBySelector("#submitBtn");
+    let caCheck = getBySelectAll("#caCheck");
+    let examCheck = getBySelectAll("#examCheck");
+    
+    for (let i = 0; i < checkB.length; i++)
     {
       if (checkB[i].checked == true)
       {
-        console.log(checkB[i].value);
-        console.log(caCheck);
-        console.log(examCheck);
+        checkB[i].setAttribute('required', '')
+        caCheck[i].setAttribute('required', '');
+        examCheck[i].setAttribute('required', '');
+        submitBtn.removeAttribute('disabled');
       }
-      if (checkB[i].checked == false)
+      else if (checkB[i].checked == false)
       {
-        console.log(checkB[i].value);
+        checkB[i].removeAttribute('required');
+        caCheck[i].removeAttribute('required');
+        examCheck[i].removeAttribute('required');
+        submitBtn.setAttribute('disabled', '');
       }
-    } */
-
-    /* for(let j = 0; j < checkB.length; j++)
-    {
-      if(checkB[j].checked == true)
-      {
-        checkB[j].setAttribute('required', '');
-      }
-      if(checkB[j].checked == false)
-      {
-        checkB[j].removeAttribute('required');
-      }
-    } */
+    }
 }
 
 /*   CHECK SUBJECT ON ADD RESULT PAGE*/

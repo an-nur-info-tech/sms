@@ -156,6 +156,10 @@ $db = new Database();
                             $names = "$res->sname $res->lname $res->oname";
                             $class = $res->class_name;
                             $admNo = $res->admNo;
+                        }else{
+                            $names = "N/A";
+                            $class = "N/A";
+                            $admNo = "N/A";
                         }
                     }
 

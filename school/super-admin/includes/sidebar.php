@@ -82,8 +82,9 @@
         <div id="collapseFour" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Manage result:</h6>
-            <a class="collapse-item" href="add-result"> Upload result</a>
             <a class="collapse-item" href="result-view"> Download Result</a>
+            <a class="collapse-item" href="result-update"> Update Result</a>
+            <a class="collapse-item" href="add-result"> Upload result</a>
           </div>
         </div>
       </li>
@@ -105,7 +106,7 @@
         </div>
       </li>      
 
-      <!-- Nav Item - Result Processing Collapse Menu -->
+      <!-- Nav Item - Year session Collapse Menu -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFive" aria-expanded="true" aria-controls="collapseFive">
           <i class="fas fa-fw fa-cog"></i>
