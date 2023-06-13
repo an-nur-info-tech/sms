@@ -117,7 +117,7 @@
             <h6 class="collapse-header">Interface:</h6>
             <a class="collapse-item" href="class-page"> Add class </a>
             <a class="collapse-item" href="subject-page"> Add subject: </a>
-            <a class="collapse-item" href="class-subject-page"> Classes subject: </a>
+            <a class="collapse-item" href="class-subject-page"> Class subject: </a>
             <a class="collapse-item" href="session-term-page"> Add Session/Term </a>
             <a class="collapse-item" href="principal-comment-page">Principal comment</a>
             <a class="collapse-item" href="class-teacher-comment-page">Class teacher comment</a>

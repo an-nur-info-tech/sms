@@ -200,7 +200,7 @@ if (isset($_POST['deleteClassSubjectBtn'])) {
             <option value=""> Instructor...</option>
             <!-- Fetching data from staff table -->
             <?php
-            $db->query("SELECT * FROM staff_tbl");
+            $db->query("SELECT * FROM staff_tbl WHERE deleted != 1");
             if (!$db->execute()) {
               die($db->getError());
             } else {
@@ -223,7 +223,7 @@ if (isset($_POST['deleteClassSubjectBtn'])) {
       </div>
       <div class="col-md-2">
         <div class="form-group">
-          <button name="submit_btn" class="btn btn-primary"> Submit </button>
+          <button name="submit_btn" class="btn btn-primary"> Submits </button>
         </div>
       </div>
     </div>

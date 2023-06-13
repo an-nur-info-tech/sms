@@ -187,7 +187,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
-                            <button class="btn btn-primary spinner_btn" onclick="add_spinner()" type="submit" name="subjectImportBtn" > Download </button>
+                            <button class="btn btn-primary" type="submit" name="subjectImportBtn" > Download </button>
                         </div>
                     </div>
                 </div>

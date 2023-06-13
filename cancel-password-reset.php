@@ -58,6 +58,7 @@ if (isset($_GET['id'])) {
     <html lang="en">
 
     <head>
+
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
@@ -81,7 +82,7 @@ if (isset($_GET['id'])) {
             } else {
             ?>
                 <title>School Mangements System</title>
-                <!-- <link rel="icon" href="./school/uploads/img/success.png" type="image/png" /> --> -->
+                <!-- <link rel="icon" href="./school/uploads/img/success.png" type="image/png" /> -->
 
         <?php
             }
@@ -107,23 +108,13 @@ if (isset($_GET['id'])) {
         <!-- Custom styles for this template-->
         <link href="school/assets/css/sb-admin-2.min.css" rel="stylesheet">
 
-        <!-- Custom styles for this page -->
-        <link href="school/assets/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+        <link href="school/assets/css/custom.css" rel="stylesheet">
 
         <!-- Sweet alert scripts -->
         <script src="school/assets/sweetalert2/sweetalert.all.min.js"></script>
-        <script type="text/javascript">
-            var loadFile = function(event) {
-                var image = document.getElementById('image');
-                image.src = URL.createObjectURL(event.target.files[0]);
-                image.onload = function() {
-                    URL.revokeObjectURL(image.src)
-                }
-            };
-        </script>
     </head>
 
-    <body class="bg-gradient-primary">
+    <body class="bg-img">
         <?php
         if (isset($_SESSION['errorMsg'])) {
             echo '<script>

@@ -32,7 +32,7 @@ require_once('code.php');
     } else {
     ?>
       <title>School Mangements System</title>
-      <!-- <link rel="icon" href="./school/uploads/img/success.png" type="image/png" /> --> -->
+      <!-- <link rel="icon" href="./school/uploads/img/success.png" type="image/png" /> --> 
 
   <?php
     }
@@ -57,18 +57,17 @@ require_once('code.php');
 
   <!-- Custom styles for this template-->
   <link href="school/assets/css/sb-admin-2.min.css" rel="stylesheet">
-
-  <!-- Custom styles for this page -->
-  <link href="school/assets/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+  
+  <link href="school/assets/css/custom.css" rel="stylesheet">
 
   <!-- Sweet alert scripts -->
   <script src="school/assets/sweetalert2/sweetalert.all.min.js"></script>
 </head>
 
-<body class="bg-gradient-primary">
+<body class="bg-img">
 
   <div class="container">
-    <div class="row mt-5 text-center text-white">
+    <div class="row mt-5 text-center text-white bg-custom">
       <div class="col-md-12">
         <h1><?php echo $title; ?></h1>
         <p class="text-gray-300"><?php echo $project_note; ?></p>

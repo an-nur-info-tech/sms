@@ -1,7 +1,6 @@
 
 /*  ASSIGN CLASS TEACHER MODAL TODO*/
-$(".assign_btn").click(function (e) {
-    e.preventDefault();
+$(".assign_btn").click(function () {
     let assignClassID = $(this).attr("assignClassID");
     // console.log(assignClassID);
     $("#assignClassID").val(assignClassID);

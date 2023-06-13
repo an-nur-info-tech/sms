@@ -65,7 +65,7 @@ if(isset($_POST["select_section"])){
 if(isset($_POST["assignClassID"])){    
     $db = new Database();
 
-    $db->query("SELECT * FROM staff_tbl;");
+    $db->query("SELECT * FROM staff_tbl WHERE deleted != 1;");
     if ($db->execute()){
         if ($db->rowCount() > 0){
             $response = $db->resultset();

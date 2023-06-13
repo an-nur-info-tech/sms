@@ -59,49 +59,95 @@ if (isset($_POST['update_btn']))
                 $_SESSION['location'] = "frontend";
             }
             else{
-                
-                $db->query("UPDATE frontend_tbl
-                    SET
-                        img_logo = :img_logo, 
-                        school_name = :school_name,
-                        school_sections = :school_sections,
-                        school_addr = :school_addr,
-                        school_contact1 = :school_contact1,
-                        school_contact2 = :school_contact2,
-                        email = :email,
-                        project_name = :project_name,
-                        project_note = :project_note,
-                        footer = :footer;"
-                );
-                $db->bind(':img_logo', $target_file);
-                $db->bind(':school_name', $school_name);
-                $db->bind(':school_sections', $school_sections);
-                $db->bind(':school_addr', $school_addr);
-                $db->bind(':school_contact1', $school_contact1);
-                $db->bind(':school_contact2', $school_contact2);
-                $db->bind(':email', $email);
-                $db->bind(':project_name', $project_name);
-                $db->bind(':project_note', $project_note);
-                $db->bind(':footer', $footer);
-                if (($db->execute()) && (unlink($fileToRemove))){
-                    if (($db->rowCount() > 0) && move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)){
-                        $error = true;
-                        $_SESSION['errorMsg'] = true;
-                        $_SESSION['errorTitle'] = "Success";
-                        $_SESSION['sessionMsg'] = "Updated successully";
-                        $_SESSION['sessionIcon'] = "success";
-                        $_SESSION['location'] = "frontend";
+                // Check if file to change is empty or not
+                if(empty($fileToRemove) || ($fileToRemove == null) || !file_exists($fileToRemove)){ 
+                    $db->query("UPDATE frontend_tbl
+                        SET
+                            img_logo = :img_logo, 
+                            school_name = :school_name,
+                            school_sections = :school_sections,
+                            school_addr = :school_addr,
+                            school_contact1 = :school_contact1,
+                            school_contact2 = :school_contact2,
+                            email = :email,
+                            project_name = :project_name,
+                            project_note = :project_note,
+                            footer = :footer;"
+                    );
+                    $db->bind(':img_logo', $target_file);
+                    $db->bind(':school_name', $school_name);
+                    $db->bind(':school_sections', $school_sections);
+                    $db->bind(':school_addr', $school_addr);
+                    $db->bind(':school_contact1', $school_contact1);
+                    $db->bind(':school_contact2', $school_contact2);
+                    $db->bind(':email', $email);
+                    $db->bind(':project_name', $project_name);
+                    $db->bind(':project_note', $project_note);
+                    $db->bind(':footer', $footer);
+                    if ($db->execute()){
+                        if (($db->rowCount() > 0) && move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)){
+                            $error = true;
+                            $_SESSION['errorMsg'] = true;
+                            $_SESSION['errorTitle'] = "Success";
+                            $_SESSION['sessionMsg'] = "Updated successully";
+                            $_SESSION['sessionIcon'] = "success";
+                            $_SESSION['location'] = "frontend";
+                        }else{
+                            $error = true;
+                            $_SESSION['errorMsg'] = true;
+                            $_SESSION['errorTitle'] = "Error";
+                            $_SESSION['sessionMsg'] = "Update failed";
+                            $_SESSION['sessionIcon'] = "error";
+                            $_SESSION['location'] = "frontend";
+                        }
                     }else{
-                        $error = true;
-                        $_SESSION['errorMsg'] = true;
-                        $_SESSION['errorTitle'] = "Error";
-                        $_SESSION['sessionMsg'] = "Update failed";
-                        $_SESSION['sessionIcon'] = "error";
-                        $_SESSION['location'] = "frontend";
+                        die($db->getError());
                     }
                 }else{
-                    die($db->getError());
+                    $db->query("UPDATE frontend_tbl
+                        SET
+                            img_logo = :img_logo, 
+                            school_name = :school_name,
+                            school_sections = :school_sections,
+                            school_addr = :school_addr,
+                            school_contact1 = :school_contact1,
+                            school_contact2 = :school_contact2,
+                            email = :email,
+                            project_name = :project_name,
+                            project_note = :project_note,
+                            footer = :footer;"
+                    );
+                    $db->bind(':img_logo', $target_file);
+                    $db->bind(':school_name', $school_name);
+                    $db->bind(':school_sections', $school_sections);
+                    $db->bind(':school_addr', $school_addr);
+                    $db->bind(':school_contact1', $school_contact1);
+                    $db->bind(':school_contact2', $school_contact2);
+                    $db->bind(':email', $email);
+                    $db->bind(':project_name', $project_name);
+                    $db->bind(':project_note', $project_note);
+                    $db->bind(':footer', $footer);
+                    if (($db->execute()) && (unlink($fileToRemove))){
+                        if (($db->rowCount() > 0) && move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)){
+                            $error = true;
+                            $_SESSION['errorMsg'] = true;
+                            $_SESSION['errorTitle'] = "Success";
+                            $_SESSION['sessionMsg'] = "Updated successully";
+                            $_SESSION['sessionIcon'] = "success";
+                            $_SESSION['location'] = "frontend";
+                        }else{
+                            $error = true;
+                            $_SESSION['errorMsg'] = true;
+                            $_SESSION['errorTitle'] = "Error";
+                            $_SESSION['sessionMsg'] = "Update failed";
+                            $_SESSION['sessionIcon'] = "error";
+                            $_SESSION['location'] = "frontend";
+                        }
+                    }else{
+                        die($db->getError());
+                    }
                 }
+                
             }
         }
     }
@@ -329,7 +375,7 @@ if (isset($_POST['submit_btn']))
                 ?>
                         <div class="form-group text-center">
                             <img id="image" src="<?php echo $row->img_logo; ?>" class="form-control-img img-thumbnail" width="100px" height="100px" />
-                            <p class="text-danger" style="font-size: 13px;"> Logo image size should be in the range of 1KB to 100KB</p>
+                            <p class="text-danger" style="font-size: 13px;"> Logo image type should be png and size should be in the range of 1KB to 100KB</p>
                             <input type="file" name="fileToUpload" onchange="loadFile(event)" />
                             <input type="hidden" name="fileToRemove" value="<?php echo $row->img_logo; ?>" />
                         </div>
@@ -383,7 +429,7 @@ if (isset($_POST['submit_btn']))
                     ?>
                         <div class="form-group text-center">
                             <img id="image" class="form-control-img img-thumbnail" width="100px" height="100px" />
-                            <p class="text-danger" style="font-size: 13px;"> Logo image size should be in the range of 1KB to 100KB</p>
+                            <p class="text-danger" style="font-size: 13px;"> Logo image type should be png and size should be in the range of 1KB to 100KB</p>
                             <input type="file" name="fileToUpload" onchange="loadFile(event)" required/>
                         </div>
                         <hr />

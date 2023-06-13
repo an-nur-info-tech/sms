@@ -1,0 +1,21 @@
+.bg-img{
+    background-image: url(../../uploads/bg_img.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-blend-mode: luminosity;
+    /* background-position: 100%; */
+    background-color: rgb(16, 80, 133);
+    opacity: 0.9;
+}
+
+.bg-custom{
+    background-color:  rgb(16, 80, 133);
+    /* opacity: 0.9; */
+    line-height: 2.5;
+}
+.bg-custom h1{
+    font-size: 36px;
+    font-weight: bold;
+    margin-top: 1rem;
+}
+

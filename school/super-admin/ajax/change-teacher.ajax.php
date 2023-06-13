@@ -6,7 +6,7 @@ if (isset($_POST['subject_id']))
     $db = new Database();
     // $subject_id = $_POST['subject_id'];
 
-    $db->query("SELECT * FROM staff_tbl;");
+    $db->query("SELECT * FROM staff_tbl WHERE deleted != 1;");
     if ($db->execute()){
         if ($db->rowCount() > 0){
             $response = $db->resultset();

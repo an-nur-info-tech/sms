@@ -5,9 +5,6 @@ if(session_status() == PHP_SESSION_NONE)
 }
 
 require_once('school/database/Database.php');
-
-
-
 if(isset($_POST['login-btn']))
 {
     $_SESSION['errorMsg'] = false;
@@ -63,7 +60,7 @@ if(isset($_POST['login-btn']))
               $_SESSION['errorMsg'] = true;
               $_SESSION['errorTitle'] = "Restriction";
               $_SESSION['sessionMsg'] = "Acount has been deactivated";
-              $_SESSION['sessionIcon'] = "error";
+              $_SESSION['sessionIcon'] = "warning";
               $_SESSION['location'] = "index";
             }
             else{//To end session after logout
@@ -87,7 +84,7 @@ if(isset($_POST['login-btn']))
             $_SESSION['errorMsg'] = true;
             $_SESSION['errorTitle'] = "Bad request";
             $_SESSION['sessionMsg'] = "Invalid password";
-            $_SESSION['sessionIcon'] = "error";
+            $_SESSION['sessionIcon'] = "warning";
             $_SESSION['location'] = "index";
           }
         }
@@ -99,7 +96,7 @@ if(isset($_POST['login-btn']))
               $_SESSION['errorMsg'] = true;
               $_SESSION['errorTitle'] = "Restriction";
               $_SESSION['sessionMsg'] = "Acount has been deactivated";
-              $_SESSION['sessionIcon'] = "error";
+              $_SESSION['sessionIcon'] = "warning";
               $_SESSION['location'] = "index";
             }
             else{
@@ -120,9 +117,9 @@ if(isset($_POST['login-btn']))
           else{
             $_SESSION['errorMsg'] = true;
             //header('Location: index');
-            $_SESSION['errorTitle'] = "Error";
+            $_SESSION['errorTitle'] = "Warning";
             $_SESSION['sessionMsg'] = "Invalid password";
-            $_SESSION['sessionIcon'] = "error";
+            $_SESSION['sessionIcon'] = "warning";
             $_SESSION['location'] = "index";
           }
         }
@@ -134,7 +131,7 @@ if(isset($_POST['login-btn']))
               $_SESSION['errorMsg'] = true;
               $_SESSION['errorTitle'] = "Restriction";
               $_SESSION['sessionMsg'] = "Acount has been deactivated";
-              $_SESSION['sessionIcon'] = "error";
+              $_SESSION['sessionIcon'] = "warning";
               $_SESSION['location'] = "index";
             }
             else{
@@ -154,9 +151,9 @@ if(isset($_POST['login-btn']))
           }
           else{
             $_SESSION['errorMsg'] = true;
-            $_SESSION['errorTitle'] = "Error";
+            $_SESSION['errorTitle'] = "Warning";
             $_SESSION['sessionMsg'] = "Invalid password";
-            $_SESSION['sessionIcon'] = "error";
+            $_SESSION['sessionIcon'] = "warning";
             $_SESSION['location'] = "index";
           }
         }
@@ -168,7 +165,7 @@ if(isset($_POST['login-btn']))
               $_SESSION['errorMsg'] = true;
               $_SESSION['errorTitle'] = "Restriction";
               $_SESSION['sessionMsg'] = "Acount has been deactivated";
-              $_SESSION['sessionIcon'] = "error";
+              $_SESSION['sessionIcon'] = "warning";
               $_SESSION['location'] = "index";
             }
             else{
@@ -188,9 +185,9 @@ if(isset($_POST['login-btn']))
           }
           else{
             $_SESSION['errorMsg'] = true;
-            $_SESSION['errorTitle'] = "Error";
+            $_SESSION['errorTitle'] = "Warning";
             $_SESSION['sessionMsg'] = "Invalid password";
-            $_SESSION['sessionIcon'] = "error";
+            $_SESSION['sessionIcon'] = "warning";
             $_SESSION['location'] = "index";
           }
         }
@@ -202,7 +199,7 @@ if(isset($_POST['login-btn']))
               $_SESSION['errorMsg'] = true;
               $_SESSION['errorTitle'] = "Restriction";
               $_SESSION['sessionMsg'] = "Acount has been deactivated";
-              $_SESSION['sessionIcon'] = "error";
+              $_SESSION['sessionIcon'] = "warning";
               $_SESSION['location'] = "index";
             }
             else{
@@ -222,9 +219,9 @@ if(isset($_POST['login-btn']))
           }
           else{
             $_SESSION['errorMsg'] = true;
-            $_SESSION['errorTitle'] = "Error";
+            $_SESSION['errorTitle'] = "Warning";
             $_SESSION['sessionMsg'] = "Invalid password";
-            $_SESSION['sessionIcon'] = "error";
+            $_SESSION['sessionIcon'] = "warning";
             $_SESSION['location'] = "index";
           }
         }        
@@ -244,7 +241,7 @@ if(isset($_POST['login-btn']))
               $_SESSION['errorMsg'] = true;
               $_SESSION['errorTitle'] = "Restriction";
               $_SESSION['sessionMsg'] = "Acount has been deactivated";
-              $_SESSION['sessionIcon'] = "error";
+              $_SESSION['sessionIcon'] = "warning";
               $_SESSION['location'] = "index";
             }
             else{
@@ -265,9 +262,9 @@ if(isset($_POST['login-btn']))
           else{//TODO
             //$db->getLogger($_POST['email'], "Invalid password");
             $_SESSION['errorMsg'] = true;
-            $_SESSION['errorTitle'] = "Error";
+            $_SESSION['errorTitle'] = "Warning";
             $_SESSION['sessionMsg'] = "Invalid password";
-            $_SESSION['sessionIcon'] = "error";
+            $_SESSION['sessionIcon'] = "warning";
             $_SESSION['location'] = "index";
           }
         }
@@ -275,8 +272,8 @@ if(isset($_POST['login-btn']))
           //$db->getLogger($_POST['email'], "Account not exist");
           $_SESSION['errorMsg'] = true;
           $_SESSION['errorTitle'] = "Bad request";
-          $_SESSION['sessionMsg'] = "Account not exist";
-          $_SESSION['sessionIcon'] = "error";
+          $_SESSION['sessionMsg'] = "Account does not exist";
+          $_SESSION['sessionIcon'] = "warning";
           $_SESSION['location'] = "index";
         }      
       }

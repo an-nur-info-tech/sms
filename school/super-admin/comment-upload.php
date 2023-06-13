@@ -44,9 +44,9 @@ if (isset($_POST['comment_btn'])) {
                 {
                     $error = true;
                     $_SESSION['errorMsg'] = true;
-                    $_SESSION['errorTitle'] = "Error";
+                    $_SESSION['errorTitle'] = "Warning";
                     $_SESSION['sessionMsg'] = "Comments should <= 50 chars and not empty";
-                    $_SESSION['sessionIcon'] = "error";
+                    $_SESSION['sessionIcon'] = "warning";
                     $_SESSION['location'] = "comment-upload";
                 }
                 if(
@@ -65,9 +65,30 @@ if (isset($_POST['comment_btn'])) {
                 {
                     $error = true;
                     $_SESSION['errorMsg'] = true;
-                    $_SESSION['errorTitle'] = "Error";
+                    $_SESSION['errorTitle'] = "Warning";
                     $_SESSION['sessionMsg'] = "The key chars should be = 1 char ";
-                    $_SESSION['sessionIcon'] = "error";
+                    $_SESSION['sessionIcon'] = "warning";
+                    $_SESSION['location'] = "comment-upload";
+                }
+                // Check if Chars is from A-E
+                if(
+                    (!preg_match('/^[a-eA-E]/', $attendance)) || 
+                    (!preg_match('/^[a-eA-E]/', $honesty)) ||
+                    (!preg_match('/^[a-eA-E]/', $neatness)) ||
+                    (!preg_match('/^[a-eA-E]/', $punctuality)) ||
+                    (!preg_match('/^[a-eA-E]/', $tolerance)) ||
+                    (!preg_match('/^[a-eA-E]/', $creativity)) ||
+                    (!preg_match('/^[a-eA-E]/', $dexterity)) ||
+                    (!preg_match('/^[a-eA-E]/', $fluency)) ||
+                    (!preg_match('/^[a-eA-E]/', $handwriting)) ||
+                    (!preg_match('/^[a-eA-E]/', $obedience))                    
+                )
+                {
+                    $error = true;
+                    $_SESSION['errorMsg'] = true;
+                    $_SESSION['errorTitle'] = "Warning";
+                    $_SESSION['sessionMsg'] = "Allowed chars is A-E";
+                    $_SESSION['sessionIcon'] = "warning";
                     $_SESSION['location'] = "comment-upload";
                 }
                 // Check if value not temper
@@ -78,9 +99,9 @@ if (isset($_POST['comment_btn'])) {
                 {
                     $error = true;
                     $_SESSION['errorMsg'] = true;
-                    $_SESSION['errorTitle'] = "Error";
+                    $_SESSION['errorTitle'] = "Warning";
                     $_SESSION['sessionMsg'] = "Value's tempered";
-                    $_SESSION['sessionIcon'] = "error";
+                    $_SESSION['sessionIcon'] = "warning";
                     $_SESSION['location'] = "comment-upload";
                 }
                 
@@ -99,7 +120,7 @@ if (isset($_POST['comment_btn'])) {
                             $_SESSION['errorMsg'] = true;
                             $_SESSION['errorTitle'] = "Ooops...";
                             $_SESSION['sessionMsg'] = "Comments exist";
-                            $_SESSION['sessionIcon'] = "error";
+                            $_SESSION['sessionIcon'] = "warning";
                             $_SESSION['location'] = "comment-upload";
                         }
                         else 
@@ -125,11 +146,6 @@ if (isset($_POST['comment_btn'])) {
                             $db->bind(':comments', $comments);
                             
                             if (!$db->execute()) {
-                                $_SESSION['errorMsg'] = true;
-                                $_SESSION['errorTitle'] = "Error";
-                                $_SESSION['sessionMsg'] = "Error occured!";
-                                $_SESSION['sessionIcon'] = "error";
-                                $_SESSION['location'] = "comment-upload";
                                 die($db->getError());
                             } else {
                                 $_SESSION['errorMsg'] = true;
@@ -149,9 +165,9 @@ if (isset($_POST['comment_btn'])) {
     } 
     else {
         $_SESSION['errorMsg'] = true;
-        $_SESSION['errorTitle'] = "Error";
+        $_SESSION['errorTitle'] = "Warning";
         $_SESSION['sessionMsg'] = "File not supported!";
-        $_SESSION['sessionIcon'] = "error";
+        $_SESSION['sessionIcon'] = "warning";
         $_SESSION['location'] = "comment-upload";
     }
 

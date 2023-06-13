@@ -126,6 +126,7 @@ if (isset($_POST['single_view_btn'])) {
                 $pdf->ln(20);
                 //Adding another image for the next record
                 $pdf->Image($img_logo, 7, 7, 33, 34);
+                // $pdf->Image($img_logo, 7, 20, 33, 34);
                 $pdf->ln();
                 //Student Information goes here
                 $pdf->SetFont(

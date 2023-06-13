@@ -52,6 +52,8 @@ if (session_status() == PHP_SESSION_NONE) {
 
   <!-- Custom styles for this page -->
   <link href="../assets/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+  <!-- Custom css style -->
+  <link href="../assets/css/custom.css" rel="stylesheet">
 
   <!-- Sweet alert scripts -->
   <script src="../assets/sweetalert2/sweetalert.all.min.js"></script>

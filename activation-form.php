@@ -78,72 +78,63 @@ if (isset($_GET['staff_id'])) {
     <html lang="en">
 
     <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
-        <meta name="description" content="">
-        <meta name="author" content="">
 
-        <?php
-        $db = new Database();
-        $db->query("SELECT * FROM frontend_tbl");
-        if ($db->execute()) {
-            if ($db->rowCount() > 0) {
-                $row = $db->single();
-                $title = $row->project_name;
-                $logo_img = $row->img_logo;
-                $project_note = $row->project_note;
-        ?>
-                <title><?php echo $title; ?></title>
-                <link rel="icon" href="./school/super-admin/<?php echo $logo_img; ?>" type="image/png" />
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
+<meta name="description" content="">
+<meta name="author" content="">
 
-            <?php
-            } else {
-            ?>
-                <title>School Mangements System</title>
-                <!-- <link rel="icon" href="./school/uploads/img/success.png" type="image/png" /> --> -->
+<?php
+$db = new Database();
+$db->query("SELECT * FROM frontend_tbl");
+if ($db->execute()) {
+  if ($db->rowCount() > 0) {
+    $row = $db->single();
+    $title = $row->project_name;
+    $logo_img = $row->img_logo;
+    $project_note = $row->project_note;
+?>
+    <title><?php echo $title; ?></title>
+    <link rel="icon" href="./school/super-admin/<?php echo $logo_img; ?>" type="image/png" />
 
-        <?php
-            }
-        } else {
-            die($db->getError());
-        }
-        $db->Disconect();
-        ?>
-        <!-- Custom fonts for this template-->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <?php
+  } else {
+  ?>
+    <title>School Mangements System</title>
+    <!-- <link rel="icon" href="./school/uploads/img/success.png" type="image/png" /> --> 
+
+<?php
+  }
+} else {
+  die($db->getError());
+}
+$db->Disconect();
+?>
+<!-- Custom fonts for this template-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-sb-admin-2/4.1.4/css/sb-admin-2.css" integrity="sha512-gOfBez3ehpchNxj4TfBZfX1MDLKLRif67tFJNLQSpF13lXM1t9ffMNCbZfZNBfcN2/SaWvOf+7CvIHtQ0Nci2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-sb-admin-2/4.1.4/css/sb-admin-2.css" integrity="sha512-gOfBez3ehpchNxj4TfBZfX1MDLKLRif67tFJNLQSpF13lXM1t9ffMNCbZfZNBfcN2/SaWvOf+7CvIHtQ0Nci2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 
-        <!-- Custom fonts for this template-->
-        <link href="school/assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+<!-- Custom fonts for this template-->
+<link href="school/assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
-        <!-- Custom styles for this template-->
-        <link href="school/assets/css/sb-admin-2.min.css" rel="stylesheet">
+<!-- Custom styles for this template-->
+<link href="school/assets/css/sb-admin-2.min.css" rel="stylesheet">
 
-        <!-- Custom styles for this page -->
-        <link href="school/assets/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+<link href="school/assets/css/custom.css" rel="stylesheet">
 
-        <!-- Sweet alert scripts -->
-        <script src="school/assets/sweetalert2/sweetalert.all.min.js"></script>
-        <script type="text/javascript">
-            var loadFile = function(event) {
-                var image = document.getElementById('image');
-                image.src = URL.createObjectURL(event.target.files[0]);
-                image.onload = function() {
-                    URL.revokeObjectURL(image.src)
-                }
-            };
-        </script>
-    </head>
+<!-- Sweet alert scripts -->
+<script src="school/assets/sweetalert2/sweetalert.all.min.js"></script>
+</head>
 
-    <body class="bg-gradient-primary">
+    <body class="bg-img">
         <!-- Begin Page Content -->
         <div class="container-fluid">
             <!-- Alerts messages -->
@@ -169,46 +160,50 @@ if (isset($_GET['staff_id'])) {
                 unset($_SESSION['sessionIcon']);
             }
             ?>
-            <div class="card mt-5">
-                <div class="card-header text-center">
-                    <h1 class="text-primary"> Account Activation Page </h1>
-                </div>
-                <div class="card-body">
-                    <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data">
-                        <input type="hidden" value="<?php echo $id; ?>" name="staff_id" class="form-control">
-                        <div class="form-row text-center">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <p>Please type in your login password, password strength should at least 8 characters(Uppercase and Lowercase) with special symbol </p>
-                                </div>
-                            </div>
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <div class="card mt-5">
+                        <div class="card-header text-center">
+                            <h1 class="text-primary"> Account Activation Page </h1>
                         </div>
-                        <div class="form-row">
-                            <div class="col-md-2"></div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label class="control-label" for="pwd"> * Password: </label>
-                                    <input type="password" id="pwd" onkeypress="check_password_strength()" class="form-control" placeholder="Password" name="pwd" required>
+                        <div class="card-body">
+                            <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data">
+                                <input type="hidden" value="<?php echo $id; ?>" name="staff_id" class="form-control">
+                                <div class="form-row text-center">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <p>Please type in your login password, password strength should at least 8 characters(Uppercase and Lowercase) with special symbol </p>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label class="control-label" for="c_pwd">* Confirm Password: </label>
-                                    <input type="password" id="c_pwd" onkeypress="check_password_strength()" name="c_pwd" class="form-control" placeholder="Confirm password" required>
+                                <div class="form-row">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label" for="pwd"> * Password: </label>
+                                            <input type="password" id="pwd" onkeypress="check_password_strength()" class="form-control" placeholder="Password" name="pwd" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label" for="c_pwd">* Confirm Password: </label>
+                                            <input type="password" id="c_pwd" onkeypress="check_password_strength()" name="c_pwd" class="form-control" placeholder="Confirm password" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2"></div>
                                 </div>
-                            </div>
-                            <div class="col-md-2"></div>
+                                <div class="form-row">
+                                    <div class="col-md-12 text-center mt-5">
+                                        <button class="btn btn-primary spinner_btn" disabled onclick="add_spinner()" name="submit_btn"> Submit </button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-                        <div class="form-row">
-                            <div class="col-md-12 text-center mt-5">
-                                <button class="btn btn-primary spinner_btn" disabled onclick="add_spinner()" name="submit_btn"> Submit </button>
-                            </div>
-                        </div>
-                    </form>
+                    </div>
+
                 </div>
-                <div class="card-footer text-center">
-                    <p>Copy right &copy; 2023 Powered by <a href="https://www.an-nur-info-tech.com">an-nur-info-tech.com</a></p>
-                </div>
+                <div class="col-md-3"></div>
             </div>
         </div>
         <script type="text/javascript">

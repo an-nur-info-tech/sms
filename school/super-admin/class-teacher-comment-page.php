@@ -217,7 +217,7 @@ if (isset($_POST['submit_btn'])) {
                 </tr>
 
                 <tr>
-                    <th colspan="6">
+                    <th colspan="6" class="text-center">
                         <?php echo $result->sname . " " . $result->lname . " " . $result->oname . " [ " . $result->admNo . " ] from " . $result->class_name; ?>
                     </th>
                 </tr>

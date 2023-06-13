@@ -304,8 +304,13 @@ if (isset($_POST['deleteClassBtn'])) {
                         $db->query("SELECT * FROM staff_tbl WHERE staff_id = :staff_id;");
                         $db->bind(':staff_id', $staff_id);
                         $db->execute();
-                        $dats = $db->single();
-                        echo "$dats->fname $dats->sname $dats->oname &nbsp;&nbsp;&nbsp;<span class='text-danger rmAssign_btn' rmAssignClassID='$row->class_id' data-toggle='modal' data-target='#rmAssignClass'  title='Click to remove teacher' name='assign_btn'><i class='fas fa-fw fa-trash fa-sm'></i> </span>";
+                        if ($db->rowCount() > 0)
+                        {
+                          $dats = $db->single();
+                          echo "$dats->fname $dats->sname $dats->oname &nbsp;&nbsp;&nbsp;<span class='text-danger rmAssign_btn' rmAssignClassID='$row->class_id' data-toggle='modal' data-target='#rmAssignClass'  title='Click to remove teacher' name='assign_btn'><i class='fas fa-fw fa-trash fa-sm'></i> </span>";
+                        }else{
+                          echo "Teacher name not found";
+                        }
                       }
                       ?>
                     </td>

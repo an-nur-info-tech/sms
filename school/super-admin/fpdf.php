@@ -592,7 +592,7 @@ if (isset($_POST['view_class_btn'])) {
                                         }
                                     }
                                 } else {
-                                    $error = "Null";
+                                    $error = "N/A";
                                     $pdf->Cell(20, 5, $error, 1, 0, 'C');
                                 }
                                 $pdf->Cell(25, 5, $grade, 1, 0, 'C');
@@ -626,7 +626,7 @@ if (isset($_POST['view_class_btn'])) {
                             $pdf->Cell(100, 5, "TOTAL ", 1, 0, 'R');
                             $pdf->Cell(15, 5, $total, 1, 0, 'C');
                         } else {
-                            $pdf->Cell(15, 5, 'Null', 1, 0, 'C');
+                            $pdf->Cell(15, 5, 'N/A', 1, 0, 'C');
                         }
 
                         //Getting Firt term total
@@ -639,7 +639,7 @@ if (isset($_POST['view_class_btn'])) {
                             $first_term_total = $db->single()->first_total_sum;
                             $pdf->Cell(20, 5, $first_term_total, 1, 0, 'C');
                         } else {
-                            $pdf->Cell(20, 5, 'Null', 1, 0, 'C');
+                            $pdf->Cell(20, 5, 'N/A', 1, 0, 'C');
                         }
                         //Getting  average
                         $db->query("SELECT AVG(total) AS average FROM result_tbl WHERE admNo = :admNo AND session_id = :session_id AND term_id = :term_id;");
@@ -652,7 +652,7 @@ if (isset($_POST['view_class_btn'])) {
                             //TERM AVERAGE
                             $pdf->Cell(55, 5, 'AVERAGE = ' . round(($average), 2, PHP_ROUND_HALF_UP), 1, 1, 'L');
                         } else {
-                            $pdf->Cell(60, 5, 'Null', 1, 1, 'L');
+                            $pdf->Cell(60, 5, 'N/A', 1, 1, 'L');
                         }
                         $pdf->Cell(190, 5, '', 1, 1, 'C');
                         $pdf->Cell(190, 5, '', 1, 1, 'C');
@@ -961,7 +961,7 @@ if (isset($_POST['view_class_btn'])) {
                                         $pdf->Cell(18, 5, $row->total, 1, 0, 'C');
                                     }
                                 } else {
-                                    $pdf->Cell(18, 5, 'Null', 1, 0, 'C');
+                                    $pdf->Cell(18, 5, 'N/A', 1, 0, 'C');
                                 }
 
                                 //Getting the overall total of each subject and adding to first term column
@@ -977,7 +977,7 @@ if (isset($_POST['view_class_btn'])) {
                                         $pdf->Cell(17, 5, $row->total, 1, 0, 'C');
                                     }
                                 } else {
-                                    $pdf->Cell(17, 5, 'Null', 1, 0, 'C');
+                                    $pdf->Cell(17, 5, 'N/A', 1, 0, 'C');
                                 }
 
                                 //sessional average for each subjects column TODO
@@ -1796,7 +1796,7 @@ if (isset($_POST['download_class_btn'])) {
                                         }
                                     }
                                 } else {
-                                    $error = "Null";
+                                    $error = "N/A";
                                     $pdf->Cell(20, 5, $error, 1, 0, 'C');
                                 }
                                 $pdf->Cell(25, 5, $grade, 1, 0, 'C');
@@ -1830,7 +1830,7 @@ if (isset($_POST['download_class_btn'])) {
                             $pdf->Cell(100, 5, "TOTAL ", 1, 0, 'R');
                             $pdf->Cell(15, 5, $total, 1, 0, 'C');
                         } else {
-                            $pdf->Cell(15, 5, 'Null', 1, 0, 'C');
+                            $pdf->Cell(15, 5, 'N/A', 1, 0, 'C');
                         }
 
                         //Getting Firt term total
@@ -1843,7 +1843,7 @@ if (isset($_POST['download_class_btn'])) {
                             $first_term_total = $db->single()->first_total_sum;
                             $pdf->Cell(20, 5, $first_term_total, 1, 0, 'C');
                         } else {
-                            $pdf->Cell(20, 5, 'Null', 1, 0, 'C');
+                            $pdf->Cell(20, 5, 'N/A', 1, 0, 'C');
                         }
                         //Getting  average
                         $db->query("SELECT AVG(total) AS average FROM result_tbl WHERE admNo = :admNo AND session_id = :session_id AND term_id = :term_id;");
@@ -1856,7 +1856,7 @@ if (isset($_POST['download_class_btn'])) {
                             //TERM AVERAGE
                             $pdf->Cell(55, 5, 'AVERAGE = ' . round(($average), 2, PHP_ROUND_HALF_UP), 1, 1, 'L');
                         } else {
-                            $pdf->Cell(60, 5, 'Null', 1, 1, 'L');
+                            $pdf->Cell(60, 5, 'N/A', 1, 1, 'L');
                         }
                         $pdf->Cell(190, 5, '', 1, 1, 'C');
                         $pdf->Cell(190, 5, '', 1, 1, 'C');
@@ -2162,7 +2162,7 @@ if (isset($_POST['download_class_btn'])) {
                                         $pdf->Cell(18, 5, $row->total, 1, 0, 'C');
                                     }
                                 } else {
-                                    $pdf->Cell(18, 5, 'Null', 1, 0, 'C');
+                                    $pdf->Cell(18, 5, 'N/A', 1, 0, 'C');
                                 }
 
                                 //Getting the overall total of each subject and adding to first term column
@@ -2178,7 +2178,7 @@ if (isset($_POST['download_class_btn'])) {
                                         $pdf->Cell(17, 5, $row->total, 1, 0, 'C');
                                     }
                                 } else {
-                                    $pdf->Cell(17, 5, 'Null', 1, 0, 'C');
+                                    $pdf->Cell(17, 5, 'N/A', 1, 0, 'C');
                                 }
 
                                 //sessional average for each subjects column TODO
